@@ -7,21 +7,11 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class Category
+    public class TestTable
     {
-        public Category()
-        {
-            this.Headings = new HashSet<Heading>();
-        }
-
         [Key]
         public int ID { get; set; }
         [StringLength(50)]
         public string Name { get; set; }
-        [StringLength(250)]
-        public string Description { get; set; }
-        public bool Status { get; set; }
-
-        public ICollection<Heading> Headings { get; set; }
     }
 }

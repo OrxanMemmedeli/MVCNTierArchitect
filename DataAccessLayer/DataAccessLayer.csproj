@@ -65,6 +65,10 @@
     <Compile Include="EntityFramework\EFContentRepository.cs" />
     <Compile Include="EntityFramework\EFHeadingRepository.cs" />
     <Compile Include="EntityFramework\EFWriterRepository.cs" />
+    <Compile Include="Migrations\202110220843095_TestTable.cs" />
+    <Compile Include="Migrations\202110220843095_TestTable.designer.cs">
+      <DependentUpon>202110220843095_TestTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -79,7 +83,11 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202110220843095_TestTable.resx">
+      <DependentUpon>202110220843095_TestTable.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
