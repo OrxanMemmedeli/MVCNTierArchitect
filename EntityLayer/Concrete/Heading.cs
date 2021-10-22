@@ -9,6 +9,10 @@ namespace EntityLayer.Concrete
 {
     public class Heading
     {
+        public Heading()
+        {
+            this.Contents = new HashSet<Content>();
+        }
         [Key]
         public int ID { get; set; }
         [StringLength(50)]

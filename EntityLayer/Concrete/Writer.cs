@@ -10,6 +10,11 @@ namespace EntityLayer.Concrete
 {
     public class Writer
     {
+        public Writer()
+        {
+            this.Headings = new HashSet<Heading>();
+            this.Contents = new HashSet<Content>();
+        }
         [Key]
         public int ID { get; set; }
         [StringLength(50)]
