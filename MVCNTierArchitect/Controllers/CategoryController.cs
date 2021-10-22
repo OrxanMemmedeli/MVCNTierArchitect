@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,11 +27,23 @@ namespace MVCNTierArchitect.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Category category)
         {
-            categoryManager.Add(category);
+            CategoryValidator categoryValidator = new CategoryValidator();
+            ValidationResult validationResult = categoryValidator.Validate(category);    // using FluentValidation.Results
 
-            return View();
+            if (!validationResult.IsValid)
+            {
+                foreach (var item in validationResult.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View(category);
+            }
+
+            categoryManager.Add(category);
+            return RedirectToAction("Index");
         }
     }
 }
