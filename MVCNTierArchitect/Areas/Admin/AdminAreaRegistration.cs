@@ -17,8 +17,9 @@ namespace MVCNTierArchitect.Areas.Admin
             context.MapRoute(
                 "Admin_default",
                 "Admin/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
-            );
+                new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                new[] { "MVCNTierArchitect.Area.Admin.Controllers" } // for use same controller name 
+            ); 
         }
     }
 }
