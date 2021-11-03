@@ -15,13 +15,6 @@ namespace MVCNTierArchitect
             routes.LowercaseUrls = true;
 
             routes.MapRoute(
-                name: "Admin",
-                url: "Admin/{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "MVCNTierArchitect.Area.Admin.Controllers" } // for use same controller name 
-            );
-
-            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },

@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
-
+    [RouteArea("Admin")]
     public class CategoryController : Controller
     {
         CategoryManager categoryManager = new CategoryManager(new EFCategoryRepository());
