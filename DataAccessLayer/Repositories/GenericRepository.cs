@@ -42,6 +42,11 @@ namespace DataAccessLayer.Repositories
             return _object.Where(Filter).ToList();
         }
 
+        public T GetById(Expression<Func<T, bool>> Filter)
+        {
+            return _object.FirstOrDefault(Filter);
+        }
+
         public void Update(T t)
         {
             context.SaveChanges();

@@ -1,46 +1,89 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.Category>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Kateqoriyalar";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int counter = 0;
 }
 
-<h2>Admin side</h2>
+<h2>Kateqoriyalar</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="/Admin/Category/Create" class="btn btn-primary">Yeni kateqoriya</a>
 </p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            #
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Description)
+            Kateqoriya
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Status)
+            Açıqlama
+        </th>
+        <th>
+            Status
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Status)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        counter++;
+        <tr>
+            <td>
+                @counter
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @if (item.Status)
+                {
+                    <span class="badge badge-success">Aktiv</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger">Passiv</span>
+                }
+            </td>
+            <td>
+                <a href="/Admin/Category/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
 
 </table>
+
+<script>
+    function Delete(id) {
+        var url = "/Admin/Category/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/Category', '_self');
+        }
+    };
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+@if (TempData["DeleteCategory"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteCategory"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditCategory"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditCategory"].ToString()))");
+    </script>
+}
