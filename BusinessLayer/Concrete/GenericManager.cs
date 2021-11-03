@@ -38,6 +38,11 @@ namespace BusinessLayer.Concrete
             return _genericDal.GetAll(Filter);
         }
 
+        public T GetByID(Expression<Func<T, bool>> Filter)
+        {
+            return _genericDal.GetById(Filter);
+        }
+
         public void Update(T t)
         {
             _genericDal.Update(t);

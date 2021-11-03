@@ -26,7 +26,7 @@ namespace BusinessLayer.Concrete
 
         public void Delete(Category t)
         {
-            throw new NotImplementedException();
+            _categoryDal.Delete(t);
         }
 
         public List<Category> GetAll()
@@ -36,12 +36,17 @@ namespace BusinessLayer.Concrete
 
         public List<Category> GetAll(Expression<Func<Category, bool>> Filter)
         {
-            throw new NotImplementedException();
+            return _categoryDal.GetAll(Filter);
+        }
+
+        public Category GetByID(Expression<Func<Category, bool>> Filter)
+        {
+            return _categoryDal.GetById(Filter);
         }
 
         public void Update(Category t)
         {
-            throw new NotImplementedException();
+            _categoryDal.Update(t);
         }
     }
 }

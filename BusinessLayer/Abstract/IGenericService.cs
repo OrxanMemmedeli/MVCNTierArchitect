@@ -14,6 +14,7 @@ namespace BusinessLayer.Abstract
         void Delete(T t);
         List<T> GetAll();
         List<T> GetAll(Expression<Func<T, bool>> Filter);
+        T GetByID(Expression<Func<T, bool>> Filter);
 
     }
 }
