@@ -2196,6 +2196,10 @@
     <Content Include="AdminLTE\plugins\uplot\uPlot.iife.min.js" />
     <Content Include="AdminLTE\plugins\uplot\uPlot.min.css" />
     <Content Include="AdminLTE\starter.html" />
+    <Content Include="Areas\Admin\Views\Istatistik\Ekran alintisi\Index   Admin.png" />
+    <Content Include="Areas\Admin\Views\Istatistik\Tablo alintisi\Category Tablosu.jpg" />
+    <Content Include="Areas\Admin\Views\Istatistik\Tablo alintisi\Heading Tablosu.jpg" />
+    <Content Include="Areas\Admin\Views\Istatistik\Tablo alintisi\Writer Tablosu.jpg" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2480,6 +2484,10 @@
     <Content Include="Areas\Admin\Views\Category\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Istatistik\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Istatistik\TotalCategory.cshtml" />
+    <Content Include="Areas\Admin\Views\Istatistik\TotalHeadingByProgramming.cshtml" />
+    <Content Include="Areas\Admin\Views\Istatistik\FindASimvolInWriter.cshtml" />
+    <Content Include="Areas\Admin\Views\Istatistik\CategoryMostTitle.cshtml" />
+    <Content Include="Areas\Admin\Views\Istatistik\Difference.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
