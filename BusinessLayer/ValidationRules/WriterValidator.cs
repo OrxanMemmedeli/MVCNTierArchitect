@@ -19,9 +19,10 @@ namespace BusinessLayer.ValidationRules
                 .MinimumLength(3).WithMessage("Soyad minimum 3 simvol ola biler")
                 .MaximumLength(50).WithMessage("Soyad maksimum 50 simvol ola biler");
             RuleFor(x => x.ImageURL).MaximumLength(250).WithMessage("Fayl Yolu maksimum 250 simvol ola biler");
-            RuleFor(x => x.Email).MaximumLength(250).WithMessage("Email Yolu maksimum 50 simvol ola biler")
+            RuleFor(x => x.Email).MaximumLength(250).WithMessage("Email maksimum 250 simvol ola biler")
                 .EmailAddress().WithMessage("Email adresi duzgen daxil edilmeyib");
-
+            RuleFor(x => x.About).MaximumLength(100).WithMessage("Haqqinda maksimum 100 simvol ola biler")
+                .MinimumLength(10).WithMessage("Haqqinda minimum 10 simvol ola biler");
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Şifrə boş ola bilməz")
                 .MinimumLength(6).WithMessage("Şifrə minimum 6 simvol ola bilər. (nümunə Aa123!!)")
