@@ -30,7 +30,8 @@ namespace EntityLayer.Concrete
         public bool Status { get; set; }
         [NotMapped]
         public virtual string ConfirmPassword { get; set; }
-
+        [NotMapped]
+        public string OldPassword { get; set; }
         public ICollection<Heading> Headings { get; set; }
         public ICollection<Content> Contents { get; set; }
     }

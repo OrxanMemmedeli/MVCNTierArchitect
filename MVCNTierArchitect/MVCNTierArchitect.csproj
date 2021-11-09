@@ -2485,6 +2485,8 @@
     <Content Include="Areas\Admin\Views\Istatistik\CategoryMostTitle.cshtml" />
     <Content Include="Areas\Admin\Views\Istatistik\Difference.cshtml" />
     <Content Include="Areas\Admin\Views\Writer\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Writer\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Writer\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
