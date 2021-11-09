@@ -130,6 +130,7 @@
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IstatistikController.cs" />
+    <Compile Include="Areas\Admin\Controllers\WriterController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -2483,6 +2484,7 @@
     <Content Include="Areas\Admin\Views\Istatistik\FindASimvolInWriter.cshtml" />
     <Content Include="Areas\Admin\Views\Istatistik\CategoryMostTitle.cshtml" />
     <Content Include="Areas\Admin\Views\Istatistik\Difference.cshtml" />
+    <Content Include="Areas\Admin\Views\Writer\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
