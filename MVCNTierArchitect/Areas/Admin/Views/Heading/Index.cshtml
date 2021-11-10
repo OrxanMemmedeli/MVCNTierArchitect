@@ -1,0 +1,81 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Heading>
+
+@{
+    ViewBag.Title = "Başlıqlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int counter = 0;
+}
+
+<h2>Başlıqlar</h2>
+
+<p>
+    <a href="/Admin/Heading/Create" class="btn btn-primary">Yeni başlıq</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Başlıq
+        </th>
+        <th colspan="2">
+            Yazar
+        </th>
+        <th>
+            Kategoriya
+        </th>
+        <th>
+            Yazılma tarixi
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        counter++;
+        <tr>
+            <td>
+                @counter
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Writer.Name)
+            </td>
+            <td>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <img alt="Avatar" class="table-avatar" src="@item.Writer.ImageURL">
+                    </li>
+                </ul>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @item.CreatedDate.ToShortDateString()
+            </td>
+            <td>
+                <a href="/Admin/Category/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function Delete(id) {
+        var url = "/Admin/Heading/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/Heading', '_self');
+        }
+    };
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>

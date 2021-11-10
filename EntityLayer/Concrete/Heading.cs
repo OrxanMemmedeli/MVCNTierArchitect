@@ -19,8 +19,8 @@ namespace EntityLayer.Concrete
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
 
-        public int CategorID { get; set; }
-        public virtual Category Categor { get; set; }
+        public int CategoryID { get; set; }
+        public virtual Category Category { get; set; }
 
         public int WriterID { get; set; }
         public virtual Writer Writer { get; set; }
