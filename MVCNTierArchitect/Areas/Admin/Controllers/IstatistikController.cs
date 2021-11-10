@@ -26,7 +26,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public PartialViewResult TotalHeadingByProgramming()
         {
             HeadingManager headingManager = new HeadingManager(new EFHeadingRepository());
-            ViewBag.TotalByProgramming = headingManager.GetAll(x => x.CategorID == 1).Count();
+            ViewBag.TotalByProgramming = headingManager.GetAll(x => x.CategoryID == 1).Count();
             return PartialView();
         }
 
