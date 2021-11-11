@@ -28,6 +28,9 @@
         <th>
             Yazılma tarixi
         </th>
+        <th>
+            Status
+        </th>
         <th></th>
     </tr>
 
@@ -58,9 +61,30 @@
                 @item.CreatedDate.ToShortDateString()
             </td>
             <td>
-                <a href="/Admin/Content/ContentByHeading/@item.ID" class="badge badge-primary" title="Başlığa uyğun yazılar"><i class="fas fa-clipboard-list"></i></a> |
+                @if (item.Status)
+                {
+                    <span class="badge badge-success">Aktiv</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger">Silinmiş</span>
+                }
+            </td>
+            <td>
+                @if (item.Contents.Count() != 0)
+                {
+                    <a href="/Admin/Content/ContentByHeading/@item.ID" class="badge badge-primary" title="Başlığa uyğun yazılar"><i class="fas fa-clipboard-list"></i></a> <span>|</span>
+                }
                 <a href="/Admin/Heading/Edit/@item.ID" class="badge badge-success" title="Düzəliş et"><i class="fas fa-edit"></i></a> |
-                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+                @if (item.Status)
+                {
+                    <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+                }
+                else
+                {
+                    <a class="badge badge-warning" title="Bərpa Et" onclick="Restore(@item.ID)"><i class="fas fa-recycle"></i></a>
+                }
+
             </td>
         </tr>
     }
@@ -76,7 +100,37 @@
             window.open('/Admin/Heading', '_self');
         }
     };
+    function Restore(id) {
+        var url = "/Admin/Heading/Restore/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/Heading', '_self');
+        }
+    };
+
 </script>
 
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="~/Scripts/jquery-3.4.1.js"></script>
+
+@if (TempData["DeleteHeading"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteHeading"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditHeading"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditHeading"].ToString()))");
+    </script>
+}
+
+@if (TempData["RestoreHeading"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["RestoreHeading"].ToString()))");
+    </script>
+}

@@ -1,0 +1,80 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Content>
+
+@{
+    ViewBag.Title = "Məzmunlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Məzmunlar</h2>
+
+<p>
+    <a href="/Admin/Content/Create" class="btn btn-primary">Yeni Məzmun</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Başlıq
+        </th>
+        <th>
+            Yazar
+        </th>
+        <th>
+            Məzmun
+        </th>
+        <th>
+            Yaranma Tarixi
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.Heading.Name
+            </td>
+            <td>
+                @item.Writer.Name @item.Writer.Surname
+            </td>
+            <td>
+                @item.Text
+            </td>
+            <td>
+                @item.CreatedDate.ToString("dd-MMM-yyyy");
+            </td>
+            <td>
+                <a href="/Admin/Content/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function Delete(id) {
+        var url = "/Admin/Content/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/Content', '_self');
+        }
+    };
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+@if (TempData["DeleteContent"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteContent"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditContent"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditContent"].ToString()))");
+    </script>
+}
