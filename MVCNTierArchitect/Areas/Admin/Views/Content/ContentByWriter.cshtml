@@ -1,0 +1,44 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Content>
+@{
+    ViewBag.Title = "Yazara görə İçəriklər";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="timeline timeline-inverse">
+    <div class="time-label">
+        @if (Model != null)
+        {
+            <span class="bg-primary">
+                @Model.Select(x => x.Writer).Distinct().First().Name @Model.Select(x => x.Writer).Distinct().First().Surname
+            </span>
+        }
+    </div>
+    @foreach (var item in Model)
+    {
+        <!-- timeline time label -->
+        <div class="time-label">
+            <span class="bg-danger">
+                @item.CreatedDate.ToString("dd-MMM-yyyy")
+            </span>
+        </div>
+        <!-- timeline item -->
+        <div>
+            <i class="fas fa-ellipsis-h bg-warning"></i>
+
+            <div class="timeline-item">
+                <span class="time"><i class="far fa-clock"></i> @((DateTime.Now - item.CreatedDate).Days) gün əvvəl</span>
+
+                <h3 class="timeline-header"><a href="/Admin/Content/ContentByHeading/@item.HeadingID">@item.Heading.Name </a></h3>
+
+                <div class="timeline-body">
+                    @item.Text
+                </div>
+                <div class="timeline-footer">
+                    <a href="~/AdminLTE/Content/Edit/@item.ID" class="btn btn-warning btn-flat btn-sm">Düzəliş et</a>
+                </div>
+            </div>
+        </div>
+        <!-- END timeline item -->
+    }
+
+</div>
