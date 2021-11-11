@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.Content>
 @{
-    ViewBag.Title = "Başlığa görə İçəriklər";
+    ViewBag.Title = "Başlığa görə Məzmunlar";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -35,7 +35,7 @@
                     @item.Text
                 </div>
                 <div class="timeline-footer">
-                    <a href="~/AdminLTE/Content/Edit/@item.ID" class="btn btn-warning btn-flat btn-sm">Düzəliş et</a>
+                    <a href="/Admin/Content/Edit/@item.ID" class="btn btn-warning btn-flat btn-sm">Düzəliş et</a>
                 </div>
             </div>
         </div>

@@ -9,5 +9,6 @@ namespace BusinessLayer.Abstract
 {
     public interface IHeadingService : IGenericService<Heading>
     {
+        List<Heading> GetAllWithContent();
     }
 }

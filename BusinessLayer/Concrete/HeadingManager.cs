@@ -39,6 +39,11 @@ namespace BusinessLayer.Concrete
             return _headingDal.GetAll(Filter);
         }
 
+        public List<Heading> GetAllWithContent()
+        {
+            return _headingDal.GetAllWithContent();
+        }
+
         public Heading GetByID(Expression<Func<Heading, bool>> Filter)
         {
             return _headingDal.GetById(Filter);

@@ -18,6 +18,8 @@ namespace EntityLayer.Concrete
         [StringLength(50)]
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
+        public bool Status { get; set; } = true;
+
 
         public int CategoryID { get; set; }
         public virtual Category Category { get; set; }
