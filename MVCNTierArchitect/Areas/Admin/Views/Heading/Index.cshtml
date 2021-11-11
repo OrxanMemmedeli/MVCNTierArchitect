@@ -58,7 +58,8 @@
                 @item.CreatedDate.ToShortDateString()
             </td>
             <td>
-                <a href="/Admin/Category/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a href="/Admin/Content/ContentByHeading/@item.ID" class="badge badge-primary" title="Başlığa uyğun yazılar"><i class="fas fa-clipboard-list"></i></a> |
+                <a href="/Admin/Heading/Edit/@item.ID" class="badge badge-success" title="Düzəliş et"><i class="fas fa-edit"></i></a> |
                 <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
             </td>
         </tr>
