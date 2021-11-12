@@ -1,0 +1,91 @@
+﻿@model IEnumerable<EntityLayer.Concrete.About>
+
+@{
+    ViewBag.Title = "Haqqımda";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int counter = 0;
+}
+
+<h2>Haqqımda</h2>
+
+<p>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#Modal1">Yeni</button>
+</p>
+
+<table class="table">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Haqqımda mətni (birinci)
+        </th>
+        <th>
+            Haqqımda mətni (ikinci)
+        </th>
+        <th>
+            Haqqımda şəkli (birinci)
+        </th>
+        <th>
+            Haqqımda şəkli (ikinci)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        counter++;
+        <tr>
+            <td>
+                @counter
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DetailsFirst)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DetailsSecond)
+            </td>
+            <td>
+                <img src="@item.İmageFirst" alt="Haqqımda-1" style="max-width:150px"/>
+            </td>
+            <td>
+                <img src="@item.İmageSecond" alt="Haqqımda-2" style="max-width:150px" />
+            </td>
+            <td>
+                <a href="/Admin/About/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.Action("CreatePartial", "About","Admin")
+
+<script>
+    function Delete(id) {
+        var url = "/Admin/About/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/About', '_self');
+        }
+    };
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+
+@if (TempData["DeleteAbout"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteAbout"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditAbout"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditAbout"].ToString()))");
+    </script>
+}
