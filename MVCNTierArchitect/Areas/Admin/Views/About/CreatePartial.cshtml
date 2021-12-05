@@ -1,0 +1,56 @@
+﻿<div class="modal" id="Modal1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Yeni Haqqımızda məlumatları</h2>
+            </div>
+            <div class="modal-body">
+                @using (Html.BeginForm("Create", "About", "Admin", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        <hr />
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="form-group">
+                            <label>Haqqımda mətni (birinci)</label>
+                            <div class="col-md-10">
+                                <input type="text" name="DetailsFirst" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Haqqımda mətni (ikinci)</label>
+                            <div class="col-md-10">
+                                <input type="text" name="DetailsSecond" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Haqqımda şəkli (birinci)</label>
+                            <div class="col-md-10">
+                                <input type="text" name="İmageFirst" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Haqqımda şəkli (ikinci)</label>
+                            <div class="col-md-10">
+                                <input type="text" name="İmageSecond" class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-10">
+                                <input type="submit" value="Əlavə Et" class="btn btn-success" />
+                                <a href="/Admin/About" class="btn btn-dark">Geri</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+

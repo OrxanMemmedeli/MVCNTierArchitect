@@ -51,7 +51,7 @@
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
-      <HintPath>..\packages\FluentValidation.10.3.3\lib\netstandard2.0\FluentValidation.dll</HintPath>
+      <HintPath>..\packages\FluentValidation.10.3.5\lib\netstandard2.0\FluentValidation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -127,7 +127,9 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\AboutController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
     <Compile Include="Areas\Admin\Controllers\HeadingController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -2495,6 +2497,9 @@
     <Content Include="Areas\Admin\Views\Content\ContentByWriter.cshtml" />
     <Content Include="Areas\Admin\Views\Content\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Heading\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\About\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\About\CreatePartial.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
