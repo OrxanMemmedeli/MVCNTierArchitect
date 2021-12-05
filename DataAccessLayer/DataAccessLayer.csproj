@@ -85,6 +85,10 @@
     <Compile Include="Migrations\202111111053040_NewColumnForContentAndHeading.designer.cs">
       <DependentUpon>202111111053040_NewColumnForContentAndHeading.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112051616212_NewColumnForContact.cs" />
+    <Compile Include="Migrations\202112051616212_NewColumnForContact.designer.cs">
+      <DependentUpon>202112051616212_NewColumnForContact.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -114,6 +118,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202111111053040_NewColumnForContentAndHeading.resx">
       <DependentUpon>202111111053040_NewColumnForContentAndHeading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112051616212_NewColumnForContact.resx">
+      <DependentUpon>202112051616212_NewColumnForContact.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
