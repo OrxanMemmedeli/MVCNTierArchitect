@@ -22,5 +22,31 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             var messages = _contactManager.GetAll(x => x.IsResponded == false).OrderByDescending(x => x.CreatedDate);
             return View(messages);
         }
+
+        public PartialViewResult MailLeftMenu()
+        {
+            var NewMessageCount = _contactManager.GetAll(x => x.IsResponded == false).Count();
+            ViewBag.NewMessageCount = NewMessageCount;
+            return PartialView();
+        }
+
+        public ActionResult Details(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            var message = _contactManager.GetByID(x => x.ID == id);
+            if (message == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            if (!message.IsReaded)
+            {
+                message.IsReaded = true;
+                _contactManager.Update(message);
+            }
+            return View(message);
+        }
     }
 }

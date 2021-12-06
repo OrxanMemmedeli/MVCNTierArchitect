@@ -2500,6 +2500,8 @@
     <Content Include="Areas\Admin\Views\About\Index.cshtml" />
     <Content Include="Areas\Admin\Views\About\CreatePartial.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\MailLeftMenu.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Details.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
