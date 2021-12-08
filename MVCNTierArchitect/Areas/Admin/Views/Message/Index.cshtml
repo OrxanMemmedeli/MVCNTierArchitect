@@ -1,15 +1,15 @@
-﻿@model IEnumerable<EntityLayer.Concrete.Contact>
-
+﻿@model IEnumerable<EntityLayer.Concrete.Message>
 @{
-    ViewBag.Title = "İstifadəçi mesajları";
+    ViewBag.Title = "Daxili Mesajlar";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>İstifadəçi mesajları</h1>
+                <h1>Daxili mesajlar</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -24,7 +24,7 @@
         <div class="col-md-9">
             <div class="card card-primary card-outline">
                 <div class="card-header">
-                    <h3 class="card-title">Mesalıar (kənar)</h3>
+                    <h3 class="card-title">Mesajlar (daxili)</h3>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
@@ -77,9 +77,9 @@
                                                 </div>
                                             </td>
                                             <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                                            <td class="mailbox-name"><a href="/Admin/Contact/Details/@item.ID">@item.UserName</a></td>
+                                            <td class="mailbox-name"><a href="/Admin/Message/Details/@item.ID">@item.SenderEmail</a></td>
                                             <td class="mailbox-subject">
-                                                <b>@item.Subject</b> - @(item.Message.Length <= 30 ? item.Message : item.Message.Substring(0, item.Message.Substring(0,30).LastIndexOf(" ")) + "..." )
+                                                <b>@item.Subject</b> - @(item.MessageText.Length <= 30 ? item.MessageText : item.MessageText.Substring(0, item.MessageText.Substring(0,30).LastIndexOf(" ")) + "..." )
                                             </td>
                                             <td class="mailbox-attachment">
                                                 @if (!item.IsReaded)
@@ -89,6 +89,7 @@
                                                 else
                                                 {
                                                     <span class="badge badge-secondary">Oxundu</span>
+                                                }
                                                 }
                                             </td>
                                             <td class="mailbox-attachment">
@@ -147,7 +148,6 @@
                     <!-- /.mail-box-messages -->
                 </div>
                 <!-- /.card-body -->
-
             </div>
             <!-- /.card -->
         </div>

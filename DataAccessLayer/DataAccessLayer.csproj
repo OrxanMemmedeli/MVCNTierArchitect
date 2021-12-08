@@ -57,6 +57,7 @@
     <Compile Include="Abstract\IContentDal.cs" />
     <Compile Include="Abstract\IGenericDal.cs" />
     <Compile Include="Abstract\IHeadingDal.cs" />
+    <Compile Include="Abstract\IMessageDal.cs" />
     <Compile Include="Abstract\IWriterDal.cs" />
     <Compile Include="Concrete\MVCContext.cs" />
     <Compile Include="EntityFramework\EFAboutRepository.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="EntityFramework\EFContactRepository.cs" />
     <Compile Include="EntityFramework\EFContentRepository.cs" />
     <Compile Include="EntityFramework\EFHeadingRepository.cs" />
+    <Compile Include="EntityFramework\EFMessageRepository.cs" />
     <Compile Include="EntityFramework\EFWriterRepository.cs" />
     <Compile Include="Migrations\202110220843095_TestTable.cs" />
     <Compile Include="Migrations\202110220843095_TestTable.designer.cs">
@@ -88,6 +90,14 @@
     <Compile Include="Migrations\202112051616212_NewColumnForContact.cs" />
     <Compile Include="Migrations\202112051616212_NewColumnForContact.designer.cs">
       <DependentUpon>202112051616212_NewColumnForContact.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112061015025_NewMessageTable.cs" />
+    <Compile Include="Migrations\202112061015025_NewMessageTable.designer.cs">
+      <DependentUpon>202112061015025_NewMessageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202112081558574_NewColumnsForMessageTable.cs" />
+    <Compile Include="Migrations\202112081558574_NewColumnsForMessageTable.designer.cs">
+      <DependentUpon>202112081558574_NewColumnsForMessageTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -121,6 +131,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112051616212_NewColumnForContact.resx">
       <DependentUpon>202112051616212_NewColumnForContact.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112061015025_NewMessageTable.resx">
+      <DependentUpon>202112061015025_NewMessageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112081558574_NewColumnsForMessageTable.resx">
+      <DependentUpon>202112081558574_NewColumnsForMessageTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
