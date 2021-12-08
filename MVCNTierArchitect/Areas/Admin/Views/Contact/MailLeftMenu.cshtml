@@ -1,9 +1,9 @@
 ﻿<div class="col-md-3">
-    <a href="compose.html" class="btn btn-primary btn-block mb-3">Gələn qutusu</a>
+    <a href="/Admin/Message/Create" class="btn btn-primary btn-block mb-3">Yeni Mesaj Yaz</a>
 
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Folders</h3>
+            <h3 class="card-title">Əsaslar</h3>
 
             <div class="card-tools">
                 <button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -15,17 +15,24 @@
             <ul class="nav nav-pills flex-column">
                 <li class="nav-item active">
                     <a href="/Admin/Contact" class="nav-link">
-                        <i class="fas fa-inbox"></i> Yeni gələnlər
-                        <span class="badge bg-primary float-right">@ViewBag.NewMessageCount</span>
+                        <i class="fas fa-inbox"></i> Kənar Mesajlar
+                        <span class="badge bg-primary float-right">@ViewData["NewMessageCount"]</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a href="/Admin/Message" class="nav-link">
+                        <i class="fas fa-mail-bulk"></i> Daxili Mesajlar
+                        <span class="badge bg-primary float-right">@ViewData["NewSystemMessageCount"]</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <i class="far fa-envelope"></i> Cavablanmışlar
+                    <a href="/Admin/Message/Sent" class="nav-link">
+                        <i class="far fa-envelope"></i> Göndərilmiş
+                        <span class="badge bg-secondary float-right">@ViewData["SentMessageCount"]</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="/Admin/Message/Draft" class="nav-link">
                         <i class="far fa-file-alt"></i> Qaralamalar
                     </a>
                 </li>
