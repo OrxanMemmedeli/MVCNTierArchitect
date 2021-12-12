@@ -24,6 +24,7 @@ namespace EntityLayer.Concrete
         public bool IsDraft { get; set; } = false;
         public bool IsDeleted { get; set; } = false;
         public DateTime DeletedDate { get; set; } = DateTime.Now;
+        public int? ContactID { get; set; } = null;
 
         public static implicit operator Message(Contact model)
         {
@@ -37,6 +38,7 @@ namespace EntityLayer.Concrete
                 IsDeleted = model.IsDeleted,
                 IsResponded = model.IsResponded,
                 DeletedDate = model.DeletedDate,
+                ContactID = model.ID
             };
         }
 

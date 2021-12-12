@@ -102,6 +102,10 @@
     <Compile Include="Migrations\202112120814250_AddNewColumnForContactAndMessage.Designer.cs">
       <DependentUpon>202112120814250_AddNewColumnForContactAndMessage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202112121341208_AddNewColumnMessage.cs" />
+    <Compile Include="Migrations\202112121341208_AddNewColumnMessage.Designer.cs">
+      <DependentUpon>202112121341208_AddNewColumnMessage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -143,6 +147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112120814250_AddNewColumnForContactAndMessage.resx">
       <DependentUpon>202112120814250_AddNewColumnForContactAndMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202112121341208_AddNewColumnMessage.resx">
+      <DependentUpon>202112121341208_AddNewColumnMessage.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

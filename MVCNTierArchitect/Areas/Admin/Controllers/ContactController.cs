@@ -83,5 +83,28 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Draft(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            var message = _contactManager.GetByID(x => x.ID == id);
+            if (message == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            if (!message.IsDeleted)
+            {
+                TempData["MailDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
+                Message model = message;
+
+                //*******************************************************************
+                model.SenderEmail = "memmedeli.orxan.om@gmail.com";
+                model.IsDraft = true;
+                _messageManager.Add(model);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
