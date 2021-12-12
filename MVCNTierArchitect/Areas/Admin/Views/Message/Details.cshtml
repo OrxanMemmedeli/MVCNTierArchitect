@@ -3,6 +3,33 @@
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+<style>
+    @@media print {
+
+        @@page {
+            size: A4;
+            margin: 5px;
+            left: 0;
+            top: 0;
+        }
+
+        body * {
+            visibility: hidden;
+            margin: 0px;
+            left: 0;
+            top: 0;
+        }
+
+        #printArea * {
+            margin: 5px;
+            padding: 2px;
+            visibility: visible;
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+    }
+</style>
 
 <section class="content-header">
     <div class="container-fluid">
@@ -38,18 +65,12 @@
                     <!-- /.mailbox-read-info -->
                     <div class="mailbox-controls with-border text-center">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm" data-container="body" title="Delete">
+                            <a href="/Admin/Message/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default btn-sm" data-container="body" title="Delete">
                                 <i class="far fa-trash-alt"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm" data-container="body" title="Reply">
-                                <i class="fas fa-reply"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm" data-container="body" title="Forward">
-                                <i class="fas fa-share"></i>
-                            </button>
+                            </a>
                         </div>
                         <!-- /.btn-group -->
-                        <button type="button" class="btn btn-default btn-sm" title="Print">
+                        <button class="btn btn-default btn-sm" title="Print" onclick="window.print();">
                             <i class="fas fa-print"></i>
                         </button>
                     </div>
@@ -60,12 +81,15 @@
                     <!-- /.mailbox-read-message -->
                 </div>
                 <div class="card-footer">
-                    <div class="float-right">
-                        <button type="button" class="btn btn-default"><i class="fas fa-reply"></i> Reply</button>
-                        <button type="button" class="btn btn-default"><i class="fas fa-share"></i> Forward</button>
-                    </div>
-                    <button type="button" class="btn btn-default"><i class="far fa-trash-alt"></i> Delete</button>
-                    <button type="button" class="btn btn-default"><i class="fas fa-print"></i> Print</button>
+                    @if (!Model.IsDraft)
+                    {
+                        <div class="float-right">
+                            <a href="/Admin/Message/Draft/@Model.ID" onclick="return confirm('Mesaj qaralamalara əlavə edilsinmi?')" class="btn btn-default"><i class="fas fa-file-alt"></i> Qaralama kimi yadda saxla</a>
+                        </div>
+                    }
+
+                    <a href="/Admin/Message/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default"><i class="far fa-trash-alt"></i> Sil</a>
+                    <button type="button" class="btn btn-default" onclick="window.print();"><i class="fas fa-print"></i> Çap Et</button>
                 </div>
                 <!-- /.card-footer -->
             </div>

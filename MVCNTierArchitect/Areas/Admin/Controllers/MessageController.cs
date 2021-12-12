@@ -108,5 +108,12 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             _messageManager.Add(message);
             return RedirectToAction("Index");
         }
+
+
+        public ActionResult Drafts()
+        {
+            var drafts = _messageManager.GetAll(x => x.IsDraft == true && x.IsDeleted == false).OrderByDescending(x => x.CreatedDate);
+            return View(drafts);
+        }
     }
 }
