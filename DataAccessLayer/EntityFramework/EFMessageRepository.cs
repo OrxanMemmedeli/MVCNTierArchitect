@@ -1,4 +1,5 @@
 ﻿using DataAccessLayer.Abstract;
+using DataAccessLayer.Concrete;
 using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
 using System;
@@ -11,5 +12,11 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EFMessageRepository : GenericRepository<Message>, IMessageDal
     {
+        MVCContext context = new MVCContext();
+        public void DeleteAll(List<Message> t)
+        {
+            context.Messages.RemoveRange(t);
+            context.SaveChanges();
+        }
     }
 }

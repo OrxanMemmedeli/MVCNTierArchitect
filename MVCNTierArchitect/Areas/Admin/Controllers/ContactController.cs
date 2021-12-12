@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
+using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,16 +22,16 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         }
         public ActionResult Index()
         {
-            var messages = _contactManager.GetAll().OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
+            var messages = _contactManager.GetAll(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
         public PartialViewResult MailLeftMenu()
         {
-            var newMessageCount = _contactManager.GetAll(x => x.IsResponded == false).Count();
-            var newSystemMessageCount = _messageManager.GetAll(x => x.IsResponded == false).Count();
+            var newMessageCount = _contactManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false).Count();
+            var newSystemMessageCount = _messageManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false).Count();
             //*******************************************************************
-            var sentMessageCount = _messageManager.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com").Count();
+            var sentMessageCount = _messageManager.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true).Count();
 
             ViewData["NewSystemMessageCount"] = newSystemMessageCount;
             ViewData["NewMessageCount"] = newMessageCount;
@@ -56,5 +57,31 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             return View(message);
         }
+
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            var message = _contactManager.GetByID(x => x.ID == id);
+            if (message == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            if (!message.IsDeleted)
+            {
+                message.IsDeleted = true;
+                TempData["MailDeleted"] = "Mesaj SİLİNMİŞLƏR qovluğuna daxil edildi. Mesaj 30 gündən sonra həmişəlik silinəcəkdir.";
+
+                Message model = message;
+                //*******************************************************************
+                model.SenderEmail = "memmedeli.orxan.om@gmail.com";
+                _contactManager.Delete(message);
+                _messageManager.Add(model);
+            }
+            return RedirectToAction("Index");
+        }
+
     }
 }

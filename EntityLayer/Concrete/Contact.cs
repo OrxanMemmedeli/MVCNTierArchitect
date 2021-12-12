@@ -21,5 +21,7 @@ namespace EntityLayer.Concrete
         public DateTime CreatedDate { get; set; }
         public bool IsReaded { get; set; } = false;
         public bool IsResponded { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
+        public DateTime DeletedDate { get; set; } = DateTime.Now;
     }
 }
