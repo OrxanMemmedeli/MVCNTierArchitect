@@ -29,6 +29,11 @@ namespace BusinessLayer.Concrete
             _messageDal.Delete(t);
         }
 
+        public void DeleteAll(List<Message> t)
+        {
+            _messageDal.DeleteAll(t);
+        }
+
         public List<Message> GetAll()
         {
             return _messageDal.GetAll();

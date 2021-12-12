@@ -29,6 +29,11 @@ namespace BusinessLayer.Concrete
             _contactDal.Delete(t);
         }
 
+        public void DeleteAll(List<Contact> t)
+        {
+            _contactDal.DeleteAll(t);
+        }
+
         public List<Contact> GetAll()
         {
             return _contactDal.GetAll();

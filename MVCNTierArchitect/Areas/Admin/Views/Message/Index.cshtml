@@ -42,20 +42,15 @@
                 <div class="card-body p-0">
                     <div class="mailbox-controls">
                         <!-- Check all button -->
-                        <button type="button" class="btn btn-default btn-sm checkbox-toggle">
-                            <i class="far fa-square"></i>
-                        </button>
+                        @if (Model.Count() != 0)
+                        {
                         <div class="btn-group">
-                            <button type="button" class="btn btn-default btn-sm">
+                            <a href="/Admin/Message/DeleteAll"  class="btn btn-default btn-sm" title="Hamısını sil" onclick="return confirm('Mesajlar silinsinmi?')">
                                 <i class="far fa-trash-alt"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-reply"></i>
-                            </button>
-                            <button type="button" class="btn btn-default btn-sm">
-                                <i class="fas fa-share"></i>
-                            </button>
+                            </a>
                         </div>
+                        }
+
                         <!-- /.btn-group -->
                         <button type="button" class="btn btn-default btn-sm">
                             <i class="fas fa-sync-alt"></i>
@@ -65,15 +60,22 @@
                     <div class="table-responsive mailbox-messages">
                         <table class="table table-hover table-striped">
                             <tbody>
-                                @if (Model != null)
+                                @if (Model.Count() != 0)
                                 {
                                     foreach (var item in Model)
                                     {
                                         <tr>
                                             <td>
                                                 <div class="icheck-primary">
-                                                    <input type="checkbox" value="" id="check1">
-                                                    <label for="check1"></label>
+                                                    <a href="/Admin/Message/Delete/@item.ID"  class="btn btn-default btn-sm" title="Sil" onclick="return confirm('Mesaj silinsinmi?')">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </a>
+                                                    <a class="btn btn-default btn-sm" title="Cavabla">
+                                                        <i class="fas fa-reply"></i>
+                                                    </a>
+                                                    <a class="btn btn-default btn-sm" title="Paylaş">
+                                                        <i class="fas fa-share"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                             <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
@@ -131,10 +133,10 @@
                                         </td>
                                         <td class="mailbox-star"></td>
                                         <td class="mailbox-name"></td>
+                                        <td>
+                                        </td>
                                         <td class="mailbox-subject text-danger">
                                             Yeni mesaj mövcud deyil
-                                        </td>
-                                        <td>
                                         </td>
                                         <td>
                                         </td>
@@ -156,3 +158,10 @@
     <!-- /.row -->
 </section>
 
+
+@if (TempData["MessageDeleted"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MessageDeleted"].ToString()))");
+    </script>
+}

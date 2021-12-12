@@ -21,5 +21,38 @@ namespace EntityLayer.Concrete
         public DateTime CreatedDate { get; set; }
         public bool IsReaded { get; set; } = false;
         public bool IsResponded { get; set; } = false;
+        public bool IsDraft { get; set; } = false;
+        public bool IsDeleted { get; set; } = false;
+        public DateTime DeletedDate { get; set; } = DateTime.Now;
+
+        public static implicit operator Message(Contact model)
+        {
+            return new Message
+            {
+                SenderEmail = model.Email,
+                Subject = model.Subject,
+                MessageText = model.Message,
+                CreatedDate = model.CreatedDate,
+                IsReaded = model.IsReaded,
+                IsDeleted = model.IsDeleted,
+                IsResponded = model.IsResponded,
+                DeletedDate = model.DeletedDate,
+            };
+        }
+
+        //public static implicit operator Contact(Message model)
+        //{
+        //    return new Contact
+        //    {
+        //        Email = model.SenderEmail,
+        //        Subject = model.Subject,
+        //        Message = model.MessageText,
+        //        CreatedDate = model.CreatedDate,
+        //        IsReaded = model.IsReaded,
+        //        IsDeleted = model.IsDeleted,
+        //        IsResponded = model.IsResponded,
+        //        DeletedDate = model.DeletedDate,
+        //    };
+        //}
     }
 }

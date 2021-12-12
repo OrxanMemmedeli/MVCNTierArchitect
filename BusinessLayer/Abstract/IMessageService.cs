@@ -9,5 +9,6 @@ namespace BusinessLayer.Abstract
 {
     public interface IMessageService : IGenericService<Message>
     {
+        void DeleteAll(List<Message> t);
     }
 }
