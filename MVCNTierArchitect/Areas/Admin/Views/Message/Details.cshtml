@@ -30,7 +30,6 @@
         }
     }
 </style>
-
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -83,12 +82,18 @@
                 <div class="card-footer">
                     @if (!Model.IsDraft)
                     {
-                        <div class="float-right">
-                            <a href="/Admin/Message/Draft/@Model.ID" onclick="return confirm('Mesaj qaralamalara əlavə edilsinmi?')" class="btn btn-default"><i class="fas fa-file-alt"></i> Qaralama kimi yadda saxla</a>
-                        </div>
+                        if (!Model.IsDeleted)
+                        {
+                            <div class="float-right">
+                                <a href="/Admin/Message/Draft/@Model.ID" onclick="return confirm('Mesaj qaralamalara əlavə edilsinmi?')" class="btn btn-default"><i class="fas fa-file-alt"></i> Qaralama kimi yadda saxla</a>
+                            </div>
+                        }
+                    }
+                    @if (!Model.IsDeleted)
+                    {
+                        <a href="/Admin/Message/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default"><i class="far fa-trash-alt"></i> Sil</a>
                     }
 
-                    <a href="/Admin/Message/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default"><i class="far fa-trash-alt"></i> Sil</a>
                     <button type="button" class="btn btn-default" onclick="window.print();"><i class="fas fa-print"></i> Çap Et</button>
                 </div>
                 <!-- /.card-footer -->

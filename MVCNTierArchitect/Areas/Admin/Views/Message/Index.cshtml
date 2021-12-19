@@ -44,11 +44,11 @@
                         <!-- Check all button -->
                         @if (Model.Count() != 0)
                         {
-                        <div class="btn-group">
-                            <a href="/Admin/Message/DeleteAll"  class="btn btn-default btn-sm" title="Hamısını sil" onclick="return confirm('Mesajlar silinsinmi?')">
-                                <i class="far fa-trash-alt"></i>
-                            </a>
-                        </div>
+                            <div class="btn-group">
+                                <a href="/Admin/Message/DeleteAll" class="btn btn-default btn-sm" title="Hamısını sil" onclick="return confirm('Mesajlar silinsinmi?')">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
                         }
 
                         <!-- /.btn-group -->
@@ -67,7 +67,7 @@
                                         <tr>
                                             <td>
                                                 <div class="icheck-primary">
-                                                    <a href="/Admin/Message/Delete/@item.ID"  class="btn btn-default btn-sm" title="Sil" onclick="return confirm('Mesaj silinsinmi?')">
+                                                    <a href="/Admin/Message/Delete/@item.ID" class="btn btn-default btn-sm" title="Sil" onclick="return confirm('Mesaj silinsinmi?')">
                                                         <i class="far fa-trash-alt"></i>
                                                     </a>
                                                     <a class="btn btn-default btn-sm" title="Cavabla">
@@ -92,7 +92,7 @@
                                                 {
                                                     <span class="badge badge-secondary">Oxundu</span>
                                                 }
-                                                
+
                                             </td>
                                             <td class="mailbox-attachment">
                                                 @if (!item.IsResponded)
@@ -163,5 +163,29 @@
 {
     <script>
         swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MessageDeleted"].ToString()))");
+    </script>
+}
+@if (TempData["MailDeleted"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MailDeleted"].ToString()))");
+    </script>
+}
+@if (TempData["MailDrafted"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MailDrafted"].ToString()))");
+    </script>
+}
+@if (TempData["ContactDrafted"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["ContactDrafted"].ToString()))");
+    </script>
+}
+@if (TempData["MailCreated"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MailCreated"].ToString()))");
     </script>
 }
