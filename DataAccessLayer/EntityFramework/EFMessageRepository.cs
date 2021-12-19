@@ -4,6 +4,7 @@ using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +16,11 @@ namespace DataAccessLayer.EntityFramework
         MVCContext context = new MVCContext();
         public void DeleteAll(List<Message> t)
         {
-            context.Messages.RemoveRange(t);
+            foreach (var item in t)
+            {
+                context.Entry(item).State = EntityState.Deleted;
+            }
+
             context.SaveChanges();
         }
     }

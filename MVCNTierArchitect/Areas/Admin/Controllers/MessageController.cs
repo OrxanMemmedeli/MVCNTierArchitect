@@ -24,7 +24,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var messages = _messageManager.GetAll(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
+            var messages = _messageManager.GetAll(x => x.IsDeleted == false && x.IsDraft == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
@@ -109,11 +109,53 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            var message = _messageManager.GetByID(x => x.ID == id);
+            if (message == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            if (!message.IsDeleted)
+            {
+                message.DeletedDate = DateTime.Now;
+                message.IsDeleted = true;
+                TempData["MailDeleted"] = "Mesaj SİLİNMİŞLƏR qovluğuna daxil ediləcək və 30 gündən sonra həmişəlik silinəcəkdir.";
+
+                _messageManager.Update(message);
+            }
+            return RedirectToAction("Index");
+        }
+
 
         public ActionResult Drafts()
         {
             var drafts = _messageManager.GetAll(x => x.IsDraft == true && x.IsDeleted == false).OrderByDescending(x => x.CreatedDate);
             return View(drafts);
+        }
+
+        public ActionResult Draft(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            var message = _messageManager.GetByID(x => x.ID == id);
+            if (message == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            if (!message.IsDeleted)
+            {
+                TempData["MailDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
+                message.IsDraft = true;
+                _messageManager.Update(message);
+            }
+            return RedirectToAction("Index");
         }
     }
 }

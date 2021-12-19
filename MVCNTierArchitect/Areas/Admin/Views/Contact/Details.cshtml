@@ -79,10 +79,13 @@
                     <!-- /.mailbox-read-message -->
                 </div>
                 <div class="card-footer">
-                    <div class="float-right">
-                        <a href="/Admin/Contact/Draft/@Model.ID" onclick="return confirm('Mesaj qaralamalara əlavə edilsinmi?')" class="btn btn-default"><i class="fas fa-file-alt"></i> Qaralama kimi yadda saxla</a>
-                    </div>
-                    <a href="/Admin/Contact/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default"><i class="far fa-trash-alt"></i> Sil</a>
+                    @if (!Model.IsDeleted)
+                    {
+                        <div class="float-right">
+                            <a href="/Admin/Contact/Draft/@Model.ID" onclick="return confirm('Mesaj qaralamalara əlavə edilsinmi?')" class="btn btn-default"><i class="fas fa-file-alt"></i> Qaralama kimi yadda saxla</a>
+                        </div>
+                        <a href="/Admin/Contact/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default"><i class="far fa-trash-alt"></i> Sil</a>
+                    }
                     <button type="button" class="btn btn-default" onclick="window.print();"><i class="fas fa-print"></i> Çap Et</button>
                 </div>
                 <!-- /.card-footer -->

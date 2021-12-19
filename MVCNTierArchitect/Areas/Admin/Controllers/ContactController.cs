@@ -29,13 +29,15 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public PartialViewResult MailLeftMenu()
         {
             var newMessageCount = _contactManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false).Count();
-            var newSystemMessageCount = _messageManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false).Count();
+            var newSystemMessageCount = _messageManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false).Count();
+            var draftMessageCount = _messageManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true).Count();
             //*******************************************************************
             var sentMessageCount = _messageManager.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true).Count();
 
             ViewData["NewSystemMessageCount"] = newSystemMessageCount;
             ViewData["NewMessageCount"] = newMessageCount;
             ViewData["SentMessageCount"] = sentMessageCount;
+            ViewData["DraftMessageCount"] = draftMessageCount;
             return PartialView();
         }
 
@@ -71,8 +73,9 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             if (!message.IsDeleted)
             {
+                message.DeletedDate = DateTime.Now;
                 message.IsDeleted = true;
-                TempData["MailDeleted"] = "Mesaj SİLİNMİŞLƏR qovluğuna daxil edildi. Mesaj 30 gündən sonra həmişəlik silinəcəkdir.";
+                TempData["MailDeleted"] = "Mesaj SİLİNMİŞLƏR qovluğuna daxil ediləcək və 30 gündən sonra həmişəlik silinəcəkdir.";
 
                 Message model = message;
                 //*******************************************************************
@@ -96,7 +99,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             if (!message.IsDeleted)
             {
-                TempData["MailDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
+                TempData["ContactDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
                 Message model = message;
 
                 //*******************************************************************
