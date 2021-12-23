@@ -37,7 +37,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             var newSystemMessageCount = _messageManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false).Count();
             var draftMessageCount = _messageManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true).Count();
             //*******************************************************************
-            var sentMessageCount = _messageManager.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true).Count();
+            var sentMessageCount = _messageManager.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false).Count();
 
             ViewData["NewSystemMessageCount"] = newSystemMessageCount;
             ViewData["NewMessageCount"] = newMessageCount;
@@ -91,11 +91,6 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public PartialViewResult Draft(int id, Contact contact)
-        {
-            return PartialView(contact);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Draft(Contact contact)
@@ -129,6 +124,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             contactMessage.IsResponded = true;
             contactMessage.Message = "Müraciətiniz üçün təşəkkür edirik";
             contactMessage.Subject = "Admindən cavab";
+
             return View(contactMessage);
         }
 
@@ -143,6 +139,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             message.SenderEmail = "memmedeli.orxan.om@gmail.com";
             message.CreatedDate = DateTime.Now;
             message.ContactID = contactMessage.ID;
+            message.IsResponded = false;
 
             ValidationResult results = _validator.Validate(message);
             if (!results.IsValid)
@@ -156,6 +153,11 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             TempData["ContactSent"] = "Mesaj Göndərildi.";
 
             _messageManager.Add(message);
+
+            var contact = _contactManager.GetByID(x => x.ID == contactMessage.ID);
+            contact.IsResponded = true;
+            _contactManager.Update(contact);
+
             return RedirectToAction("Sent", "Message", "Admin");
         }
     }
