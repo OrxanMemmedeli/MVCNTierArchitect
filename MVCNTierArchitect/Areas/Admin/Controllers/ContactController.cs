@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation.Results;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,10 +16,14 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     {
         private readonly ContactManager _contactManager;
         private readonly MessageManager _messageManager;
+        private readonly MessageValidator _validator;
+
         public ContactController()
         {
             _contactManager = new ContactManager(new EFContactRepository());
             _messageManager = new MessageManager(new EFMessageRepository());
+            _validator = new MessageValidator();
+
         }
         public ActionResult Index()
         {
@@ -86,21 +91,24 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Draft(int? id)
+        public PartialViewResult Draft(int id, Contact contact)
         {
-            if (id == null)
+            return PartialView(contact);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Draft(Contact contact)
+        {
+            if (contact == null)
             {
                 return new HttpNotFoundResult();
             }
-            var message = _contactManager.GetByID(x => x.ID == id);
-            if (message == null)
-            {
-                return new HttpNotFoundResult();
-            }
-            if (!message.IsDeleted)
+
+            if (!contact.IsDeleted)
             {
                 TempData["ContactDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
-                Message model = message;
+                Message model = contact;
 
                 //*******************************************************************
                 model.SenderEmail = "memmedeli.orxan.om@gmail.com";
@@ -108,6 +116,47 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 _messageManager.Add(model);
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Create(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var contactMessage = _contactManager.GetByID(x => x.ID == id);
+            contactMessage.IsResponded = true;
+            contactMessage.Message = "Müraciətiniz üçün təşəkkür edirik";
+            contactMessage.Subject = "Admindən cavab";
+            return View(contactMessage);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(Contact contactMessage)
+        {
+            Message message = new Message();
+
+            message = contactMessage;
+            //*******************************************************************
+            message.SenderEmail = "memmedeli.orxan.om@gmail.com";
+            message.CreatedDate = DateTime.Now;
+            message.ContactID = contactMessage.ID;
+
+            ValidationResult results = _validator.Validate(message);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View(contactMessage);
+            }
+            TempData["ContactSent"] = "Mesaj Göndərildi.";
+
+            _messageManager.Add(message);
+            return RedirectToAction("Sent", "Message", "Admin");
         }
     }
 }

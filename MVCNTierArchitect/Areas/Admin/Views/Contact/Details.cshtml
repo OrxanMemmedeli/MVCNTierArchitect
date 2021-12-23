@@ -82,7 +82,7 @@
                     @if (!Model.IsDeleted)
                     {
                         <div class="float-right">
-                            <a href="/Admin/Contact/Draft/@Model.ID" onclick="return confirm('Mesaj qaralamalara əlavə edilsinmi?')" class="btn btn-default"><i class="fas fa-file-alt"></i> Qaralama kimi yadda saxla</a>
+                            <a href="/Admin/Contact/Create/@Model.ID" class="btn btn-default"><i class="fas fa-file-alt"></i> Cavabla</a>
                         </div>
                         <a href="/Admin/Contact/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default"><i class="far fa-trash-alt"></i> Sil</a>
                     }

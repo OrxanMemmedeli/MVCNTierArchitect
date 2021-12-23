@@ -2508,6 +2508,9 @@
     <Content Include="Areas\Admin\Views\Message\Deleteds.cshtml" />
     <Content Include="Areas\Admin\Views\Message\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Message\Drafts.cshtml" />
+    <Content Include="Areas\Admin\Views\Message\Sent.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Contact\Draft.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
