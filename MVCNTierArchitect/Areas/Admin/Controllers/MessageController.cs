@@ -24,7 +24,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var messages = _messageManager.GetAll(x => x.IsDeleted == false && x.IsDraft == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
+            var messages = _messageManager.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
@@ -95,6 +95,11 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Message message)
         {
+            //*******************************************************************
+            message.SenderEmail = "memmedeli.orxan.om@gmail.com";
+            message.CreatedDate = DateTime.Now;
+            message.IsResponded = true;
+
             ValidationResult results = _validator.Validate(message);
             if (!results.IsValid)
             {
@@ -104,6 +109,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 }
                 return View(message);
             }
+            TempData["MessageSent"] = "Mesaj Göndərildi.";
 
             _messageManager.Add(message);
             return RedirectToAction("Index");
@@ -156,6 +162,12 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 _messageManager.Update(message);
             }
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Sent()
+        {
+            var drafts = _messageManager.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true).OrderByDescending(x => x.CreatedDate);
+            return View(drafts);
         }
     }
 }

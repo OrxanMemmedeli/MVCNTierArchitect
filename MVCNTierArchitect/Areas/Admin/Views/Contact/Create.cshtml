@@ -1,4 +1,4 @@
-﻿@model EntityLayer.Concrete.Message
+﻿@model EntityLayer.Concrete.Contact
 @{
     ViewBag.Title = "Yeni mesaj";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -32,7 +32,7 @@
                 </div>
 
                 <!-- /.card-header -->
-                @using (Html.BeginForm("Create", "Message", "Admin", FormMethod.Post))
+                @using (Html.BeginForm("Create", "Contact", "Admin", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -40,8 +40,8 @@
                     <div class="card-body">
                         <div class="form-group">
                             @*<input class="form-control" placeholder="Kimə:" @Html.NameFor(x => x.ReceiverEmail)>*@
-                            @Html.EditorFor(model => model.ReceiverEmail, new { htmlAttributes = new { @class = "form-control", @placeholder = "Kimə:" } })
-                            @Html.ValidationMessageFor(model => model.ReceiverEmail, "", new { @class = "text-danger" })
+                            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @placeholder = "Kimə:" } })
+                            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
 
                         </div>
                         <div class="form-group">
@@ -51,8 +51,8 @@
 
                         </div>
                         <div class="form-group">
-                            <textarea id="compose-textarea" class="form-control" style="height: 700px" name="MessageText">@Model.MessageText</textarea>
-                            @Html.ValidationMessageFor(model => model.MessageText, "", new { @class = "text-danger" })
+                            <textarea id="compose-textarea" class="form-control" style="height: 700px" name="MessageText">@Model.Message</textarea>
+                            @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
 
                         </div>
                         <div class="form-group">
@@ -67,12 +67,14 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <div class="float-right">
-                            <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Qaralama kimi saxla</button>
                             <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Göndər</button>
                         </div>
                         <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Təmizlə</button>
                     </div>
                 }
+
+                @Html.Action("Draft", "/Admin/Contact", Model)
+
                 <!-- /.card-footer -->
             </div>
             <!-- /.card -->
@@ -91,3 +93,4 @@
         $('#compose-textarea').summernote()
     })
 </script>
+

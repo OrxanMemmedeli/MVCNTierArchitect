@@ -4,6 +4,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
+
 
 namespace EntityLayer.Concrete
 {
@@ -17,6 +19,7 @@ namespace EntityLayer.Concrete
         public string ReceiverEmail { get; set; }
         [StringLength(50)]
         public string Subject { get; set; }
+        [AllowHtml]
         public string MessageText { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool IsReaded { get; set; } = false;
@@ -30,7 +33,7 @@ namespace EntityLayer.Concrete
         {
             return new Message
             {
-                SenderEmail = model.Email,
+                ReceiverEmail = model.Email,
                 Subject = model.Subject,
                 MessageText = model.Message,
                 CreatedDate = model.CreatedDate,

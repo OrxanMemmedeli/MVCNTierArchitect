@@ -1,0 +1,150 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Message>
+
+@{
+    ViewBag.Title = "Göndərilmiş mesajlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Göndərilmiş mesajlar</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row">
+
+        @Html.Action("MailLeftMenu", "Contact", "Admin")
+
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Göndərilmiş mesajlar</h3>
+
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Mesajlardan axtar">
+                            <div class="input-group-append">
+                                <div class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <div class="mailbox-controls">
+                        <!-- Check all button -->
+                        @if (Model.Count() != 0)
+                        {
+                            <div class="btn-group">
+                                <a href="/Admin/Message/DeleteAll" class="btn btn-default btn-sm" title="Hamısını sil" onclick="return confirm('Mesajlar silinsinmi?')">
+                                    <i class="far fa-trash-alt"></i>
+                                </a>
+                            </div>
+                        }
+
+                        <!-- /.btn-group -->
+                        <button type="button" class="btn btn-default btn-sm">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+
+                    </div>
+                    <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover table-striped">
+                            <tbody>
+                                @if (Model.Count() != 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td class="mailbox-name"><a href="/Admin/Message/Details/@item.ID">@item.SenderEmail</a></td>
+                                            <td class="mailbox-subject">
+                                                <b>@item.Subject</b> - @(item.MessageText.Length <= 30 ? item.MessageText : item.MessageText.Substring(0, item.MessageText.Substring(0,30).LastIndexOf(" ")) + "..." )
+                                            </td>
+
+                                            <td class="mailbox-attachment">
+                                                @if (!item.IsResponded)
+                                                {
+                                                    <span class="badge badge-warning">✔</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-success">✔✔</span>
+                                                }
+                                            </td>
+                                            <td class="mailbox-date">
+                                                @{
+                                                    var days = Math.Round((DateTime.Now - item.CreatedDate).TotalDays, 0);
+                                                    var hours = Math.Round((DateTime.Now - item.CreatedDate).TotalHours, 0);
+                                                    var minutes = Math.Round((DateTime.Now - item.CreatedDate).TotalMinutes, 0);
+                                                    if (days == 0 && hours == 0 && minutes != 0)
+                                                    {
+                                                        <span>@minutes dəqiqə əvvəl </span>
+                                                    }
+                                                    else if (days == 0 && hours != 0 && minutes != 0)
+                                                    {
+                                                        <span>@hours saat əvvəl </span>
+                                                    }
+                                                    else if (days != 0 && hours != 0 && minutes != 0)
+                                                    {
+                                                        <span>@days gün əvvəl </span>
+                                                    }
+                                                }
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td class="mailbox-star"></td>
+                                        <td class="mailbox-name"></td>
+                                        <td>
+                                        </td>
+                                        <td class="mailbox-subject text-danger">
+                                            Göndərilmiş mesaj mövcud deyil
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        <!-- /.table -->
+                    </div>
+                    <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+
+@if (TempData["ContactSent"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["ContactSent"].ToString()))");
+    </script>
+}
+
+@if (TempData["MessageSent"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MessageSent"].ToString()))");
+    </script>
+}
