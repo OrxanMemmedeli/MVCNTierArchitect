@@ -56,6 +56,7 @@
     <Compile Include="Abstract\IContentDal.cs" />
     <Compile Include="Abstract\IGenericDal.cs" />
     <Compile Include="Abstract\IHeadingDal.cs" />
+    <Compile Include="Abstract\IImageFileDal.cs" />
     <Compile Include="Abstract\IMessageDal.cs" />
     <Compile Include="Abstract\IWriterDal.cs" />
     <Compile Include="Concrete\MVCContext.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="EntityFramework\EFContactRepository.cs" />
     <Compile Include="EntityFramework\EFContentRepository.cs" />
     <Compile Include="EntityFramework\EFHeadingRepository.cs" />
+    <Compile Include="EntityFramework\EFImageFileRepository.cs" />
     <Compile Include="EntityFramework\EFMessageRepository.cs" />
     <Compile Include="EntityFramework\EFWriterRepository.cs" />
     <Compile Include="Migrations\202110220843095_TestTable.cs" />
@@ -105,6 +107,14 @@
     <Compile Include="Migrations\202112121341208_AddNewColumnMessage.cs" />
     <Compile Include="Migrations\202112121341208_AddNewColumnMessage.Designer.cs">
       <DependentUpon>202112121341208_AddNewColumnMessage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201041426051_NewImageTable.cs" />
+    <Compile Include="Migrations\202201041426051_NewImageTable.Designer.cs">
+      <DependentUpon>202201041426051_NewImageTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201041455516_changeColumnName.cs" />
+    <Compile Include="Migrations\202201041455516_changeColumnName.Designer.cs">
+      <DependentUpon>202201041455516_changeColumnName.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -150,6 +160,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202112121341208_AddNewColumnMessage.resx">
       <DependentUpon>202112121341208_AddNewColumnMessage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201041426051_NewImageTable.resx">
+      <DependentUpon>202201041426051_NewImageTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201041455516_changeColumnName.resx">
+      <DependentUpon>202201041455516_changeColumnName.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
