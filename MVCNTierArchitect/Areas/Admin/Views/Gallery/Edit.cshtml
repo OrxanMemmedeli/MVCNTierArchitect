@@ -1,0 +1,45 @@
+﻿@model EntityLayer.Concrete.ImageFile
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm("Edit", "Gallery", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>ImageFile</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.URL)
+
+        <div class="form-group">
+            Başlıq
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Şəkil
+            <div class="col-md-10">
+                <input type="file" name="Image" class="form-control" />
+                <img src="@Model.URL" style="width:200px; height:auto" />
+                @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Yadda Saxla" class="btn btn-success" />
+                <a href="/Admin/Gallery/GetAll" class="btn btn-dark">Geri</a>
+            </div>
+        </div>
+    </div>
+}

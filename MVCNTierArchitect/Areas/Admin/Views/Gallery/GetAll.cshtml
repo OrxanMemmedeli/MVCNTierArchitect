@@ -1,0 +1,75 @@
+﻿@model IEnumerable<EntityLayer.Concrete.ImageFile>
+
+@{
+    ViewBag.Title = "Şəkillər";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Şəkillər</h2>
+
+<p>
+    <a href="/Admin/Gallery/Create" class="btn btn-primary">Yeni Şəkil (Şəkillər)</a>
+    <a href="/Admin/Gallery" class="btn btn-dark">Qalareya</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Başlıq
+        </th>
+        <th>
+            URL
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                <img src="@item.URL" style="width:75px;height:75px" />
+            </td>
+            <td>
+                <a href="/Admin/Gallery/Edit/@item.ID" class="badge badge-success" title="Düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<script>
+    function Delete(id) {
+        var url = "/Admin/Gallery/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/GetAll', '_self');
+        }
+    };
+</script>
+
+
+@if (TempData["DeleteImage"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteImage"].ToString()))");
+    </script>
+}
+
+@if (TempData["ErrorImage"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["ErrorImage"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditImage"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditImage"].ToString()))");
+    </script>
+}

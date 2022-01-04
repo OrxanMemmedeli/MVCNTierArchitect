@@ -131,6 +131,7 @@
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GalleryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HeadingController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IstatistikController.cs" />
@@ -2511,6 +2512,10 @@
     <Content Include="Areas\Admin\Views\Message\Drafts.cshtml" />
     <Content Include="Areas\Admin\Views\Message\Sent.cshtml" />
     <Content Include="Areas\Admin\Views\Contact\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Gallery\GetAll.cshtml" />
+    <Content Include="Areas\Admin\Views\Gallery\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Gallery\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Gallery\Create.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2546,6 +2551,7 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Models\" />
+    <Folder Include="UploadedFiles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

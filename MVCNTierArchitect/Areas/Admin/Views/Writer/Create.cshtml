@@ -10,86 +10,86 @@
 {
     @Html.AntiForgeryToken()
 
-<div class="form-horizontal">
-    <h4>Yeni Yazar</h4>
-    <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="row">
-        <div class="form-group col-md-4">
-            <label class="control-label col-md-12">Yazar Adı</label>
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div class="form-horizontal">
+        <h4>Yeni Yazar</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-12">Yazar Adı</label>
+                <div class="col-md-12">
+                    <input type="text" name="Name" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group col-md-4">
-            <label class="control-label col-md-12">Yazar Soyadı</label>
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.Surname, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-12">Yazar Soyadı</label>
+                <div class="col-md-12">
+                    <input type="text" name="Surname" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Surname, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group col-md-4">
-            <label class="control-label col-md-12">Email</label>
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group col-md-4">
-            <label class="control-label col-md-12">Şifrə</label>
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
-                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group col-md-4">
-            <label class="control-label col-md-12">Şifrənin təkrarı</label>
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control", @type = "password" } })
-                @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group col-md-3">
-            <label class="control-label col-md-12">FotoURL</label>
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.ImageURL, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group col-md-1">
-            <label class="control-label col-md-12">Status</label>
-            <div class="col-md-12">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Status)
-                    @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-12">Email</label>
+                <div class="col-md-12">
+                    <input type="email" name="Email" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
         </div>
-    </div>        
-    <div class="row">
-        <div class="form-group col-md-12">
-            <label class="control-label col-md-12">Haqqında (qısa açıqlama)</label>
-            <div class="col-md-12">
-                @Html.EditorFor(model => model.About, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-12">Şifrə</label>
+                <div class="col-md-12">
+                    <input type="password" name="Password" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label col-md-12">Şifrənin təkrarı</label>
+                <div class="col-md-12">
+                    <input type="password" name="ConfirmPassword" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-3">
+                <label class="control-label col-md-12">FotoURL</label>
+                <div class="col-md-12">
+                    <input type="text" name="ImageURL" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group col-md-1">
+                <label class="control-label col-md-12">Status</label>
+                <div class="col-md-12">
+                    <div class="checkbox">
+                        <input type="checkbox" name="Status" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.Status, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="control-label col-md-12">Haqqında (qısa açıqlama)</label>
+                <div class="col-md-12">
+                    <input type="text" name="About" class="form-control" />
+                    @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Əlavə Et" class="btn btn-success" />
+                <a href="/Admin/Writer" class="btn btn-dark">Geri</a>
             </div>
         </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Əlavə Et" class="btn btn-success" />
-            <a href="/Admin/Writer" class="btn btn-dark">Geri</a>
-        </div>
-    </div>
-</div>
 }
 
