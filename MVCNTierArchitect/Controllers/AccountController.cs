@@ -1,4 +1,5 @@
-﻿using MVCNTierArchitect.Models.ViewModels;
+﻿using BusinessLayer.Abstract;
+using MVCNTierArchitect.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,29 +12,37 @@ namespace MVCNTierArchitect.Controllers
     public class AccountController : Controller
     {
         private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
+        private readonly IAdminService _adminService;
 
-        public AccountController(IAncryptionAndDecryption ancryptionAndDecryption)
+        public AccountController(IAncryptionAndDecryption ancryptionAndDecryption, IAdminService adminService)
         {
             _ancryptionAndDecryption = ancryptionAndDecryption;
+            _adminService = adminService;
         }
 
+
+
         // GET: Account
-        public ActionResult Login(string returnURL)
+        public ActionResult AdminLogin(string returnURL)
         {
             ViewBag.ReturnURL = returnURL;
-            if (Url.IsLocalUrl(returnURL))
+            if (User.Identity.IsAuthenticated)
             {
-                return Redirect(returnURL);
+                if (Url.IsLocalUrl(returnURL))
+                {
+                    return Redirect(returnURL);
+                }
+                else
+                {
+                    return Redirect("/Admin");
+                }
             }
-            else
-            {
-                return Redirect("/Admin");
-            }
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel model, string returnURL)
+        public ActionResult AdminLogin(LoginViewModel model, string returnURL)
         {
             var password = _ancryptionAndDecryption.EncodeData(model.Password);
             return Redirect("/Admin");
