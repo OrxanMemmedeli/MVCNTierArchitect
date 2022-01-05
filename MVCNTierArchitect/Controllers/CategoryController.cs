@@ -1,4 +1,5 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -13,11 +14,17 @@ namespace MVCNTierArchitect.Controllers
 {
     public class CategoryController : Controller
     {
-        CategoryManager categoryManager = new CategoryManager(new EFCategoryRepository());
+        private readonly ICategoryService _categoryServive;
+
+        public CategoryController(ICategoryService categoryServive)
+        {
+            _categoryServive = categoryServive;
+        }
+
         // GET: Category
         public ActionResult Index()
         {
-            return View(categoryManager.GetAll());
+            return View(_categoryServive.GetAll());
         }
 
         [HttpGet]
@@ -42,7 +49,7 @@ namespace MVCNTierArchitect.Controllers
                 return View(category);
             }
 
-            categoryManager.Add(category);
+            _categoryServive.Add(category);
             return RedirectToAction("Index");
         }
     }

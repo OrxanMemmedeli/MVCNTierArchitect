@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -14,35 +14,36 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     [RouteArea("Admin")]
     public class HeadingController : Controller
     {
-        private readonly HeadingManager _headingManager;
+        private readonly IHeadingService _headingService;
         private readonly HeadingValidator _validator;
-        private readonly CategoryManager _categoryManager;
-        private readonly WriterManager _writerManager;
-        public HeadingController()
+        private readonly ICategoryService _categoryService;
+        private readonly IWriterService _writerService;
+
+        public HeadingController(IHeadingService headingService, ICategoryService categoryService, IWriterService writerService)
         {
-            _headingManager = new HeadingManager(new EFHeadingRepository());
-            _categoryManager = new CategoryManager(new EFCategoryRepository());
-            _writerManager = new WriterManager(new EFWriterRepository());
+            _headingService = headingService;
+            _categoryService = categoryService;
+            _writerService = writerService;                    
             _validator = new HeadingValidator();
         }
 
         public ActionResult Index()
         {
-            var headings = _headingManager.GetAllWithContent();
+            var headings = _headingService.GetAllWithContent();
             return View(headings);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
-            List<SelectListItem> categories = (from c in _categoryManager.GetAll()
+            List<SelectListItem> categories = (from c in _categoryService.GetAll()
                                                select new SelectListItem
                                                {
                                                    Text = c.Name,
                                                    Value = c.ID.ToString()
                                                }).ToList();
 
-            List<SelectListItem> writers = (from w in _writerManager.GetAll()
+            List<SelectListItem> writers = (from w in _writerService.GetAll()
                                             select new SelectListItem
                                             {
                                                 Text = w.Name + " " + w.Surname,
@@ -65,14 +66,14 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
-                List<SelectListItem> categories = (from c in _categoryManager.GetAll()
+                List<SelectListItem> categories = (from c in _categoryService.GetAll()
                                                    select new SelectListItem
                                                    {
                                                        Text = c.Name,
                                                        Value = c.ID.ToString()
                                                    }).ToList();
 
-                List<SelectListItem> writers = (from w in _writerManager.GetAll()
+                List<SelectListItem> writers = (from w in _writerService.GetAll()
                                                 select new SelectListItem
                                                 {
                                                     Text = w.Name + " " + w.Surname,
@@ -83,7 +84,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(heading);
             }
 
-            _headingManager.Add(heading);
+            _headingService.Add(heading);
             return RedirectToAction("Index");
         }
 
@@ -95,14 +96,14 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            List<SelectListItem> categories = (from c in _categoryManager.GetAll()
+            List<SelectListItem> categories = (from c in _categoryService.GetAll()
                                                select new SelectListItem
                                                {
                                                    Text = c.Name,
                                                    Value = c.ID.ToString()
                                                }).ToList();
             ViewBag.Categories = categories;
-            var heading = _headingManager.GetByID(x => x.ID == id);
+            var heading = _headingService.GetByID(x => x.ID == id);
             return View(heading);
         }
 
@@ -118,7 +119,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
-                List<SelectListItem> categories = (from c in _categoryManager.GetAll()
+                List<SelectListItem> categories = (from c in _categoryService.GetAll()
                                                    select new SelectListItem
                                                    {
                                                        Text = c.Name,
@@ -128,7 +129,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(heading);
             }
 
-            _headingManager.Update(heading);
+            _headingService.Update(heading);
             TempData["EditHeading"] = "Başlıq yeniləndi.";
             return RedirectToAction("Index");
         }
@@ -141,13 +142,13 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var heading = _headingManager.GetByID(x => x.ID == id);
+            var heading = _headingService.GetByID(x => x.ID == id);
             if (heading == null)
             {
                 return new HttpNotFoundResult();
             }
             heading.Status = false;
-            _headingManager.Update(heading);
+            _headingService.Update(heading);
             TempData["DeleteHeading"] = "Başlıq silindi.";
             return RedirectToAction("Index");
         }
@@ -160,13 +161,13 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var heading = _headingManager.GetByID(x => x.ID == id);
+            var heading = _headingService.GetByID(x => x.ID == id);
             if (heading == null)
             {
                 return new HttpNotFoundResult();
             }
             heading.Status = true;
-            _headingManager.Update(heading);
+            _headingService.Update(heading);
             TempData["RestoreHeading"] = "Başlıq bərpa edildi.";
             return RedirectToAction("Index");
         }

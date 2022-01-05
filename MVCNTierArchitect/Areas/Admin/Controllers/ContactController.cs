@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -14,30 +14,30 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     [RouteArea("Admin")]
     public class ContactController : Controller
     {
-        private readonly ContactManager _contactManager;
-        private readonly MessageManager _messageManager;
+        private readonly IContactService _contactService;
+        private readonly IMessageService _messageService;
         private readonly MessageValidator _validator;
 
-        public ContactController()
+        public ContactController(IContactService contactService, IMessageService messageService)
         {
-            _contactManager = new ContactManager(new EFContactRepository());
-            _messageManager = new MessageManager(new EFMessageRepository());
+            _contactService = contactService;
+            _messageService = messageService;            
             _validator = new MessageValidator();
-
         }
+
         public ActionResult Index()
         {
-            var messages = _contactManager.GetAll(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
+            var messages = _contactService.GetAll(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
         public PartialViewResult MailLeftMenu()
         {
-            var newMessageCount = _contactManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false).Count();
-            var newSystemMessageCount = _messageManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false).Count();
-            var draftMessageCount = _messageManager.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true).Count();
+            var newMessageCount = _contactService.GetAll(x => x.IsResponded == false && x.IsDeleted == false).Count();
+            var newSystemMessageCount = _messageService.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false).Count();
+            var draftMessageCount = _messageService.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true).Count();
             //*******************************************************************
-            var sentMessageCount = _messageManager.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false).Count();
+            var sentMessageCount = _messageService.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false).Count();
 
             ViewData["NewSystemMessageCount"] = newSystemMessageCount;
             ViewData["NewMessageCount"] = newMessageCount;
@@ -52,7 +52,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var message = _contactManager.GetByID(x => x.ID == id);
+            var message = _contactService.GetByID(x => x.ID == id);
             if (message == null)
             {
                 return new HttpNotFoundResult();
@@ -60,7 +60,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             if (!message.IsReaded)
             {
                 message.IsReaded = true;
-                _contactManager.Update(message);
+                _contactService.Update(message);
             }
             return View(message);
         }
@@ -71,7 +71,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var message = _contactManager.GetByID(x => x.ID == id);
+            var message = _contactService.GetByID(x => x.ID == id);
             if (message == null)
             {
                 return new HttpNotFoundResult();
@@ -85,8 +85,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 Message model = message;
                 //*******************************************************************
                 model.SenderEmail = "memmedeli.orxan.om@gmail.com";
-                _contactManager.Delete(message);
-                _messageManager.Add(model);
+                _contactService.Delete(message);
+                _messageService.Add(model);
             }
             return RedirectToAction("Index");
         }
@@ -108,7 +108,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 //*******************************************************************
                 model.SenderEmail = "memmedeli.orxan.om@gmail.com";
                 model.IsDraft = true;
-                _messageManager.Add(model);
+                _messageService.Add(model);
             }
             return RedirectToAction("Index");
         }
@@ -120,7 +120,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var contactMessage = _contactManager.GetByID(x => x.ID == id);
+            var contactMessage = _contactService.GetByID(x => x.ID == id);
             contactMessage.IsResponded = true;
             contactMessage.Message = "Müraciətiniz üçün təşəkkür edirik";
             contactMessage.Subject = "Admindən cavab";
@@ -152,11 +152,11 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             TempData["ContactSent"] = "Mesaj Göndərildi.";
 
-            _messageManager.Add(message);
+            _messageService.Add(message);
 
-            var contact = _contactManager.GetByID(x => x.ID == contactMessage.ID);
+            var contact = _contactService.GetByID(x => x.ID == contactMessage.ID);
             contact.IsResponded = true;
-            _contactManager.Update(contact);
+            _contactService.Update(contact);
 
             return RedirectToAction("Sent", "Message", "Admin");
         }

@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -14,16 +14,16 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     [RouteArea("Admin")]
     public class AboutController : Controller
     {
-        private readonly AboutManager _aboutManager;
+        private readonly IAboutService _aboutService;
         private readonly AboutValidator _validator;
-        public AboutController()
+        public AboutController(IAboutService aboutService)
         {
-            _aboutManager = new AboutManager(new EFAboutRepository());
+            _aboutService = aboutService;
             _validator = new AboutValidator();
         }
         public ActionResult Index()
         {
-            var abouts = _aboutManager.GetAll();
+            var abouts = _aboutService.GetAll();
             return View(abouts);
         }
 
@@ -47,7 +47,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(about);
             }
 
-            _aboutManager.Add(about);
+            _aboutService.Add(about);
             return RedirectToAction("Index");
         }
 
