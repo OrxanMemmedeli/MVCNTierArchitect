@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAboutDal.cs" />
+    <Compile Include="Abstract\IAdminDal.cs" />
     <Compile Include="Abstract\ICategoryDal.cs" />
     <Compile Include="Abstract\IContactDal.cs" />
     <Compile Include="Abstract\IContentDal.cs" />
@@ -61,6 +62,7 @@
     <Compile Include="Abstract\IWriterDal.cs" />
     <Compile Include="Concrete\MVCContext.cs" />
     <Compile Include="EntityFramework\EFAboutRepository.cs" />
+    <Compile Include="EntityFramework\EFAdminRepository.cs" />
     <Compile Include="EntityFramework\EFCategoryRepository.cs" />
     <Compile Include="EntityFramework\EFContactRepository.cs" />
     <Compile Include="EntityFramework\EFContentRepository.cs" />
@@ -116,6 +118,10 @@
     <Compile Include="Migrations\202201041455516_changeColumnName.Designer.cs">
       <DependentUpon>202201041455516_changeColumnName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201051017583_NewAdminTable.cs" />
+    <Compile Include="Migrations\202201051017583_NewAdminTable.Designer.cs">
+      <DependentUpon>202201051017583_NewAdminTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -166,6 +172,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201041455516_changeColumnName.resx">
       <DependentUpon>202201041455516_changeColumnName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201051017583_NewAdminTable.resx">
+      <DependentUpon>202201051017583_NewAdminTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
