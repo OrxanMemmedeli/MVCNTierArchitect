@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -14,17 +14,17 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     [RouteArea("Admin")]
     public class MessageController : Controller
     {
-        private readonly MessageManager _messageManager;
+        private readonly IMessageService _messageService;
         private readonly MessageValidator _validator;
-        public MessageController()
+        public MessageController(IMessageService messageService)
         {
-            _messageManager = new MessageManager(new EFMessageRepository());
+            _messageService = messageService;
             _validator = new MessageValidator();
         }
 
         public ActionResult Index()
         {
-            var messages = _messageManager.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
+            var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
@@ -34,7 +34,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var message = _messageManager.GetByID(x => x.ID == id);
+            var message = _messageService.GetByID(x => x.ID == id);
             if (message == null)
             {
                 return new HttpNotFoundResult();
@@ -42,14 +42,14 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             if (!message.IsReaded)
             {
                 message.IsReaded = true;
-                _messageManager.Update(message);
+                _messageService.Update(message);
             }
             return View(message);
         }
 
         public ActionResult Deleteds()
         {
-            var messages = _messageManager.GetAll(x => x.IsDeleted == true).OrderByDescending(x => x.CreatedDate);
+            var messages = _messageService.GetAll(x => x.IsDeleted == true).OrderByDescending(x => x.CreatedDate);
 
             DeleteOldMessage(messages);
 
@@ -69,7 +69,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             if (models.Count() != 0)
             {
-                _messageManager.DeleteAll(models);
+                _messageService.DeleteAll(models);
             }
         }
 
@@ -82,7 +82,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             else
             {
-                message = _messageManager.GetByID(x => x.ID == id);
+                message = _messageService.GetByID(x => x.ID == id);
                 if (message == null)
                 {
                     return new HttpNotFoundResult();
@@ -111,7 +111,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             TempData["MessageSent"] = "Mesaj Göndərildi.";
 
-            _messageManager.Add(message);
+            _messageService.Add(message);
             return RedirectToAction("Index");
         }
 
@@ -121,7 +121,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var message = _messageManager.GetByID(x => x.ID == id);
+            var message = _messageService.GetByID(x => x.ID == id);
             if (message == null)
             {
                 return new HttpNotFoundResult();
@@ -132,7 +132,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 message.IsDeleted = true;
                 TempData["MailDeleted"] = "Mesaj SİLİNMİŞLƏR qovluğuna daxil ediləcək və 30 gündən sonra həmişəlik silinəcəkdir.";
 
-                _messageManager.Update(message);
+                _messageService.Update(message);
             }
             return RedirectToAction("Index");
         }
@@ -140,7 +140,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         public ActionResult Drafts()
         {
-            var drafts = _messageManager.GetAll(x => x.IsDraft == true && x.IsDeleted == false).OrderByDescending(x => x.CreatedDate);
+            var drafts = _messageService.GetAll(x => x.IsDraft == true && x.IsDeleted == false).OrderByDescending(x => x.CreatedDate);
             return View(drafts);
         }
 
@@ -150,7 +150,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var message = _messageManager.GetByID(x => x.ID == id);
+            var message = _messageService.GetByID(x => x.ID == id);
             if (message == null)
             {
                 return new HttpNotFoundResult();
@@ -159,14 +159,14 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 TempData["MailDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
                 message.IsDraft = true;
-                _messageManager.Update(message);
+                _messageService.Update(message);
             }
             return RedirectToAction("Index");
         }
 
         public ActionResult Sent()
         {
-            var drafts = _messageManager.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true).OrderByDescending(x => x.CreatedDate);
+            var drafts = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true).OrderByDescending(x => x.CreatedDate);
             return View(drafts);
         }
     }

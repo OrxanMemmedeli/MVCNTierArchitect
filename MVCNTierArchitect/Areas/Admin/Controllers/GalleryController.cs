@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -15,23 +15,23 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     [RouteArea("Admin")]
     public class GalleryController : Controller
     {
-        private readonly ImageFileManager _imageFileManager;
+        private readonly IImageFileService _imageFileService;
         private readonly ImageFileValidator _validator;
-        public GalleryController()
+        public GalleryController(IImageFileService imageFileService)
         {
-            _imageFileManager = new ImageFileManager(new EFImageFileRepository());
+            _imageFileService = imageFileService;
             _validator = new ImageFileValidator();
         }
         // GET: Admin/Gallery
         public ActionResult Index()
         {
-            var files = _imageFileManager.GetAll();
+            var files = _imageFileService.GetAll();
             return View(files);
         }
 
         public ActionResult GetAll()
         {
-            var files = _imageFileManager.GetAll();
+            var files = _imageFileService.GetAll();
             return View(files);
         }
 
@@ -43,12 +43,12 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var image = _imageFileManager.GetByID(x => x.ID == id);
+            var image = _imageFileService.GetByID(x => x.ID == id);
             if (image == null)
             {
                 return new HttpNotFoundResult();
             }
-            _imageFileManager.Delete(image);
+            _imageFileService.Delete(image);
             if (image.URL != null)
             {
                 string fullPath = Request.MapPath(image.URL);
@@ -77,7 +77,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View();
             }
             List<ImageFile> files = UploadFiles(Images);
-            _imageFileManager.Addrange(files);
+            _imageFileService.Addrange(files);
             return RedirectToAction("GetAll");
         }
 
@@ -112,7 +112,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var image = _imageFileManager.GetByID(x => x.ID == id);
+            var image = _imageFileService.GetByID(x => x.ID == id);
             if (image == null)
             {
                 return new HttpNotFoundResult();
@@ -151,7 +151,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(imageFile);
             }
 
-            _imageFileManager.Update(imageFile);
+            _imageFileService.Update(imageFile);
             TempData["EditImage"] = "Şəkil məlumatları yeniləndi.";
             return RedirectToAction("GetAll");
         }

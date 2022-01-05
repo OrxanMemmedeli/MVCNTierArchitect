@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -14,17 +14,17 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     [RouteArea("Admin")]
     public class CategoryController : Controller
     {
-        private readonly CategoryManager _categoryManager;
+        private readonly ICategoryService _categoryService;
         private readonly CategoryValidator _validator;
-        public CategoryController()
+        public CategoryController(ICategoryService categoryService)
         {
-            _categoryManager = new CategoryManager(new EFCategoryRepository());
+            _categoryService = categoryService;
             _validator = new CategoryValidator();
         }
 
         public ActionResult Index()
         {
-            var categories = _categoryManager.GetAll();
+            var categories = _categoryService.GetAll();
             return View(categories);
         }
 
@@ -48,7 +48,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(category);
             }
 
-            _categoryManager.Add(category);
+            _categoryService.Add(category);
             return RedirectToAction("Index");
         }
 
@@ -60,7 +60,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var category = _categoryManager.GetByID(x => x.ID == id);
+            var category = _categoryService.GetByID(x => x.ID == id);
             if (category == null)
             {
                 return new HttpNotFoundResult();
@@ -83,7 +83,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(category);
             }
 
-            _categoryManager.Update(category);
+            _categoryService.Update(category);
             TempData["EditCategory"] = "Kateqoriya yeniləndi.";
             return RedirectToAction("Index");
         }
@@ -97,13 +97,13 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var category = _categoryManager.GetByID(x => x.ID == id);
+            var category = _categoryService.GetByID(x => x.ID == id);
             if (category == null)
             {
                 return new HttpNotFoundResult();
             }
 
-            _categoryManager.Delete(category);
+            _categoryService.Delete(category);
             TempData["DeleteCategory"] = "Kateqoriya silindi.";
             return RedirectToAction("Index");
         }

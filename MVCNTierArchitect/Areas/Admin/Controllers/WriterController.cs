@@ -1,4 +1,4 @@
-﻿using BusinessLayer.Concrete;
+﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
@@ -13,18 +13,18 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
     public class WriterController : Controller
     {
-        private readonly WriterManager _writerManager;
+        private readonly IWriterService _writerService;
         private readonly WriterValidator _validator;
 
-        public WriterController()
+        public WriterController(IWriterService writerService)
         {
-            _writerManager = new WriterManager(new EFWriterRepository());
+            _writerService = writerService;
             _validator = new WriterValidator();
         }
 
         public ActionResult Index()
         {
-            var writers = _writerManager.GetAll();
+            var writers = _writerService.GetAll();
             return View(writers);
         }
 
@@ -47,7 +47,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 }
                 return View(writer);
             }
-            _writerManager.Add(writer);
+            _writerService.Add(writer);
             return RedirectToAction("Index");
         }
 
@@ -59,7 +59,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var Writer = _writerManager.GetByID(x => x.ID == id);
+            var Writer = _writerService.GetByID(x => x.ID == id);
             if (Writer == null)
             {
                 return new HttpNotFoundResult();
@@ -88,7 +88,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(writer);
             }
 
-            _writerManager.Update(writer);
+            _writerService.Update(writer);
             return RedirectToAction("Index");
         }
     }
