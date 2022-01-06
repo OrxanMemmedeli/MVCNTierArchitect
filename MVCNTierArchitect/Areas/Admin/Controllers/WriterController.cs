@@ -19,7 +19,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public WriterController(IWriterService writerService)
         {
             _writerService = writerService;
-            _validator = new WriterValidator();
+            _validator = new WriterValidator(_writerService);
         }
 
         public ActionResult Index()

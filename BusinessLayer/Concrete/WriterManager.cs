@@ -44,6 +44,11 @@ namespace BusinessLayer.Concrete
             return _writerDal.GetById(Filter);
         }
 
+        public bool IsEmailUnique(string email)
+        {
+            return _writerDal.IsEmailUnique(email);
+        }
+
         public void Update(Writer t, int id)
         {
             _writerDal.Update(t, id);
