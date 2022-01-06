@@ -151,7 +151,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(imageFile);
             }
 
-            _imageFileService.Update(imageFile);
+            _imageFileService.Update(imageFile, imageFile.ID);
             TempData["EditImage"] = "Şəkil məlumatları yeniləndi.";
             return RedirectToAction("GetAll");
         }

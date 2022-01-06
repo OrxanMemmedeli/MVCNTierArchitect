@@ -49,9 +49,9 @@ namespace BusinessLayer.Concrete
              return _imageFileDal.GetById(Filter);
         }
 
-        public void Update(ImageFile t)
+        public void Update(ImageFile t, int id)
         {
-            _imageFileDal.Update(t);
+            _imageFileDal.Update(t, id);
         }
     }
 }
