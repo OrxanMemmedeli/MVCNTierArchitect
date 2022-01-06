@@ -29,6 +29,11 @@ namespace BusinessLayer.Concrete
             _adminDal.Delete(t);
         }
 
+        public Admin Get(Expression<Func<Admin, bool>> Filter)
+        {
+            return _adminDal.Get(Filter);
+        }
+
         public List<Admin> GetAll()
         {
             return _adminDal.GetAll();
