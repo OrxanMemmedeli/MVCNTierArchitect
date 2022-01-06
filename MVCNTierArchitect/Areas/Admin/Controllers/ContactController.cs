@@ -60,7 +60,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             if (!message.IsReaded)
             {
                 message.IsReaded = true;
-                _contactService.Update(message);
+                _contactService.Update(message, message.ID);
             }
             return View(message);
         }
@@ -156,7 +156,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             var contact = _contactService.GetByID(x => x.ID == contactMessage.ID);
             contact.IsResponded = true;
-            _contactService.Update(contact);
+            _contactService.Update(contact, contact.ID);
 
             return RedirectToAction("Sent", "Message", "Admin");
         }

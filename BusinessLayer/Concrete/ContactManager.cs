@@ -49,9 +49,9 @@ namespace BusinessLayer.Concrete
             return _contactDal.GetById(Filter);
         }
 
-        public void Update(Contact t)
+        public void Update(Contact t, int id)
         {
-            _contactDal.Update(t);
+            _contactDal.Update(t,id);
         }
     }
 }

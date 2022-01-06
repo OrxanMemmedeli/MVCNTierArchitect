@@ -43,9 +43,9 @@ namespace BusinessLayer.Concrete
             return _contentDal.GetById(Filter);
         }
 
-        public void Update(Content t)
+        public void Update(Content t, int id)
         {
-            _contentDal.Update(t);
+            _contentDal.Update(t, id);
         }
     }
 }

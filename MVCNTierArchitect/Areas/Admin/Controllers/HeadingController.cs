@@ -129,7 +129,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(heading);
             }
 
-            _headingService.Update(heading);
+            _headingService.Update(heading, heading.ID);
             TempData["EditHeading"] = "Başlıq yeniləndi.";
             return RedirectToAction("Index");
         }
@@ -148,7 +148,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
             heading.Status = false;
-            _headingService.Update(heading);
+            _headingService.Update(heading, heading.ID);
             TempData["DeleteHeading"] = "Başlıq silindi.";
             return RedirectToAction("Index");
         }
@@ -167,7 +167,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
             heading.Status = true;
-            _headingService.Update(heading);
+            _headingService.Update(heading, heading.ID);
             TempData["RestoreHeading"] = "Başlıq bərpa edildi.";
             return RedirectToAction("Index");
         }

@@ -42,7 +42,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             if (!message.IsReaded)
             {
                 message.IsReaded = true;
-                _messageService.Update(message);
+                _messageService.Update(message, message.ID);
             }
             return View(message);
         }
@@ -132,7 +132,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 message.IsDeleted = true;
                 TempData["MailDeleted"] = "Mesaj SİLİNMİŞLƏR qovluğuna daxil ediləcək və 30 gündən sonra həmişəlik silinəcəkdir.";
 
-                _messageService.Update(message);
+                _messageService.Update(message, message.ID);
             }
             return RedirectToAction("Index");
         }
@@ -159,7 +159,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 TempData["MailDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
                 message.IsDraft = true;
-                _messageService.Update(message);
+                _messageService.Update(message, message.ID);
             }
             return RedirectToAction("Index");
         }

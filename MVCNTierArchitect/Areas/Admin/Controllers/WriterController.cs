@@ -88,7 +88,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(writer);
             }
 
-            _writerService.Update(writer);
+            _writerService.Update(writer, writer.ID);
             return RedirectToAction("Index");
         }
     }

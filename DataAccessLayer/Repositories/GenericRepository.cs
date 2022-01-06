@@ -51,10 +51,17 @@ namespace DataAccessLayer.Repositories
             return _object.FirstOrDefault(Filter);
         }
 
-        public void Update(T t)
+        public void Update(T t, int id)
         {
             var updatedEntity = context.Entry(t);
+
+            var local = _object.Find(id);
+            if (local != null)
+            {
+                context.Entry(local).State = EntityState.Detached;
+            }
             updatedEntity.State = EntityState.Modified;
+
             context.SaveChanges();
         }
     }

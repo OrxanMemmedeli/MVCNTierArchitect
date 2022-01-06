@@ -83,7 +83,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(category);
             }
 
-            _categoryService.Update(category);
+            _categoryService.Update(category, category.ID);
             TempData["EditCategory"] = "Kateqoriya yeniləndi.";
             return RedirectToAction("Index");
         }
