@@ -1,0 +1,85 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Admin>
+
+@{
+    ViewBag.Title = "Adminlər";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    int counter = 0;
+}
+
+<h2>Adminlər</h2>
+<p>
+    <a href="/Admin/Admin/Create" class="btn btn-primary">Yeni kateqoriya</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            İstifadəçi adı
+        </th>
+        <th>
+            Səlahiyyət
+        </th>
+        <th>
+            Status
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        counter++;
+        <tr>
+            <td>
+                @counter
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role)
+            </td>
+            <td>
+                @if (item.Status)
+                {
+                    <span class="badge badge-success">Aktiv</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger">Passiv</span>
+                }
+            </td>
+            <td>
+                <a href="/Admin/Admin/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function Delete(id) {
+        var url = "/Admin/Admin/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/Admin', '_self');
+        }
+    };
+</script>
+
+@if (ViewBag.DeleteAdmin != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(ViewBag.DeleteAdmin.ToString()))");
+    </script>
+}
+
+@if (ViewBag.EditAdmin != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(ViewBag.EditAdmin.ToString()))");
+    </script>
+}

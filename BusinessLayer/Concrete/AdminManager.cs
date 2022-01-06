@@ -44,6 +44,11 @@ namespace BusinessLayer.Concrete
             return _adminDal.GetById(Filter);
         }
 
+        public bool IsUserNameUnique(string username)
+        {
+            return _adminDal.IsUserNameUnique(username);
+        }
+
         public void Update(Admin t, int id)
         {
             _adminDal.Update(t, id);

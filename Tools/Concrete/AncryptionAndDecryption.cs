@@ -10,7 +10,7 @@ namespace Tools.Concrete
 {
     public class AncryptionAndDecryption : IAncryptionAndDecryption
     {
-        public string DecodeData(string data)
+        public string EncodeData(string data)
         {
             string returndata = "";
             byte[] encoding = UTF8Encoding.UTF8.GetBytes(data);
@@ -27,7 +27,7 @@ namespace Tools.Concrete
             return returndata;
         }
 
-        public string EncodeData(string data)
+        public string DecodeData(string data)
         {
             string returndata = "";
             byte[] str = Convert.FromBase64String(data);
