@@ -11,6 +11,7 @@ using Tools.Abstract;
 
 namespace MVCNTierArchitect.Controllers
 {
+    [AllowAnonymous]
     public class AccountController : Controller
     {
         private readonly IAncryptionAndDecryption _ancryptionAndDecryption;

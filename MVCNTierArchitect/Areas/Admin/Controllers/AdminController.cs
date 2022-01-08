@@ -11,7 +11,6 @@ using Tools.Abstract;
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
     [RouteArea("Admin")]
-    [Authorize]
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;
