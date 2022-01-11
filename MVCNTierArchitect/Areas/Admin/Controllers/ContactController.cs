@@ -33,9 +33,15 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         public PartialViewResult MailLeftMenu()
         {
-            var newMessageCount = _contactService.GetAll(x => x.IsResponded == false && x.IsDeleted == false).Count();
-            var newSystemMessageCount = _messageService.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false).Count();
-            var draftMessageCount = _messageService.GetAll(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true).Count();
+            var messages = _messageService.GetAll();
+            var contacts = _contactService.GetAll();
+
+            var newMessageCount = contacts.Where(x => x.IsResponded == false && x.IsDeleted == false).Count();
+            var readedContactCount = contacts.Where(x => x.IsReaded == true && x.IsDeleted == false).Count();
+
+            var newSystemMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false).Count();
+            var draftMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true).Count();
+            var readedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false).Count();
             //*******************************************************************
             var sentMessageCount = _messageService.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false).Count();
 
@@ -43,6 +49,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             ViewData["NewMessageCount"] = newMessageCount;
             ViewData["SentMessageCount"] = sentMessageCount;
             ViewData["DraftMessageCount"] = draftMessageCount;
+            ViewData["ReadedContactCount"] = readedContactCount;
+            ViewData["ReadedMessageCount"] = readedMessageCount;
             return PartialView();
         }
 

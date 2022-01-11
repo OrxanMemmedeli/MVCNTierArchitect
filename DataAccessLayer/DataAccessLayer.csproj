@@ -122,6 +122,14 @@
     <Compile Include="Migrations\202201051017583_NewAdminTable.Designer.cs">
       <DependentUpon>202201051017583_NewAdminTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201110656029_NewStatusColumnForAbout.cs" />
+    <Compile Include="Migrations\202201110656029_NewStatusColumnForAbout.Designer.cs">
+      <DependentUpon>202201110656029_NewStatusColumnForAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202201110710560_ChangeAdminUserNameColumnLength.cs" />
+    <Compile Include="Migrations\202201110710560_ChangeAdminUserNameColumnLength.Designer.cs">
+      <DependentUpon>202201110710560_ChangeAdminUserNameColumnLength.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -175,6 +183,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201051017583_NewAdminTable.resx">
       <DependentUpon>202201051017583_NewAdminTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201110656029_NewStatusColumnForAbout.resx">
+      <DependentUpon>202201110656029_NewStatusColumnForAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201110710560_ChangeAdminUserNameColumnLength.resx">
+      <DependentUpon>202201110710560_ChangeAdminUserNameColumnLength.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

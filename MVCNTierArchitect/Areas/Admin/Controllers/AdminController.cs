@@ -50,6 +50,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
 
             admin.Password = _ancryptionAndDecryption.EncodeData(admin.Password);
+            admin.UserName = _ancryptionAndDecryption.EncodeData(admin.UserName);
             _adminService.Add(admin);
             return RedirectToAction("Index");
         }

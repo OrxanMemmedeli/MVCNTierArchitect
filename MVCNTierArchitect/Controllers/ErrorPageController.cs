@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace MVCNTierArchitect.Controllers
 {
+    [AllowAnonymous]
     public class ErrorPageController : Controller
     {
         // GET: ErrorPage

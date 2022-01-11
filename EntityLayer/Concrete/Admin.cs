@@ -12,7 +12,6 @@ namespace EntityLayer.Concrete
     {
         [Key]
         public int ID { get; set; }
-        [StringLength(50)]
         public string UserName { get; set; }
         public string Password { get; set; }
         [NotMapped]
