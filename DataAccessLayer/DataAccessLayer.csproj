@@ -59,6 +59,8 @@
     <Compile Include="Abstract\IHeadingDal.cs" />
     <Compile Include="Abstract\IImageFileDal.cs" />
     <Compile Include="Abstract\IMessageDal.cs" />
+    <Compile Include="Abstract\ISkillDal.cs" />
+    <Compile Include="Abstract\ISkillInfoDal.cs" />
     <Compile Include="Abstract\IWriterDal.cs" />
     <Compile Include="Concrete\MVCContext.cs" />
     <Compile Include="EntityFramework\EFAboutRepository.cs" />
@@ -69,6 +71,8 @@
     <Compile Include="EntityFramework\EFHeadingRepository.cs" />
     <Compile Include="EntityFramework\EFImageFileRepository.cs" />
     <Compile Include="EntityFramework\EFMessageRepository.cs" />
+    <Compile Include="EntityFramework\EFSkillInfoRepository.cs" />
+    <Compile Include="EntityFramework\EFSkillRepository.cs" />
     <Compile Include="EntityFramework\EFWriterRepository.cs" />
     <Compile Include="Migrations\202110220843095_TestTable.cs" />
     <Compile Include="Migrations\202110220843095_TestTable.designer.cs">
@@ -130,6 +134,10 @@
     <Compile Include="Migrations\202201110710560_ChangeAdminUserNameColumnLength.Designer.cs">
       <DependentUpon>202201110710560_ChangeAdminUserNameColumnLength.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201110814206_NewSkillsTables.cs" />
+    <Compile Include="Migrations\202201110814206_NewSkillsTables.Designer.cs">
+      <DependentUpon>202201110814206_NewSkillsTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -189,6 +197,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201110710560_ChangeAdminUserNameColumnLength.resx">
       <DependentUpon>202201110710560_ChangeAdminUserNameColumnLength.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202201110814206_NewSkillsTables.resx">
+      <DependentUpon>202201110814206_NewSkillsTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

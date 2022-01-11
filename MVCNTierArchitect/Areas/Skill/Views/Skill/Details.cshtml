@@ -1,0 +1,12 @@
+﻿
+@{
+    ViewBag.Title = "Məlumatlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Haqqında məlumatları</h2>
+@Html.Action("SkillInfo", "Skill", "Skill")
+
+<hr />
+<h2>Bacarıqlarım</h2>
+@Html.Action("Skill", "Skill", "Skill")

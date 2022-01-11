@@ -1,0 +1,11 @@
+﻿@model IEnumerable<EntityLayer.Concrete.SkillInfo>
+
+@foreach (var item in Model)
+{
+    <div class="profile-grid logo wthree">
+        <img src="@item.ImageURL" alt="">
+        <h2>@item.FullName </h2>
+        <p>@item.Position</p>
+        <p>@item.About</p>
+    </div>
+}

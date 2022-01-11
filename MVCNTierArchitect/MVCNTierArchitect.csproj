@@ -141,6 +141,8 @@
     <Compile Include="Areas\Admin\Controllers\IstatistikController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessageController.cs" />
     <Compile Include="Areas\Admin\Controllers\WriterController.cs" />
+    <Compile Include="Areas\Skill\Controllers\SkillController.cs" />
+    <Compile Include="Areas\Skill\SkillAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
@@ -2221,6 +2223,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Skills_Theme\css\style.css" />
+    <Content Include="Content\Skills_Theme\images\5.jpg" />
+    <Content Include="Content\Skills_Theme\images\img1.jpg" />
+    <Content Include="Content\Skills_Theme\images\sprite.png" />
+    <Content Include="Content\Skills_Theme\index.html" />
+    <Content Include="Content\Skills_Theme\js\bars.js" />
+    <Content Include="Content\Skills_Theme\js\easyResponsiveTabs.js" />
+    <Content Include="Content\Skills_Theme\js\jquery-1.11.1.min.js" />
+    <Content Include="Content\Skills_Theme\js\jquery.circlechart.js" />
+    <Content Include="Content\Skills_Theme\w3layouts-License.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -2527,6 +2539,17 @@
     <Content Include="Areas\Admin\Views\Gallery\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Create.cshtml" />
+    <Content Include="Areas\Skill\Views\web.config" />
+    <Content Include="Areas\Skill\Views\Skill\Index.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\About.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\Skills.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\SkillInfo.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\Skill.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\Details.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\CreateSkill.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\CreateInfo.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\EditSkill.cshtml" />
+    <Content Include="Areas\Skill\Views\Skill\EditInfo.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2538,6 +2561,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="SS Odev 3\Odev 3.png" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2562,7 +2586,10 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\Skill\Data\" />
+    <Folder Include="Areas\Skill\Views\Shared\" />
     <Folder Include="UploadedFiles\" />
+    <Folder Include="Views\Skill\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
