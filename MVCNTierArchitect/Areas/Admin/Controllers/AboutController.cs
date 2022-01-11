@@ -51,5 +51,23 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Status(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var about = _aboutService.GetByID(x => x.ID == id);
+
+            if (about == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            about.Status = !about.Status;
+            _aboutService.Update(about, about.ID);
+            return RedirectToAction("Index");
+        }
     }
 }

@@ -29,6 +29,9 @@
         <th>
             Haqqımda şəkli (ikinci)
         </th>
+        <th>
+            Status
+        </th>
         <th></th>
     </tr>
 
@@ -46,12 +49,30 @@
                 @Html.DisplayFor(modelItem => item.DetailsSecond)
             </td>
             <td>
-                <img src="@item.İmageFirst" alt="Haqqımda-1" style="max-width:150px"/>
+                <img src="@item.İmageFirst" alt="Haqqımda-1" style="max-width:150px" />
             </td>
             <td>
                 <img src="@item.İmageSecond" alt="Haqqımda-2" style="max-width:150px" />
             </td>
             <td>
+                @if (item.Status)
+                {
+                    <span class="badge badge-success" title="Aktiv status"><i class="fas fa-lock-open"></i></span>
+                }
+                else
+                {
+                    <span class="badge badge-danger" title="Passiv status"><i class="fas fa-lock"></i></span>
+                }
+            </td>
+            <td>
+                @if (item.Status)
+                {
+                    <a title="Passiv statusa keç" href="/Admin/About/Status/@item.ID"><i class="fas fa-lock" style="color:#f0dd35"></i></a> <span> | </span>
+                }
+                else
+                {
+                    <a title="Aktiv Statusa keç" href="/Admin/About/Status/@item.ID"><i class="fas fa-lock-open" style="color:#eb7236"></i></a> <span> | </span>
+                }
                 <a href="/Admin/About/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
                 <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
             </td>
@@ -60,7 +81,7 @@
 
 </table>
 
-@Html.Action("CreatePartial", "About","Admin")
+@Html.Action("CreatePartial", "About", "Admin")
 
 <script>
     function Delete(id) {

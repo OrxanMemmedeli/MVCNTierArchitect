@@ -19,6 +19,7 @@ namespace EntityLayer.Concrete
         public string İmageFirst { get; set; }
         [StringLength(250)]
         public string İmageSecond { get; set; }
+        public bool Status { get; set; } = true;
 
     }
 }

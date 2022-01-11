@@ -1,10 +1,13 @@
 ﻿using BusinessLayer.Abstract;
+using BusinessLayer.Concrete;
 using DataAccessLayer.Concrete;
+using DataAccessLayer.EntityFramework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Security;
+using Tools.Concrete;
 
 namespace MVCNTierArchitect.Roles
 {
@@ -16,6 +19,9 @@ namespace MVCNTierArchitect.Roles
         //{
         //    _adminService = adminService;
         //}
+
+        private readonly AdminManager adminManager = new AdminManager(new EFAdminRepository());
+        private readonly AncryptionAndDecryption ancryptionAndDecryption = new AncryptionAndDecryption();
 
         public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -47,13 +53,12 @@ namespace MVCNTierArchitect.Roles
         public override string[] GetRolesForUser(string username)
         {
             //var admin = _adminService.Get(x => x.UserName == username);
-            //if (admin != null)
-            //{
-            //    return new string[] { admin.Role };
-            //}
-            MVCContext c = new MVCContext();
-            var admin = c.Admins.FirstOrDefault(x => x.UserName == username);
-            return new string[] { admin.Role };
+            var admin = adminManager.Get(x => x.UserName == username);
+            if (admin != null)
+            {
+                return new string[] { admin.Role };
+            }
+            return new string[] { "Error" };
         }
 
         public override string[] GetUsersInRole(string roleName)

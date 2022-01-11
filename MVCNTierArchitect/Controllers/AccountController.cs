@@ -29,17 +29,17 @@ namespace MVCNTierArchitect.Controllers
         public ActionResult AdminLogin(string returnURL)
         {
             ViewBag.ReturnURL = returnURL;
-            if (User.Identity.IsAuthenticated)
-            {
-                if (Url.IsLocalUrl(returnURL))
-                {
-                    return Redirect(returnURL);
-                }
-                else
-                {
-                    return Redirect("/Admin");
-                }
-            }
+            //if (User.Identity.IsAuthenticated)
+            //{
+            //    if (Url.IsLocalUrl(returnURL))
+            //    {
+            //        return Redirect(returnURL);
+            //    }
+            //    else
+            //    {
+            //        return Redirect("/Admin");
+            //    }
+            //}
             return View();
         }
 
@@ -58,13 +58,14 @@ namespace MVCNTierArchitect.Controllers
             }
 
             var password = _ancryptionAndDecryption.EncodeData(model.Password);
+            var userName = _ancryptionAndDecryption.EncodeData(model.UserName);
 
-            var admin = _adminService.Get(x => x.UserName == model.UserName && x.Password == password);
+            var admin = _adminService.Get(x => x.UserName == userName && x.Password == password);
 
             if (admin != null)
             {
                 FormsAuthentication.SetAuthCookie(admin.UserName, false);
-                Session["AdminUserName"] = admin.UserName;
+                Session["AdminUserName"] = _ancryptionAndDecryption.DecodeData(admin.UserName);
                 if (!string.IsNullOrEmpty(returnURL))
                 {
                     return Redirect(returnURL);
