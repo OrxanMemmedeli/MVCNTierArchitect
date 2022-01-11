@@ -1,0 +1,45 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Skill>
+
+<p>
+    <a href="/Skill/Skill/CreateSkill" class="btn btn-primary">Yeni Bacarıq</a>
+</p>
+<table class="table table-hover">
+    <tr>
+        <th>
+            Bilik
+        </th>
+        <th>
+            Faiz
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Percent)%
+            </td>
+            <td>
+                <a href="/Skill/Skill/EditSkill/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="DeleteSkill(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+
+<script>
+    function DeleteSkill(id) {
+        var url = "/Skill/Skill/DeleteSkill/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Skill/Skill/Details', '_self');
+        }
+    };
+</script>

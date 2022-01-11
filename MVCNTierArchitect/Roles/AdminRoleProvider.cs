@@ -21,7 +21,6 @@ namespace MVCNTierArchitect.Roles
         //}
 
         private readonly AdminManager adminManager = new AdminManager(new EFAdminRepository());
-        private readonly AncryptionAndDecryption ancryptionAndDecryption = new AncryptionAndDecryption();
 
         public override string ApplicationName { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -58,7 +57,7 @@ namespace MVCNTierArchitect.Roles
             {
                 return new string[] { admin.Role };
             }
-            return new string[] { "Error" };
+            return new string[] { "" };
         }
 
         public override string[] GetUsersInRole(string roleName)

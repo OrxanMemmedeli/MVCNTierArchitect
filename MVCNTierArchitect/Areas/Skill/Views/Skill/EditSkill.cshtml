@@ -1,0 +1,43 @@
+﻿@model EntityLayer.Concrete.Skill
+
+@{
+    ViewBag.Title = "Bacarıqlar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Bacarıqlar</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            Bacırıq
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            Faiz
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Percent, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Percent, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Yenilə" class="btn btn-success" />
+                <a href="/Skill/Skill/Details" class="btn btn-dark">Geri</a>
+            </div>
+        </div>
+    </div>
+
+}

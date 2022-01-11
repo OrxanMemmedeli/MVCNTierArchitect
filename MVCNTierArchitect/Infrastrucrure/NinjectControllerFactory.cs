@@ -34,6 +34,8 @@ namespace MVCNTierArchitect.Infrastrucrure
             _ninjectKernal.Bind<IImageFileService>().To<ImageFileManager>().WithConstructorArgument("imageFileDal", new EFImageFileRepository());
             _ninjectKernal.Bind<IMessageService>().To<MessageManager>().WithConstructorArgument("messageDal", new EFMessageRepository());
             _ninjectKernal.Bind<IWriterService>().To<WriterManager>().WithConstructorArgument("writerDal", new EFWriterRepository());
+            _ninjectKernal.Bind<ISkillInfoService>().To<SkillInfoManager>().WithConstructorArgument("skillInfoDal", new EFSkillInfoRepository());
+            _ninjectKernal.Bind<ISkillService>().To<SkillManager>().WithConstructorArgument("skillDal", new EFSkillRepository());
         }
 
         private void AddToolsBinding()
