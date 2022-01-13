@@ -24,6 +24,9 @@
         <th>
             Yaranma Tarixi
         </th>
+        <th>
+            Status
+        </th>
         <th></th>
     </tr>
 
@@ -40,11 +43,28 @@
                 @item.Text
             </td>
             <td>
-                @item.CreatedDate.ToString("dd-MMM-yyyy");
+                @item.CreatedDate.ToString("dd-MMM-yyyy")
+            </td>
+            <td>
+                @if (item.Status)
+                {
+                    <span class="badge badge-success">Aktiv</span>
+                }
+                else
+                {
+                    <span class="badge badge-danger">Silinmiş</span>
+                }
             </td>
             <td>
                 <a href="/Admin/Content/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
-                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+                @if (item.Status)
+                {
+                    <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+                }
+                else
+                {
+                    <a class="badge badge-warning" title="Bərpa Et" onclick="Restore(@item.ID)"><i class="fas fa-recycle"></i></a>
+                }
             </td>
         </tr>
     }
@@ -54,6 +74,15 @@
 <script>
     function Delete(id) {
         var url = "/Admin/Content/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/Content', '_self');
+        }
+    };
+
+    function Restore(id) {
+        var url = "/Admin/Content/Restore/" + id;
         if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
             window.open(url, '_self');
         } else {
@@ -75,5 +104,12 @@
 {
     <script>
         swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditContent"].ToString()))");
+    </script>
+}
+
+@if (TempData["RestoreContent"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["RestoreContent"].ToString()))");
     </script>
 }

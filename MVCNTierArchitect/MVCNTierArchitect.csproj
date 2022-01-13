@@ -143,6 +143,7 @@
     <Compile Include="Areas\Admin\Controllers\WriterController.cs" />
     <Compile Include="Areas\Skill\Controllers\SkillController.cs" />
     <Compile Include="Areas\Skill\SkillAreaRegistration.cs" />
+    <Compile Include="Areas\Writer\Controllers\ContentController.cs" />
     <Compile Include="Areas\Writer\Controllers\HeadingController.cs" />
     <Compile Include="Areas\Writer\Controllers\WriterController.cs" />
     <Compile Include="Areas\Writer\WriterAreaRegistration.cs" />
@@ -2558,6 +2559,12 @@
     <Content Include="Areas\Writer\Views\Heading\Index.cshtml" />
     <Content Include="Areas\Writer\Views\Heading\Create.cshtml" />
     <Content Include="Areas\Writer\Views\Heading\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Content\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Content\Edit.cshtml" />
+    <Content Include="Areas\Writer\Views\Content\ContentByWriter.cshtml" />
+    <Content Include="Areas\Writer\Views\Content\Index.cshtml" />
+    <Content Include="Areas\Writer\Views\Content\Create.cshtml" />
+    <Content Include="Areas\Writer\Views\Content\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
