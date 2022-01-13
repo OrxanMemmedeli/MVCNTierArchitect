@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
-using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using System;
@@ -9,37 +8,26 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MVCNTierArchitect.Areas.Admin.Controllers
+namespace MVCNTierArchitect.Areas.Writer.Controllers
 {
-    [RouteArea("Admin")]
+    [RouteArea("Writer")]
     public class ContentController : Controller
     {
         private readonly IContentService _contentService;
         private readonly IHeadingService _headingService;
-        private readonly IWriterService _writerService;
         private readonly ContentValidator _validator;
 
-        public ContentController(IContentService contentService, IHeadingService headingService, IWriterService writerService)
+        public ContentController(IContentService contentService, IHeadingService headingService, ContentValidator validator)
         {
             _contentService = contentService;
             _headingService = headingService;
-            _writerService = writerService;
-            _validator = new ContentValidator();
+            _validator = validator;
         }
 
+        // GET: Writer/Content
         public ActionResult Index()
         {
-            var contents = _contentService.GetAll();
-            return View(contents);
-        }
-
-        public ActionResult ContentByHeading(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpNotFoundResult();
-            }
-            var contents = _contentService.GetAll(x => x.HeadingID == id).OrderByDescending(x => x.CreatedDate);
+            var contents = _contentService.GetAll(x => x.WriterID == 1 && x.Status == true);
             return View(contents);
         }
 
@@ -56,20 +44,13 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public ActionResult Create()
         {
             List<SelectListItem> headings = (from c in _headingService.GetAll()
-                                               select new SelectListItem
-                                               {
-                                                   Text = c.Name,
-                                                   Value = c.ID.ToString()
-                                               }).ToList();
+                                             select new SelectListItem
+                                             {
+                                                 Text = c.Name,
+                                                 Value = c.ID.ToString()
+                                             }).ToList();
 
-            List<SelectListItem> writers = (from w in _writerService.GetAll()
-                                            select new SelectListItem
-                                            {
-                                                Text = w.Name + " " + w.Surname,
-                                                Value = w.ID.ToString()
-                                            }).ToList();
             ViewBag.Headings = headings;
-            ViewBag.Writers = writers;
             return View();
         }
 
@@ -79,6 +60,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         {
             content.CreatedDate = DateTime.Now;
             content.Status = true;
+            content.WriterID = 1;
             ValidationResult results = _validator.Validate(content);
             if (!results.IsValid)
             {
@@ -92,15 +74,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                                                      Text = c.Name,
                                                      Value = c.ID.ToString()
                                                  }).ToList();
-
-                List<SelectListItem> writers = (from w in _writerService.GetAll()
-                                                select new SelectListItem
-                                                {
-                                                    Text = w.Name + " " + w.Surname,
-                                                    Value = w.ID.ToString()
-                                                }).ToList();
                 ViewBag.Headings = headings;
-                ViewBag.Writers = writers;
                 return View(content);
             }
 
@@ -121,16 +95,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                                                  Text = c.Name,
                                                  Value = c.ID.ToString()
                                              }).ToList();
-
-            List<SelectListItem> writers = (from w in _writerService.GetAll()
-                                            select new SelectListItem
-                                            {
-                                                Text = w.Name + " " + w.Surname,
-                                                Value = w.ID.ToString()
-                                            }).ToList();
             ViewBag.Headings = headings;
-            ViewBag.Writers = writers;
-
             var content = _contentService.GetByID(x => x.ID == id);
             return View(content);
         }
@@ -152,20 +117,12 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                                                      Text = c.Name,
                                                      Value = c.ID.ToString()
                                                  }).ToList();
-
-                List<SelectListItem> writers = (from w in _writerService.GetAll()
-                                                select new SelectListItem
-                                                {
-                                                    Text = w.Name + " " + w.Surname,
-                                                    Value = w.ID.ToString()
-                                                }).ToList();
                 ViewBag.Headings = headings;
-                ViewBag.Writers = writers;
                 return View(content);
             }
 
             _contentService.Update(content, content.ID);
-            TempData["EditContent"] = "Məzmun yeniləndi.";
+            TempData["WEditContent"] = "Məzmun yeniləndi.";
             return RedirectToAction("Index");
         }
 
@@ -183,26 +140,9 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             content.Status = false;
             _contentService.Update(content, content.ID);
-            TempData["DeleteContent"] = "Məzmun silindi.";
+            TempData["WDeleteContent"] = "Məzmun silindi.";
             return RedirectToAction("Index");
         }
 
-        public ActionResult Restore(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpNotFoundResult();
-            }
-
-            var content = _contentService.GetByID(x => x.ID == id);
-            if (content == null)
-            {
-                return new HttpNotFoundResult();
-            }
-            content.Status = true;
-            _contentService.Update(content, content.ID);
-            TempData["RestoreContent"] = "Məzmun bərpa edildi.";
-            return RedirectToAction("Index");
-        }
     }
 }

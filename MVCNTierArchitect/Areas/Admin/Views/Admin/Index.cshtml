@@ -1,9 +1,10 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.Admin>
-
+@using Tools.Concrete
 @{
     ViewBag.Title = "Adminlər";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     int counter = 0;
+    AncryptionAndDecryption ancryptionAndDecryption = new AncryptionAndDecryption();
 }
 
 <h2>Adminlər</h2>
@@ -35,7 +36,7 @@
                 @counter
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
+                @ancryptionAndDecryption.DecodeData(item.UserName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Role)
@@ -83,3 +84,4 @@
         swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(ViewBag.EditAdmin.ToString()))");
     </script>
 }
+
