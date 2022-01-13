@@ -39,9 +39,14 @@ namespace BusinessLayer.Concrete
             return _headingDal.GetAll(Filter);
         }
 
-        public List<Heading> GetAllWithContent()
+        public List<Heading> GetAllWithContentAndWriter()
         {
-            return _headingDal.GetAllWithContent();
+            return _headingDal.GetAllWithContentAndWriter();
+        }
+
+        public List<Heading> GetAllWithContentAndWriter(Expression<Func<Heading, bool>> Filter)
+        {
+            return _headingDal.GetAllWithContentAndWriter(Filter);
         }
 
         public Heading GetByID(Expression<Func<Heading, bool>> Filter)

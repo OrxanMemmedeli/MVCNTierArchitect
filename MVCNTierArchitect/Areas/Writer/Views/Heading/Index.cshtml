@@ -1,0 +1,102 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Heading>
+
+@{
+    ViewBag.Title = "Başlıqlar";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+    int counter = 0;
+
+}
+
+<h2>Başlıqlar</h2>
+
+<p>
+    <a href="/Writer/Heading/Create" class="btn btn-primary">Yeni başlıq</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            #
+        </th>
+        <th>
+            Başlıq
+        </th>
+        <th colspan="2">
+            Yazar
+        </th>
+        <th>
+            Kategoriya
+        </th>
+        <th>
+            Yazılma tarixi
+        </th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        counter++;
+        <tr>
+            <td>
+                @counter
+            </td>
+            <td>
+                @item.Name
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Writer.Name)
+            </td>
+            <td>
+                <ul class="list-inline">
+                    <li class="list-inline-item">
+                        <img alt="Avatar" src="@item.Writer.ImageURL" class="table-avatar" style="width:128px; height:128px;">
+                    </li>
+                </ul>
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category.Name)
+            </td>
+            <td>
+                @item.CreatedDate.ToShortDateString()
+            </td>
+            <td>
+                @if (item.Contents.Count() != 0)
+                {
+                    <a href="/Writer/Content/ContentByHeading/@item.ID" class="badge badge-primary" title="Başlığa uyğun yazılar"><i class="fas fa-clipboard-list"></i></a> <span>|</span>
+                }
+                <a href="/Writer/Heading/Edit/@item.ID" class="badge badge-success" title="Düzəliş et"><i class="fas fa-edit"></i></a> |
+
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+
+
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function Delete(id) {
+        var url = "/Writer/Heading/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Writer/Heading', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["WDeleteHeading"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["WDeleteHeading"].ToString()))");
+    </script>
+}
+
+@if (TempData["WEditHeading"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["WEditHeading"].ToString()))");
+    </script>
+}
+

@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,9 +16,14 @@ namespace DataAccessLayer.EntityFramework
     {
         MVCContext context = new MVCContext();
 
-        public List<Heading> GetAllWithContent()
+        public List<Heading> GetAllWithContentAndWriter()
         {
-            return context.Headings.Include(x => x.Contents).ToList();
+            return context.Headings.Include(x => x.Contents).Include(x => x.Writer).ToList();
+        }
+
+        public List<Heading> GetAllWithContentAndWriter(Expression<Func<Heading, bool>> Filter)
+        {
+            return context.Headings.Include(x => x.Contents).Include(x => x.Writer).Where(Filter).ToList();
         }
     }
 }

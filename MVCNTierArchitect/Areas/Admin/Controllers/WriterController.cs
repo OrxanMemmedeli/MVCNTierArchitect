@@ -36,7 +36,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Writer writer)
+        public ActionResult Create(EntityLayer.Concrete.Writer writer)
         {
             ValidationResult results = _validator.Validate(writer);
             if (!results.IsValid)
@@ -70,7 +70,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(Writer writer)
+        public ActionResult Edit(EntityLayer.Concrete.Writer writer)
         {
             if ((writer.Password == "Test123456!!" || string.IsNullOrEmpty(writer.Password)) && (writer.ConfirmPassword == "Test123456!!" || string.IsNullOrEmpty(writer.ConfirmPassword)))
             {

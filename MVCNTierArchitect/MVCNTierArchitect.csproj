@@ -143,6 +143,9 @@
     <Compile Include="Areas\Admin\Controllers\WriterController.cs" />
     <Compile Include="Areas\Skill\Controllers\SkillController.cs" />
     <Compile Include="Areas\Skill\SkillAreaRegistration.cs" />
+    <Compile Include="Areas\Writer\Controllers\HeadingController.cs" />
+    <Compile Include="Areas\Writer\Controllers\WriterController.cs" />
+    <Compile Include="Areas\Writer\WriterAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
@@ -2550,6 +2553,11 @@
     <Content Include="Areas\Skill\Views\Skill\CreateInfo.cshtml" />
     <Content Include="Areas\Skill\Views\Skill\EditSkill.cshtml" />
     <Content Include="Areas\Skill\Views\Skill\EditInfo.cshtml" />
+    <Content Include="Areas\Writer\Views\web.config" />
+    <Content Include="Areas\Writer\Views\Writer\Index.cshtml" />
+    <Content Include="Areas\Writer\Views\Heading\Index.cshtml" />
+    <Content Include="Areas\Writer\Views\Heading\Create.cshtml" />
+    <Content Include="Areas\Writer\Views\Heading\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2581,6 +2589,7 @@
     <Content Include="Views\Shared\_AdminLayout.cshtml" />
     <Content Include="Views\ErrorPage\Responce404.cshtml" />
     <Content Include="Views\Account\AdminLogin.cshtml" />
+    <Content Include="Views\Shared\_WriterLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -2588,6 +2597,8 @@
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Skill\Data\" />
     <Folder Include="Areas\Skill\Views\Shared\" />
+    <Folder Include="Areas\Writer\Data\" />
+    <Folder Include="Areas\Writer\Views\Shared\" />
     <Folder Include="UploadedFiles\" />
     <Folder Include="Views\Skill\" />
   </ItemGroup>

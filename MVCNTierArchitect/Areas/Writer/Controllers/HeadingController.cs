@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
-using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using System;
@@ -9,27 +8,26 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MVCNTierArchitect.Areas.Admin.Controllers
+namespace MVCNTierArchitect.Areas.Writer.Controllers
 {
-    [RouteArea("Admin")]
+    [RouteArea("Writer")]
     public class HeadingController : Controller
     {
         private readonly IHeadingService _headingService;
         private readonly HeadingValidator _validator;
         private readonly ICategoryService _categoryService;
-        private readonly IWriterService _writerService;
 
-        public HeadingController(IHeadingService headingService, ICategoryService categoryService, IWriterService writerService)
+        public HeadingController(IHeadingService headingService, ICategoryService categoryService)
         {
             _headingService = headingService;
             _categoryService = categoryService;
-            _writerService = writerService;                    
             _validator = new HeadingValidator();
         }
 
+        // GET: Writer/Heading
         public ActionResult Index()
         {
-            var headings = _headingService.GetAllWithContentAndWriter();
+            var headings = _headingService.GetAllWithContentAndWriter(x => x.WriterID == 1 && x.Status == true);
             return View(headings);
         }
 
@@ -42,15 +40,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                                                    Text = c.Name,
                                                    Value = c.ID.ToString()
                                                }).ToList();
-
-            List<SelectListItem> writers = (from w in _writerService.GetAll()
-                                            select new SelectListItem
-                                            {
-                                                Text = w.Name + " " + w.Surname,
-                                                Value = w.ID.ToString()
-                                            }).ToList();
             ViewBag.Categories = categories;
-            ViewBag.Writers = writers;
             return View();
         }
 
@@ -59,6 +49,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public ActionResult Create(Heading heading)
         {
             heading.CreatedDate = DateTime.Now;
+            heading.WriterID = 1;
             ValidationResult results = _validator.Validate(heading);
             if (!results.IsValid)
             {
@@ -72,15 +63,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                                                        Text = c.Name,
                                                        Value = c.ID.ToString()
                                                    }).ToList();
-
-                List<SelectListItem> writers = (from w in _writerService.GetAll()
-                                                select new SelectListItem
-                                                {
-                                                    Text = w.Name + " " + w.Surname,
-                                                    Value = w.ID.ToString()
-                                                }).ToList();
                 ViewBag.Categories = categories;
-                ViewBag.Writers = writers;
                 return View(heading);
             }
 
@@ -130,7 +113,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
 
             _headingService.Update(heading, heading.ID);
-            TempData["EditHeading"] = "Başlıq yeniləndi.";
+            TempData["WEditHeading"] = "Başlıq yeniləndi.";
             return RedirectToAction("Index");
         }
 
@@ -149,26 +132,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             heading.Status = false;
             _headingService.Update(heading, heading.ID);
-            TempData["DeleteHeading"] = "Başlıq silindi.";
-            return RedirectToAction("Index");
-        }
-
-        [HttpGet]
-        public ActionResult Restore(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpNotFoundResult();
-            }
-
-            var heading = _headingService.GetByID(x => x.ID == id);
-            if (heading == null)
-            {
-                return new HttpNotFoundResult();
-            }
-            heading.Status = true;
-            _headingService.Update(heading, heading.ID);
-            TempData["RestoreHeading"] = "Başlıq bərpa edildi.";
+            TempData["WDeleteHeading"] = "Başlıq silindi.";
             return RedirectToAction("Index");
         }
     }
