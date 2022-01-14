@@ -27,7 +27,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         // GET: Writer/Content
         public ActionResult Index()
         {
-            var contents = _contentService.GetAll(x => x.WriterID == 1 && x.Status == true);
+            var contents = _contentService.GetAllByHeading(x => x.WriterID == 1 && x.Status == true);
             return View(contents);
         }
 
@@ -79,7 +79,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             }
 
             _contentService.Add(content);
-            return RedirectToAction("Index");
+            return Redirect("/Writer/Content");
         }
 
         public ActionResult Edit(int? id)
@@ -123,7 +123,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
             _contentService.Update(content, content.ID);
             TempData["WEditContent"] = "Məzmun yeniləndi.";
-            return RedirectToAction("Index");
+            return Redirect("/Writer/Content");
         }
 
         public ActionResult Delete(int? id)
@@ -141,7 +141,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             content.Status = false;
             _contentService.Update(content, content.ID);
             TempData["WDeleteContent"] = "Məzmun silindi.";
-            return RedirectToAction("Index");
+            return Redirect("/Writer/Content");
         }
 
     }
