@@ -38,6 +38,11 @@ namespace BusinessLayer.Concrete
             return _contentDal.GetAll(Filter);
         }
 
+        public List<Content> GetAllByHeading(Expression<Func<Content, bool>> Filter)
+        {
+            return _contentDal.GetAllByHeading(Filter);
+        }
+
         public Content GetByID(Expression<Func<Content, bool>> Filter)
         {
             return _contentDal.GetById(Filter);
