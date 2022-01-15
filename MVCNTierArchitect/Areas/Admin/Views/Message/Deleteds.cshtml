@@ -52,7 +52,7 @@
                                         <tr>
                                             <td class="mailbox-name"><a href="/Admin/Message/Details/@item.ID">@item.SenderEmail</a></td>
                                             <td class="mailbox-subject">
-                                                <b>@item.Subject</b> - @(item.MessageText.Length <= 30 ? item.MessageText : item.MessageText.Substring(0, item.MessageText.Substring(0,30).LastIndexOf(" ")) + "..." )
+                                                <b>@item.Subject</b> - @(item.MessageText.ToString().Length <= 30 ? item.MessageText : item.MessageText.Contains("</") ? "Xüsusi simvollu mətn" : item.MessageText.Substring(0, item.MessageText.Substring(0, 30).LastIndexOf(" ")) + "..." )
                                             </td>
                                             <td class="mailbox-attachment">
                                                 @if (!item.IsReaded)

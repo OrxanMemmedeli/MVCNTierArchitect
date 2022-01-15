@@ -42,8 +42,9 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             var newSystemMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false).Count();
             var draftMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true).Count();
             var readedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false).Count();
+            var deletedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false).Count();
             //*******************************************************************
-            var sentMessageCount = _messageService.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false).Count();
+            var sentMessageCount = _messageService.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false && x.IsDeleted == false).Count();
 
             ViewData["NewSystemMessageCount"] = newSystemMessageCount;
             ViewData["NewMessageCount"] = newMessageCount;
@@ -51,6 +52,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             ViewData["DraftMessageCount"] = draftMessageCount;
             ViewData["ReadedContactCount"] = readedContactCount;
             ViewData["ReadedMessageCount"] = readedMessageCount;
+            ViewData["DeletedMessageCount"] = deletedMessageCount;
             return PartialView();
         }
 
@@ -159,6 +161,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(contactMessage);
             }
             TempData["ContactSent"] = "Mesaj Göndərildi.";
+            message.IsResponded = true;
 
             _messageService.Add(message);
 
@@ -168,5 +171,6 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             return RedirectToAction("Sent", "Message", "Admin");
         }
+
     }
 }

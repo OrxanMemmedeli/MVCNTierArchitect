@@ -169,5 +169,42 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             var drafts = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true).OrderByDescending(x => x.CreatedDate);
             return View(drafts);
         }
+
+        public ActionResult Reply(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var contactMessage = _messageService.GetByID(x => x.ID == id);
+            contactMessage.IsResponded = true;
+            contactMessage.MessageText = "Müraciətiniz üçün təşəkkür edirik";
+            contactMessage.Subject = "Admindən cavab";
+
+            return View(contactMessage);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reply(Message message)
+        {
+            //*******************************************************************
+            message.SenderEmail = "memmedeli.orxan.om@gmail.com";
+
+            ValidationResult results = _validator.Validate(message);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View(message);
+            }
+            TempData["MessageReply"] = "Mesaj Göndərildi.";
+            _messageService.Update(message, message.ID);
+
+            return RedirectToAction("Sent", "Message", "Admin");
+        }
     }
 }

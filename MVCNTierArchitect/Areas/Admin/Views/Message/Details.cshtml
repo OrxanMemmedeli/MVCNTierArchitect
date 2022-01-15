@@ -56,18 +56,13 @@
                     <div class="mailbox-read-info">
                         <h5>@Model.Subject</h5>
                         <h6>
-                            Göndərən: @Model.SenderEmail
+                            Göndərən: @Model.SenderEmail <br />
                             Göndərilən: @Model.ReceiverEmail
                             <span class="mailbox-read-time float-right">@Model.CreatedDate.ToString("dd-MMM-yyyy HH:mm")</span>
                         </h6>
                     </div>
                     <!-- /.mailbox-read-info -->
                     <div class="mailbox-controls with-border text-center">
-                        <div class="btn-group">
-                            <a href="/Admin/Message/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default btn-sm" data-container="body" title="Delete">
-                                <i class="far fa-trash-alt"></i>
-                            </a>
-                        </div>
                         <!-- /.btn-group -->
                         <button class="btn btn-default btn-sm" title="Print" onclick="window.print();">
                             <i class="fas fa-print"></i>
@@ -82,7 +77,7 @@
                 <div class="card-footer">
                     @if (!Model.IsDraft)
                     {
-                        if (!Model.IsDeleted)
+                        if (!Model.IsDeleted && !Model.IsResponded)
                         {
                             <div class="float-right">
                                 <a href="/Admin/Message/Draft/@Model.ID" onclick="return confirm('Mesaj qaralamalara əlavə edilsinmi?')" class="btn btn-default"><i class="fas fa-file-alt"></i> Qaralama kimi yadda saxla</a>
