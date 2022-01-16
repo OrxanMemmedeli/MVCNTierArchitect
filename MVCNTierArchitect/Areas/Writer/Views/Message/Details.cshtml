@@ -1,8 +1,9 @@
 ﻿@model EntityLayer.Concrete.Message
 @{
     ViewBag.Title = "Mesaj Detalları";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
 }
+
 <style>
     @@media print {
 
@@ -34,7 +35,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Daxili mesajlar</h1>
+                <h1>Mesaj Detalları</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -43,7 +44,7 @@
 <section class="content">
     <div class="row">
 
-        @Html.Action("MailLeftMenu", "Contact", "Admin")
+        @Html.Action("MailLeftMenu", "Message", "Writer")
 
         <!-- /.col -->
         <div class="col-md-9">
@@ -80,13 +81,13 @@
                         if (!Model.IsDeleted && !Model.IsResponded)
                         {
                             <div class="float-right">
-                                <a href="/Admin/Message/Reply/@Model.ID" class="btn btn-default"><i class="fas fa-file-alt"></i> Cavabla</a>
+                                <a href="/Writer/Message/Reply/@Model.ID" class="btn btn-default"><i class="fas fa-file-alt"></i> Cavabla</a>
                             </div>
                         }
                     }
                     @if (!Model.IsDeleted)
                     {
-                        <a href="/Admin/Message/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default"><i class="far fa-trash-alt"></i> Sil</a>
+                        <a href="/Writer/Message/Delete/@Model.ID" onclick="return confirm('Mesaj silinsinmi?')" class="btn btn-default"><i class="far fa-trash-alt"></i> Sil</a>
                     }
 
                     <button type="button" class="btn btn-default" onclick="window.print();"><i class="fas fa-print"></i> Çap Et</button>
@@ -99,4 +100,5 @@
     </div>
     <!-- /.row -->
 </section>
+
 

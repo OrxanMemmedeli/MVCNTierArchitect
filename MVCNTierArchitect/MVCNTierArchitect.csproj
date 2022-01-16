@@ -145,6 +145,7 @@
     <Compile Include="Areas\Skill\SkillAreaRegistration.cs" />
     <Compile Include="Areas\Writer\Controllers\ContentController.cs" />
     <Compile Include="Areas\Writer\Controllers\HeadingController.cs" />
+    <Compile Include="Areas\Writer\Controllers\MessageController.cs" />
     <Compile Include="Areas\Writer\Controllers\WriterController.cs" />
     <Compile Include="Areas\Writer\WriterAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -2566,6 +2567,14 @@
     <Content Include="Areas\Writer\Views\Content\Create.cshtml" />
     <Content Include="Areas\Writer\Views\Content\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Message\Reply.cshtml" />
+    <Content Include="Areas\Writer\Views\Message\MailLeftMenu.cshtml" />
+    <Content Include="Areas\Writer\Views\Message\Index.cshtml" />
+    <Content Include="Areas\Writer\Views\Message\Details.cshtml" />
+    <Content Include="Areas\Writer\Views\Message\Deleteds.cshtml" />
+    <Content Include="Areas\Writer\Views\Message\Create.cshtml" />
+    <Content Include="Areas\Writer\Views\Message\Drafts.cshtml" />
+    <Content Include="Areas\Writer\Views\Message\Sent.cshtml" />
+    <Content Include="Areas\Writer\Views\Message\Reply.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

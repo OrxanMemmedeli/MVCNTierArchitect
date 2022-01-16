@@ -1,9 +1,9 @@
 ﻿@model EntityLayer.Concrete.Message
-
 @{
-    ViewBag.Title = "Mesajı Cavabla";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Yeni mesaj";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
 }
+
 
 <!-- summernote -->
 <link href="~/AdminLTE/plugins/summernote/summernote-bs4.css" rel="stylesheet" />
@@ -13,7 +13,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Mesajı Cavabla</h1>
+                <h1>Yeni mesaj</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -23,34 +23,27 @@
 <section class="content">
     <div class="row">
 
-        @Html.Action("MailLeftMenu", "Contact", "Admin")
+        @Html.Action("MailLeftMenu", "Message", "Writer")
 
         <!-- /.col -->
         <div class="col-md-9">
             <div class="card card-primary card-outline">
                 <div class="card-header">
-                    <h3 class="card-title">Mesajı Cavablayın</h3>
+                    <h3 class="card-title">Yeni Mesaj Yaradın</h3>
                 </div>
 
                 <!-- /.card-header -->
-                @using (Html.BeginForm("Reply", "Message", "Admin", FormMethod.Post))
+                @using (Html.BeginForm("Create", "Message", "Writer", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                    @Html.HiddenFor(x => x.ID)
-                    @Html.HiddenFor(x => x.ReceiverEmail)
-                    @Html.HiddenFor(x => x.ContactID)
-                    @Html.HiddenFor(x => x.IsDraft)
-                    @Html.HiddenFor(x => x.DeletedDate)
-                    @Html.HiddenFor(x => x.CreatedDate)
-                    @Html.HiddenFor(x => x.IsResponded)
-                    @Html.HiddenFor(x => x.IsReaded)
-                    @Html.HiddenFor(x => x.IsDeleted)
+
                     <div class="card-body">
                         <div class="form-group">
-                            <input type="email" value="@Model.ReceiverEmail" disabled="disabled" readonly class="form-control" />
                             @*<input class="form-control" placeholder="Kimə:" @Html.NameFor(x => x.ReceiverEmail)>*@
+                            @Html.EditorFor(model => model.ReceiverEmail, new { htmlAttributes = new { @class = "form-control", @placeholder = "Kimə:" } })
                             @Html.ValidationMessageFor(model => model.ReceiverEmail, "", new { @class = "text-danger" })
+
                         </div>
                         <div class="form-group">
                             @*<input class="form-control" placeholder="Başlıq:" @Html.NameFor(x => x.Subject)>*@
@@ -61,6 +54,7 @@
                         <div class="form-group">
                             <textarea id="compose-textarea" class="form-control" style="height: 700px" name="MessageText">@Model.MessageText</textarea>
                             @Html.ValidationMessageFor(model => model.MessageText, "", new { @class = "text-danger" })
+
                         </div>
                         <div class="form-group">
                             <div class="btn btn-default btn-file">
@@ -74,13 +68,10 @@
                     <!-- /.card-body -->
                     <div class="card-footer">
                         <div class="float-right">
+                            <button type="button" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Qaralama kimi saxla</button>
                             <button type="submit" class="btn btn-primary"><i class="far fa-envelope"></i> Göndər</button>
                         </div>
-                        @if (!Model.IsDraft)
-                        {
-                            <a href="/Admin/Message/Draft/@Model.ID" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Qaralama kimi saxla</a>
-                        }
-
+                        <button type="reset" class="btn btn-default"><i class="fas fa-times"></i> Təmizlə</button>
                     </div>
                 }
                 <!-- /.card-footer -->

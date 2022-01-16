@@ -1,0 +1,104 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Message>
+@{
+    ViewBag.Title = "Qaralamalar";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+}
+
+
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Qaralamalar</h1>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<section class="content">
+    <div class="row">
+
+        @Html.Action("MailLeftMenu", "Message", "Writer")
+
+        <!-- /.col -->
+        <div class="col-md-9">
+            <div class="card card-primary card-outline">
+                <div class="card-header">
+                    <h3 class="card-title">Qaralamalar</h3>
+
+                    <div class="card-tools">
+                        <div class="input-group input-group-sm">
+                            <input type="text" class="form-control" placeholder="Mesajlardan axtar">
+                            <div class="input-group-append">
+                                <div class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-tools -->
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body p-0">
+                    <div class="mailbox-controls">
+
+                    </div>
+                    <div class="table-responsive mailbox-messages">
+                        <table class="table table-hover table-striped">
+                            <tbody>
+                                @if (Model.Count() != 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="icheck-primary">
+                                                    <a href="/Writer/Message/Delete/@item.ID" class="btn btn-default btn-sm" title="Sil" onclick="return confirm('Mesaj silinsinmi?')">
+                                                        <i class="far fa-trash-alt"></i>
+                                                    </a>
+                                                    <a class="btn btn-default btn-sm" title="Cavabla">
+                                                        <i class="fas fa-reply"></i>
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
+                                            <td class="mailbox-name"><a href="/Writer/Message/Reply/@item.ID">@item.SenderEmail</a></td>
+                                            <td class="mailbox-subject">
+                                                <b>@item.Subject</b> - @(item.MessageText.ToString().Length <= 30 ? item.MessageText : item.MessageText.Contains("</") ? "Xüsusi simvollu mətn" : item.MessageText.Substring(0, item.MessageText.Substring(0, 30).LastIndexOf(" ")) + "..." )
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td>
+                                        </td>
+                                        <td class="mailbox-star"></td>
+                                        <td class="mailbox-name"></td>
+                                        <td>
+                                        </td>
+                                        <td class="mailbox-subject text-danger">
+                                            Yeni mesaj mövcud deyil
+                                        </td>
+                                        <td>
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                        <!-- /.table -->
+                    </div>
+                    <!-- /.mail-box-messages -->
+                </div>
+                <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+        </div>
+        <!-- /.col -->
+    </div>
+    <!-- /.row -->
+</section>
+
+
