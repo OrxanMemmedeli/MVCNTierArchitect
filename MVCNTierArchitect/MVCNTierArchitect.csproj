@@ -2565,6 +2565,7 @@
     <Content Include="Areas\Writer\Views\Content\Index.cshtml" />
     <Content Include="Areas\Writer\Views\Content\Create.cshtml" />
     <Content Include="Areas\Writer\Views\Content\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Message\Reply.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

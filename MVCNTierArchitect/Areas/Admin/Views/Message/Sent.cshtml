@@ -143,3 +143,10 @@
         swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MessageSent"].ToString()))");
     </script>
 }
+
+@if (TempData["MessageReply"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MessageReply"].ToString()))");
+    </script>
+}
