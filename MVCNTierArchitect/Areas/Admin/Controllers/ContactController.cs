@@ -118,6 +118,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 //*******************************************************************
                 model.SenderEmail = "memmedeli.orxan.om@gmail.com";
                 model.IsDraft = true;
+                model.IsResponded = false;
                 _messageService.Add(model);
             }
             return RedirectToAction("Index");
@@ -171,6 +172,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             return RedirectToAction("Sent", "Message", "Admin");
         }
+
+
 
     }
 }

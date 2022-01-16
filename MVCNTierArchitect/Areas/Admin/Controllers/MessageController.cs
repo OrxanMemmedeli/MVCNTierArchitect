@@ -75,7 +75,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         public ActionResult Create(int? id)
         {
-            Message message = new Message(); 
+            Message message = new Message();
             if (id == null)
             {
                 return View(message);
@@ -177,12 +177,12 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
 
-            var contactMessage = _messageService.GetByID(x => x.ID == id);
-            contactMessage.IsResponded = true;
-            contactMessage.MessageText = "Müraciətiniz üçün təşəkkür edirik";
-            contactMessage.Subject = "Admindən cavab";
+            var message = _messageService.GetByID(x => x.ID == id);
+            message.IsResponded = true;
+            message.MessageText = message.MessageText == null ? "Müraciətiniz üçün təşəkkür edirik" : message.MessageText;
+            message.Subject = message.Subject == null ? "Admindən cavab" : message.Subject;
 
-            return View(contactMessage);
+            return View(message);
         }
 
         [HttpPost]
@@ -191,7 +191,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         {
             //*******************************************************************
             message.SenderEmail = "memmedeli.orxan.om@gmail.com";
-
+            message.IsDraft = false;
+            message.CreatedDate = DateTime.Now;
             ValidationResult results = _validator.Validate(message);
             if (!results.IsValid)
             {
@@ -206,5 +207,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             return RedirectToAction("Sent", "Message", "Admin");
         }
+
+
     }
 }
