@@ -1,15 +1,16 @@
-﻿@model IEnumerable<EntityLayer.Concrete.Contact>
+﻿@model IEnumerable<EntityLayer.Concrete.Message>
 
 @{
-    ViewBag.Title = "İstifadəçi mesajları";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Göndərilmiş mesajlar";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
 }
+
 
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>İstifadəçi mesajları</h1>
+                <h1>Göndərilmiş mesajlar</h1>
             </div>
         </div>
     </div><!-- /.container-fluid -->
@@ -18,13 +19,13 @@
 <section class="content">
     <div class="row">
 
-        @Html.Action("MailLeftMenu", "Contact", "Admin")
+        @Html.Action("MailLeftMenu", "Message", "Writer")
 
         <!-- /.col -->
         <div class="col-md-9">
             <div class="card card-primary card-outline">
                 <div class="card-header">
-                    <h3 class="card-title">Mesalıar (kənar)</h3>
+                    <h3 class="card-title">Göndərilmiş mesajlar</h3>
 
                     <div class="card-tools">
                         <div class="input-group input-group-sm">
@@ -45,7 +46,7 @@
                         @if (Model.Count() != 0)
                         {
                             <div class="btn-group">
-                                <a href="/Admin/Contact/DeleteAll"  class="btn btn-default btn-sm" title="Hamısını sil" onclick="return confirm('Mesajlar silinsinmi?')">
+                                <a href="/Writer/Message/DeleteAll" class="btn btn-default btn-sm" title="Hamısını sil" onclick="return confirm('Mesajlar silinsinmi?')">
                                     <i class="far fa-trash-alt"></i>
                                 </a>
                             </div>
@@ -60,39 +61,19 @@
                                     foreach (var item in Model)
                                     {
                                         <tr>
-                                            <td>
-                                                <div class="icheck-primary">
-                                                    <a href="/Admin/Contact/Delete/@item.ID" class="btn btn-default btn-sm" title="Sil" onclick="return confirm('Mesaj silinsinmi?')">
-                                                        <i class="far fa-trash-alt"></i>
-                                                    </a>
-                                                    <a href="/Admin/Contact/Create/@item.ID" class="btn btn-default btn-sm" title="Cavabla">
-                                                        <i class="fas fa-reply"></i>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td class="mailbox-star"><a href="#"><i class="fas fa-star text-warning"></i></a></td>
-                                            <td class="mailbox-name"><a href="/Admin/Contact/Details/@item.ID">@item.UserName</a></td>
+                                            <td class="mailbox-name"><a href="/Writer/Message/Details/@item.ID">@item.SenderEmail</a></td>
                                             <td class="mailbox-subject">
-                                                <b>@item.Subject</b> - @(item.Message.ToString().Length <= 30 ? item.Message : item.Message.Contains("</") ? "Xüsusi simvollu mətn" : item.Message.Substring(0, item.Message.Substring(0, 30).LastIndexOf(" ")) + "..." )
+                                                <b>@item.Subject</b> - @(item.MessageText.ToString().Length <= 30 ? item.MessageText : item.MessageText.Contains("</") ? "Xüsusi simvollu mətn" : item.MessageText.Substring(0, item.MessageText.Substring(0, 30).LastIndexOf(" ")) + "..." )
                                             </td>
-                                            <td class="mailbox-attachment">
-                                                @if (!item.IsReaded)
-                                                {
-                                                    <span class="badge badge-primary">Oxunmadı</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="badge badge-secondary">Oxundu</span>
-                                                }
-                                            </td>
+
                                             <td class="mailbox-attachment">
                                                 @if (!item.IsResponded)
                                                 {
-                                                    <span class="badge bg-warning">✔</span>
+                                                    <span class="badge badge-warning">✔</span>
                                                 }
                                                 else
                                                 {
-                                                    <span class="badge bg-primary">✔✔</span>
+                                                    <span class="badge badge-success">✔✔</span>
                                                 }
                                             </td>
                                             <td class="mailbox-date">
@@ -127,7 +108,7 @@
                                         <td>
                                         </td>
                                         <td class="mailbox-subject text-danger">
-                                            Yeni mesaj mövcud deyil
+                                            Göndərilmiş mesaj mövcud deyil
                                         </td>
                                         <td>
                                         </td>
@@ -141,7 +122,6 @@
                     <!-- /.mail-box-messages -->
                 </div>
                 <!-- /.card-body -->
-
             </div>
             <!-- /.card -->
         </div>
@@ -150,9 +130,24 @@
     <!-- /.row -->
 </section>
 
-@if (TempData["MailDeleted"] != null)
+
+@if (TempData["WContactSent"] != null)
 {
     <script>
-        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["MailDeleted"].ToString()))");
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["WContactSent"].ToString()))");
+    </script>
+}
+
+@if (TempData["WMessageSent"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["WMessageSent"].ToString()))");
+    </script>
+}
+
+@if (TempData["WMessageReply"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["WMessageReply"].ToString()))");
     </script>
 }

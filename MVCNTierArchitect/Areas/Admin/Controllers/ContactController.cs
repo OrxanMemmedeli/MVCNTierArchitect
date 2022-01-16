@@ -44,7 +44,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             var readedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false).Count();
             var deletedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false).Count();
             //*******************************************************************
-            var sentMessageCount = _messageService.GetAll(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false && x.IsDeleted == false).Count();
+            var sentMessageCount = messages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false && x.IsDeleted == false).Count();
 
             ViewData["NewSystemMessageCount"] = newSystemMessageCount;
             ViewData["NewMessageCount"] = newMessageCount;

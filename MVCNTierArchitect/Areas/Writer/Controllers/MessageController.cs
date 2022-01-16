@@ -1,6 +1,5 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
-using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
 using System;
@@ -9,9 +8,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace MVCNTierArchitect.Areas.Admin.Controllers
+namespace MVCNTierArchitect.Areas.Writer.Controllers
 {
-    [RouteArea("Admin")]
+    [RouteArea("Writer")]
     public class MessageController : Controller
     {
         private readonly IMessageService _messageService;
@@ -22,9 +21,37 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             _validator = new MessageValidator();
         }
 
+        public PartialViewResult MailLeftMenu()
+        {
+            var messages = _messageService.GetAll();
+
+            var newSystemMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
+           
+            var readedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
+
+            var draftMessages = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true);
+            var draftMessageCount = draftMessages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail != "memmedeli.orxan.om@gmail.com").Count() +
+                draftMessages.Where(x => x.SenderEmail != "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
+
+            var deletedMessages = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false);
+            var deletedMessageCount = deletedMessages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail != "memmedeli.orxan.om@gmail.com").Count() +
+                deletedMessages.Where(x => x.SenderEmail != "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
+
+            //*******************************************************************
+            var sentMessageCount = messages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false && x.IsDeleted == false).Count();
+
+            ViewData["WNewSystemMessageCount"] = newSystemMessageCount;
+            ViewData["WSentMessageCount"] = sentMessageCount;
+            ViewData["WDraftMessageCount"] = draftMessageCount;
+            ViewData["WReadedMessageCount"] = readedMessageCount;
+            ViewData["WDeletedMessageCount"] = deletedMessageCount;
+            return PartialView();
+        }
+
+        // GET: Writer/Message
         public ActionResult Index()
         {
-            var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
+            var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
@@ -50,10 +77,10 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public ActionResult Deleteds()
         {
             var messages = _messageService.GetAll(x => x.IsDeleted == true).OrderByDescending(x => x.CreatedDate);
+            var writerMessages = messages.Where(x => x.ReceiverEmail == "memmedeli.orxan.om@gmail.com" || x.SenderEmail == "memmedeli.orxan.om@gmail.com").OrderByDescending(x => x.CreatedDate);
+            DeleteOldMessage(writerMessages);
 
-            DeleteOldMessage(messages);
-
-            return View(messages);
+            return View(writerMessages);
         }
 
         private void DeleteOldMessage(IOrderedEnumerable<Message> messages)
@@ -109,7 +136,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 }
                 return View(message);
             }
-            TempData["MessageSent"] = "Mesaj Göndərildi.";
+            TempData["WMessageSent"] = "Mesaj Göndərildi.";
 
             _messageService.Add(message);
             return RedirectToAction("Index");
@@ -130,7 +157,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 message.DeletedDate = DateTime.Now;
                 message.IsDeleted = true;
-                TempData["MailDeleted"] = "Mesaj SİLİNMİŞLƏR qovluğuna daxil ediləcək və 30 gündən sonra həmişəlik silinəcəkdir.";
+                TempData["WMailDeleted"] = "Mesaj SİLİNMİŞLƏR qovluğuna daxil ediləcək və 30 gündən sonra həmişəlik silinəcəkdir.";
 
                 _messageService.Update(message, message.ID);
             }
@@ -141,7 +168,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public ActionResult Drafts()
         {
             var drafts = _messageService.GetAll(x => x.IsDraft == true && x.IsDeleted == false).OrderByDescending(x => x.CreatedDate);
-            return View(drafts);
+            var writerDrafts = drafts.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" || x.ReceiverEmail == "memmedeli.orxan.om@gmail.com");
+            return View(writerDrafts);
         }
 
         public ActionResult Draft(int? id)
@@ -157,7 +185,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             if (!message.IsDeleted)
             {
-                TempData["MailDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
+                TempData["WMailDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
                 message.IsDraft = true;
                 _messageService.Update(message, message.ID);
             }
@@ -166,7 +194,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         public ActionResult Sent()
         {
-            var sents = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true).OrderByDescending(x => x.CreatedDate);
+            var sents = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true && x.SenderEmail == "memmedeli.orxan.om@gmail.com").OrderByDescending(x => x.CreatedDate);
             return View(sents);
         }
 
@@ -179,8 +207,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             var message = _messageService.GetByID(x => x.ID == id);
             message.IsResponded = true;
-            message.MessageText = message.MessageText == null ? "Müraciətiniz üçün təşəkkür edirik" : message.MessageText;
-            message.Subject = message.Subject == null ? "Admindən cavab" : message.Subject;
+            message.MessageText = message.MessageText == null ? "Təşəkkür edirəm." : message.MessageText;
+            message.Subject = message.Subject == null ? "Yazardan cavab" : message.Subject;
 
             return View(message);
         }
@@ -202,12 +230,13 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 }
                 return View(message);
             }
-            TempData["MessageReply"] = "Mesaj Göndərildi.";
+            TempData["WMessageReply"] = "Mesaj Göndərildi.";
             _messageService.Update(message, message.ID);
 
             return RedirectToAction("Sent", "Message", "Admin");
         }
 
-
     }
+
+
 }

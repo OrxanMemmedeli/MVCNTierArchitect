@@ -2,8 +2,9 @@
 
 @{
     ViewBag.Title = "Mesajı Cavabla";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Layout = "~/Views/Shared/_WriterLayout.cshtml";
 }
+
 
 <!-- summernote -->
 <link href="~/AdminLTE/plugins/summernote/summernote-bs4.css" rel="stylesheet" />
@@ -23,7 +24,7 @@
 <section class="content">
     <div class="row">
 
-        @Html.Action("MailLeftMenu", "Contact", "Admin")
+        @Html.Action("MailLeftMenu", "Message", "Writer")
 
         <!-- /.col -->
         <div class="col-md-9">
@@ -33,7 +34,7 @@
                 </div>
 
                 <!-- /.card-header -->
-                @using (Html.BeginForm("Reply", "Message", "Admin", FormMethod.Post))
+                @using (Html.BeginForm("Reply", "Message", "Writer", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -78,7 +79,7 @@
                         </div>
                         @if (!Model.IsDraft)
                         {
-                            <a href="/Admin/Message/Draft/@Model.ID" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Qaralama kimi saxla</a>
+                            <a href="/Writer/Message/Draft/@Model.ID" class="btn btn-default"><i class="fas fa-pencil-alt"></i> Qaralama kimi saxla</a>
                         }
 
                     </div>
@@ -101,3 +102,4 @@
         $('#compose-textarea').summernote()
     })
 </script>
+
