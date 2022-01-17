@@ -112,7 +112,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             TempData["MessageSent"] = "Mesaj Göndərildi.";
 
             _messageService.Add(message);
-            return RedirectToAction("Index");
+            return RedirectToAction("Sent", "Message", "Admin");
         }
 
         public ActionResult Delete(int? id)
