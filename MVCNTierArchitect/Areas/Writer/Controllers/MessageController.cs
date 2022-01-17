@@ -33,7 +33,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             var draftMessageCount = draftMessages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail != "memmedeli.orxan.om@gmail.com").Count() +
                 draftMessages.Where(x => x.SenderEmail != "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
 
-            var deletedMessages = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false);
+            var deletedMessages = messages.Where(x => x.IsDeleted == false);
             var deletedMessageCount = deletedMessages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail != "memmedeli.orxan.om@gmail.com").Count() +
                 deletedMessages.Where(x => x.SenderEmail != "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
 
@@ -139,7 +139,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             TempData["WMessageSent"] = "Mesaj Göndərildi.";
 
             _messageService.Add(message);
-            return RedirectToAction("Index");
+            return RedirectToAction("Sent", "Message", "Writer");
         }
 
         public ActionResult Delete(int? id)
@@ -186,7 +186,8 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             if (!message.IsDeleted)
             {
                 TempData["WMailDrafted"] = "Mesaj QARALAMALAR qovluğuna daxil edildi.";
-                message.IsDraft = true;
+                message.IsDraft = true; 
+                message.IsResponded = false;
                 _messageService.Update(message, message.ID);
             }
             return RedirectToAction("Index");
@@ -233,7 +234,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             TempData["WMessageReply"] = "Mesaj Göndərildi.";
             _messageService.Update(message, message.ID);
 
-            return RedirectToAction("Sent", "Message", "Admin");
+            return RedirectToAction("Sent", "Message", "Writer");
         }
 
     }

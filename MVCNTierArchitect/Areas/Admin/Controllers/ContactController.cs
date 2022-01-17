@@ -42,7 +42,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             var newSystemMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false).Count();
             var draftMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true).Count();
             var readedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false).Count();
-            var deletedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false).Count();
+            var deletedMessageCount = messages.Where(x => x.IsDeleted == false).Count();
             //*******************************************************************
             var sentMessageCount = messages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false && x.IsDeleted == false).Count();
 
