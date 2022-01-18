@@ -1,4 +1,4 @@
-﻿@model MVCNTierArchitect.Models.ViewModels.LoginViewModel
+﻿@model MVCNTierArchitect.Models.ViewModels.WriterLoginViewModel
 @{
     Layout = null;
 }
@@ -8,7 +8,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Giriş səhifəsi | Admin</title>
+    <title>Giriş səhifəsi | Yazar</title>
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -28,17 +28,17 @@
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Admin Panelə keçid</p>
+                <p class="login-box-msg">Yazar Panelinə keçid</p>
 
-                @using (Html.BeginForm("AdminLogin", "Account", FormMethod.Post))
+                @using (Html.BeginForm("Login", "Account", FormMethod.Post))
                 {
                     @Html.AntiForgeryToken()
                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <input type="hidden" name="returnURL" value="@ViewBag.ReturnURL" />
 
-                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Istifadçi adı" name="UserName">
+                        <input type="text" class="form-control" placeholder="Email ünvanı" name="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-user"></span>
@@ -89,7 +89,7 @@
                 <p class="mb-1">
                     <a href="/">Əsas səhifəyə geri dön</a>
                 </p>
-            </div>
+              </div>
             <!-- /.login-card-body -->
         </div>
     </div>
@@ -102,10 +102,10 @@
     <script src="~/AdminLTE/dist/js/adminlte.min.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    @if (ViewBag.LoginMessage != null)
+    @if (ViewBag.WriterLoginMessage != null)
     {
         <script>
-        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(ViewBag.LoginMessage.ToString()))");
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(ViewBag.WriterLoginMessage.ToString()))");
         </script>
     }
 </body>

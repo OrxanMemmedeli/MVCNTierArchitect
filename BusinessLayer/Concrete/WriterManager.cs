@@ -29,6 +29,11 @@ namespace BusinessLayer.Concrete
             _writerDal.Delete(t);
         }
 
+        public Writer Get(Expression<Func<Writer, bool>> Filter)
+        {
+            return _writerDal.Get(Filter);
+        }
+
         public List<Writer> GetAll()
         {
             return _writerDal.GetAll();

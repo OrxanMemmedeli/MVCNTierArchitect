@@ -16,7 +16,7 @@ namespace BusinessLayer.ValidationRules
             RuleFor(x => x.UserName).NotEmpty().WithMessage("İstifadəçi adı boş ola bilməz")
                 .MinimumLength(3).WithMessage("İstifadəçi adı minimum 3 simvol ola biler")
                 .MaximumLength(50).WithMessage("İstifadəçi adı maksimum 50 simvol ola biler")
-                .Must(adminService.IsUserNameUnique).WithMessage("İstifadəçi adı istifadə edilib. Fərqli istifadəçi adından istifadə edin."); ;
+                .Must(adminService.IsUserNameUnique).WithMessage("İstifadəçi adı istifadə edilib. Fərqli istifadəçi adından istifadə edin."); 
             RuleFor(x => x.Role).NotEmpty().WithMessage("Səlahiyyət boş ola bilməz")
                 .MinimumLength(1).WithMessage("Səlahiyyət minimum 1 simvol ola biler")
                 .MaximumLength(1).WithMessage("Səlahiyyət maksimum 1 simvol ola biler");

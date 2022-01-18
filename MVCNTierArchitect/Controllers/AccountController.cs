@@ -16,13 +16,18 @@ namespace MVCNTierArchitect.Controllers
     {
         private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
         private readonly IAdminService _adminService;
+        private readonly IWriterService _writerService;
         private readonly LoginViewModelValidator _validator;
+        private readonly WriterLoginViewModelValidator _writerValidator;
 
-        public AccountController(IAncryptionAndDecryption ancryptionAndDecryption, IAdminService adminService)
+
+        public AccountController(IAncryptionAndDecryption ancryptionAndDecryption, IAdminService adminService, IWriterService writerService)
         {
             _ancryptionAndDecryption = ancryptionAndDecryption;
             _adminService = adminService;
+            _writerService = writerService;
             _validator = new LoginViewModelValidator();
+            _writerValidator = new WriterLoginViewModelValidator();
         }
 
         // GET: Account
@@ -76,6 +81,52 @@ namespace MVCNTierArchitect.Controllers
                 }
             }
             ViewBag.LoginMessage = "Uğursuz əməliyat";
+            return View(model);
+
+        }
+
+
+        public ActionResult Login(string returnURL)
+        {
+            ViewBag.ReturnURL = returnURL;
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(WriterLoginViewModel model, string returnURL)
+        {
+            ValidationResult results = _writerValidator.Validate(model);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                return View(model);
+            }
+
+            //var password = _ancryptionAndDecryption.EncodeData(model.Password);
+            //var email = _ancryptionAndDecryption.EncodeData(model.Email);
+
+            //var writer = _writerService.Get(x => x.Email == email && x.Password == password);
+            var writer = _writerService.Get(x => x.Email == model.Email && x.Password == model.Password);
+
+            if (writer != null)
+            {
+                FormsAuthentication.SetAuthCookie(writer.Email, false);
+                //Session["WriterEmail"] = _ancryptionAndDecryption.DecodeData(writer.Email);
+                Session["WriterEmail"] = writer.Email;
+                if (!string.IsNullOrEmpty(returnURL))
+                {
+                    return Redirect(returnURL);
+                }
+                else
+                {
+                    return Redirect("/Writer/Writer");
+                }
+            }
+            ViewBag.WriterLoginMessage = "Uğursuz əməliyat";
             return View(model);
 
         }
