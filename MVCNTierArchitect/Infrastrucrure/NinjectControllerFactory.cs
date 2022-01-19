@@ -41,6 +41,7 @@ namespace MVCNTierArchitect.Infrastrucrure
         private void AddToolsBinding()
         {
             _ninjectKernal.Bind<IAncryptionAndDecryption>().To<AncryptionAndDecryption>();
+            _ninjectKernal.Bind<ISessionControl>().To<SessionControl>();
         }
 
         protected override IController GetControllerInstance(RequestContext requestContext, Type controllerType)
