@@ -106,17 +106,15 @@ namespace MVCNTierArchitect.Controllers
                 return View(model);
             }
 
-            //var password = _ancryptionAndDecryption.EncodeData(model.Password);
-            //var email = _ancryptionAndDecryption.EncodeData(model.Email);
+            var password = _ancryptionAndDecryption.EncodeData(model.Password);
+            var email = _ancryptionAndDecryption.EncodeData(model.Email);
 
-            //var writer = _writerService.Get(x => x.Email == email && x.Password == password);
-            var writer = _writerService.Get(x => x.Email == model.Email && x.Password == model.Password);
+            var writer = _writerService.Get(x => x.Email == email && x.Password == password);
 
             if (writer != null)
             {
                 FormsAuthentication.SetAuthCookie(writer.Email, false);
-                //Session["WriterEmail"] = _ancryptionAndDecryption.DecodeData(writer.Email);
-                Session["WriterEmail"] = writer.Email;
+                Session["WriterEmail"] = _ancryptionAndDecryption.DecodeData(writer.Email);
                 if (!string.IsNullOrEmpty(returnURL))
                 {
                     return Redirect(returnURL);

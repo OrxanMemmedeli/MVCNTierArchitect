@@ -42,10 +42,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\IAncryptionAndDecryption.cs" />
+    <Compile Include="Abstract\ISessionControl.cs" />
     <Compile Include="Concrete\AncryptionAndDecryption.cs" />
+    <Compile Include="Concrete\SessionControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BusinessLayer\BusinessLayer.csproj">
+      <Project>{930fb64f-f0c1-49e5-8e0d-b5c4992587a2}</Project>
+      <Name>BusinessLayer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\DataAccessLayer\DataAccessLayer.csproj">
       <Project>{4bbf44fe-6b27-40a5-a3d2-30eb23016d23}</Project>
       <Name>DataAccessLayer</Name>
