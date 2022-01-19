@@ -17,25 +17,22 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         private readonly IContentService _contentService;
         private readonly IHeadingService _headingService;
         private readonly ContentValidator _validator;
-        private readonly IWriterService _writerService;
-        private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
+        private readonly ISessionControl _sessionControl;
 
-
-        public ContentController(IContentService contentService, IHeadingService headingService, ContentValidator validator, IWriterService writerService, IAncryptionAndDecryption ancryptionAndDecryption)
+        public ContentController(IContentService contentService, IHeadingService headingService, ContentValidator validator, ISessionControl sessionControl)
         {
-            _writerService = writerService;
             _contentService = contentService;
             _headingService = headingService;
             _validator = validator;
-            _ancryptionAndDecryption = ancryptionAndDecryption;
+            _sessionControl = sessionControl;
         }
 
         // GET: Writer/Content
         public ActionResult Index()
         {
-            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
-
-            var contents = _contentService.GetAllByHeading(x => x.WriterID == writer.ID && x.Status == true);
+            string o = Session["WriterEmail"].ToString();
+            int id = _sessionControl.GetWriterID(o);
+            var contents = _contentService.GetAllByHeading(x => x.WriterID == id && x.Status == true);
             return View(contents);
         }
 
@@ -66,11 +63,9 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Content content)
         {
-            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
-
-            content.CreatedDate = DateTime.Now;
+             content.CreatedDate = DateTime.Now;
             content.Status = true;
-            content.WriterID = writer.ID;
+            content.WriterID = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
             ValidationResult results = _validator.Validate(content);
             if (!results.IsValid)
             {
