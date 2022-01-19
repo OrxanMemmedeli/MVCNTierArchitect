@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tools.Abstract;
 
 namespace MVCNTierArchitect.Areas.Writer.Controllers
 {
@@ -16,18 +17,24 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         private readonly IHeadingService _headingService;
         private readonly HeadingValidator _validator;
         private readonly ICategoryService _categoryService;
+        private readonly IWriterService _writerService;
+        private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
 
-        public HeadingController(IHeadingService headingService, ICategoryService categoryService)
+
+        public HeadingController(IHeadingService headingService, ICategoryService categoryService, IWriterService writerService, IAncryptionAndDecryption ancryptionAndDecryption)
         {
+            _writerService = writerService;
             _headingService = headingService;
             _categoryService = categoryService;
             _validator = new HeadingValidator();
+            _ancryptionAndDecryption = ancryptionAndDecryption;
         }
 
         // GET: Writer/Heading
         public ActionResult Index()
         {
-            var headings = _headingService.GetAllWithContentAndWriter(x => x.WriterID == 1 && x.Status == true);
+            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
+            var headings = _headingService.GetAllWithContentAndWriter(x => x.WriterID == writer.ID && x.Status == true);
             return View(headings);
         }
 
@@ -48,8 +55,11 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Heading heading)
         {
+            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
+
             heading.CreatedDate = DateTime.Now;
-            heading.WriterID = 1;
+            heading.WriterID = writer.ID;
+
             ValidationResult results = _validator.Validate(heading);
             if (!results.IsValid)
             {

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tools.Abstract;
 
 namespace MVCNTierArchitect.Areas.Writer.Controllers
 {
@@ -15,30 +16,33 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
     {
         private readonly IMessageService _messageService;
         private readonly MessageValidator _validator;
-        public MessageController(IMessageService messageService)
+        private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
+
+        public MessageController(IMessageService messageService, IAncryptionAndDecryption ancryptionAndDecryption)
         {
             _messageService = messageService;
             _validator = new MessageValidator();
+            _ancryptionAndDecryption = ancryptionAndDecryption;
         }
 
         public PartialViewResult MailLeftMenu()
         {
+            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
             var messages = _messageService.GetAll();
 
-            var newSystemMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
+            var newSystemMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false && x.ReceiverEmail == writer).Count();
            
-            var readedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
+            var readedMessageCount = messages.Where(x => x.IsReaded == true && x.IsDeleted == false && x.IsResponded == false && x.IsDraft == false && x.ReceiverEmail == writer).Count();
 
             var draftMessages = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == true);
-            var draftMessageCount = draftMessages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail != "memmedeli.orxan.om@gmail.com").Count() +
-                draftMessages.Where(x => x.SenderEmail != "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
+            var draftMessageCount = draftMessages.Where(x => x.SenderEmail == writer && x.ReceiverEmail != writer).Count() +
+                draftMessages.Where(x => x.SenderEmail != writer && x.ReceiverEmail == writer).Count();
 
             var deletedMessages = messages.Where(x => x.IsDeleted == false);
-            var deletedMessageCount = deletedMessages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail != "memmedeli.orxan.om@gmail.com").Count() +
-                deletedMessages.Where(x => x.SenderEmail != "memmedeli.orxan.om@gmail.com" && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").Count();
+            var deletedMessageCount = deletedMessages.Where(x => x.SenderEmail == writer && x.ReceiverEmail != writer).Count() +
+                deletedMessages.Where(x => x.SenderEmail != writer && x.ReceiverEmail == writer).Count();
 
-            //*******************************************************************
-            var sentMessageCount = messages.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" && x.IsResponded == true && x.IsDraft == false && x.IsDeleted == false).Count();
+            var sentMessageCount = messages.Where(x => x.SenderEmail == writer && x.IsResponded == true && x.IsDraft == false && x.IsDeleted == false).Count();
 
             ViewData["WNewSystemMessageCount"] = newSystemMessageCount;
             ViewData["WSentMessageCount"] = sentMessageCount;
@@ -51,7 +55,9 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         // GET: Writer/Message
         public ActionResult Index()
         {
-            var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false && x.ReceiverEmail == "memmedeli.orxan.om@gmail.com").OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
+            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
+
+            var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false && x.ReceiverEmail == writer).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
@@ -76,8 +82,10 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
         public ActionResult Deleteds()
         {
+            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
+
             var messages = _messageService.GetAll(x => x.IsDeleted == true).OrderByDescending(x => x.CreatedDate);
-            var writerMessages = messages.Where(x => x.ReceiverEmail == "memmedeli.orxan.om@gmail.com" || x.SenderEmail == "memmedeli.orxan.om@gmail.com").OrderByDescending(x => x.CreatedDate);
+            var writerMessages = messages.Where(x => x.ReceiverEmail == writer || x.SenderEmail == writer).OrderByDescending(x => x.CreatedDate);
             DeleteOldMessage(writerMessages);
 
             return View(writerMessages);
@@ -122,8 +130,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Message message)
         {
-            //*******************************************************************
-            message.SenderEmail = "memmedeli.orxan.om@gmail.com";
+            message.SenderEmail = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
             message.CreatedDate = DateTime.Now;
             message.IsResponded = true;
 
@@ -168,7 +175,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         public ActionResult Drafts()
         {
             var drafts = _messageService.GetAll(x => x.IsDraft == true && x.IsDeleted == false).OrderByDescending(x => x.CreatedDate);
-            var writerDrafts = drafts.Where(x => x.SenderEmail == "memmedeli.orxan.om@gmail.com" || x.ReceiverEmail == "memmedeli.orxan.om@gmail.com");
+            var writerDrafts = drafts.Where(x => x.SenderEmail == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()) || x.ReceiverEmail == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
             return View(writerDrafts);
         }
 
@@ -195,7 +202,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
         public ActionResult Sent()
         {
-            var sents = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true && x.SenderEmail == "memmedeli.orxan.om@gmail.com").OrderByDescending(x => x.CreatedDate);
+            var sents = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true && x.SenderEmail == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString())).OrderByDescending(x => x.CreatedDate);
             return View(sents);
         }
 
@@ -218,8 +225,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Reply(Message message)
         {
-            //*******************************************************************
-            message.SenderEmail = "memmedeli.orxan.om@gmail.com";
+            message.SenderEmail = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
             message.IsDraft = false;
             message.CreatedDate = DateTime.Now;
             ValidationResult results = _validator.Validate(message);

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tools.Abstract;
 
 namespace MVCNTierArchitect.Areas.Writer.Controllers
 {
@@ -16,18 +17,25 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         private readonly IContentService _contentService;
         private readonly IHeadingService _headingService;
         private readonly ContentValidator _validator;
+        private readonly IWriterService _writerService;
+        private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
 
-        public ContentController(IContentService contentService, IHeadingService headingService, ContentValidator validator)
+
+        public ContentController(IContentService contentService, IHeadingService headingService, ContentValidator validator, IWriterService writerService, IAncryptionAndDecryption ancryptionAndDecryption)
         {
+            _writerService = writerService;
             _contentService = contentService;
             _headingService = headingService;
             _validator = validator;
+            _ancryptionAndDecryption = ancryptionAndDecryption;
         }
 
         // GET: Writer/Content
         public ActionResult Index()
         {
-            var contents = _contentService.GetAllByHeading(x => x.WriterID == 1 && x.Status == true);
+            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
+
+            var contents = _contentService.GetAllByHeading(x => x.WriterID == writer.ID && x.Status == true);
             return View(contents);
         }
 
@@ -58,9 +66,11 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Content content)
         {
+            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
+
             content.CreatedDate = DateTime.Now;
             content.Status = true;
-            content.WriterID = 1;
+            content.WriterID = writer.ID;
             ValidationResult results = _validator.Validate(content);
             if (!results.IsValid)
             {

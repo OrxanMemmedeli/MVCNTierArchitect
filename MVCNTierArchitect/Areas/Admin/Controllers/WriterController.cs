@@ -8,16 +8,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tools.Abstract;
 
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
     public class WriterController : Controller
     {
+        private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
         private readonly IWriterService _writerService;
         private readonly WriterValidator _validator;
 
-        public WriterController(IWriterService writerService)
+        public WriterController(IAncryptionAndDecryption ancryptionAndDecryption,IWriterService writerService)
         {
+            _ancryptionAndDecryption = ancryptionAndDecryption;
             _writerService = writerService;
             _validator = new WriterValidator(_writerService);
         }
@@ -47,6 +50,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 }
                 return View(writer);
             }
+            writer.Password = _ancryptionAndDecryption.EncodeData(writer.Password);
+            writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
             _writerService.Add(writer);
             return RedirectToAction("Index");
         }
@@ -78,6 +83,9 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 writer.ConfirmPassword = writer.OldPassword;
             }
 
+            writer.Password = _ancryptionAndDecryption.DecodeData(writer.Password);
+            writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+
             ValidationResult results = _validator.Validate(writer);
             if (!results.IsValid)
             {
@@ -88,6 +96,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return View(writer);
             }
 
+            writer.Password = _ancryptionAndDecryption.EncodeData(writer.Password);
+            writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
             _writerService.Update(writer, writer.ID);
             return RedirectToAction("Index");
         }
