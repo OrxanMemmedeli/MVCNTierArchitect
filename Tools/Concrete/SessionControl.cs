@@ -25,13 +25,15 @@ namespace Tools.Concrete
 
         public int GetAdminID(string userName)
         {
-            var admin = _adminService.Get(x => x.UserName == _ancryptionAndDecryption.EncodeData(userName));
+            userName = _ancryptionAndDecryption.EncodeData(userName);
+            var admin = _adminService.Get(x => x.UserName == userName);
             return admin.ID;
         }
 
         public int GetWriterID(string email)
         {
-            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(email));
+            email = _ancryptionAndDecryption.EncodeData(email);
+            var writer = _writerService.Get(x => x.Email == email);
             return writer.ID;
         }
     }

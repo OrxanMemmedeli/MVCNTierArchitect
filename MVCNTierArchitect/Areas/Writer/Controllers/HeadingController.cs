@@ -17,24 +17,20 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         private readonly IHeadingService _headingService;
         private readonly HeadingValidator _validator;
         private readonly ICategoryService _categoryService;
-        private readonly IWriterService _writerService;
-        private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
+        private readonly ISessionControl _sessionControl;
 
-
-        public HeadingController(IHeadingService headingService, ICategoryService categoryService, IWriterService writerService, IAncryptionAndDecryption ancryptionAndDecryption)
+        public HeadingController(IHeadingService headingService, ICategoryService categoryService,ISessionControl sessionControl)
         {
-            _writerService = writerService;
             _headingService = headingService;
             _categoryService = categoryService;
             _validator = new HeadingValidator();
-            _ancryptionAndDecryption = ancryptionAndDecryption;
+            _sessionControl = sessionControl;
         }
 
         // GET: Writer/Heading
         public ActionResult Index()
         {
-            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
-            var headings = _headingService.GetAllWithContentAndWriter(x => x.WriterID == writer.ID && x.Status == true);
+            var headings = _headingService.GetAllWithContentAndWriter(x => x.WriterID == _sessionControl.GetWriterID(Session["WriterEmail"].ToString()) && x.Status == true);
             return View(headings);
         }
 
@@ -55,10 +51,8 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Heading heading)
         {
-            var writer = _writerService.Get(x => x.Email == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
-
             heading.CreatedDate = DateTime.Now;
-            heading.WriterID = writer.ID;
+            heading.WriterID = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
 
             ValidationResult results = _validator.Validate(heading);
             if (!results.IsValid)
