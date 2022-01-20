@@ -10,7 +10,8 @@ namespace BusinessLayer.Abstract
 {
     public interface IWriterService : IGenericService<Writer>
     {
-        bool IsEmailUnique(string email);
+
+        bool IsEmailUnique(string email, int? id);
         Writer Get(Expression<Func<Writer, bool>> Filter);
 
     }

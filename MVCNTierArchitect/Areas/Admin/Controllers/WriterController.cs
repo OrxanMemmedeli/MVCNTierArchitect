@@ -28,6 +28,10 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public ActionResult Index()
         {
             var writers = _writerService.GetAll();
+            foreach (var item in writers)
+            {
+                item.Email = _ancryptionAndDecryption.DecodeData(item.Email);
+            }
             return View(writers);
         }
 
@@ -41,6 +45,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(EntityLayer.Concrete.Writer writer)
         {
+            writer.Status = true;
+            writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
             ValidationResult results = _validator.Validate(writer);
             if (!results.IsValid)
             {
@@ -50,8 +56,20 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 }
                 return View(writer);
             }
+            else if (!_ancryptionAndDecryption.DecodeData(writer.Email).Contains("@"))
+            {
+                ModelState.AddModelError("Email", "Email adresi düzgün daxil edilmeyib.");
+                writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                return View(writer);
+            }
+            else if (!_writerService.IsEmailUnique(writer.Email, null))
+            {
+                ModelState.AddModelError("Email", "Email ünvanı istifadə edilib. Fərqli ünvan istifadə edin.");
+                writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                return View(writer);
+            }
             writer.Password = _ancryptionAndDecryption.EncodeData(writer.Password);
-            writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
+
             _writerService.Add(writer);
             return RedirectToAction("Index");
         }
@@ -69,7 +87,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 return new HttpNotFoundResult();
             }
-
+            Writer.Email = _ancryptionAndDecryption.DecodeData(Writer.Email);
             return View(Writer);
         }
 
@@ -84,7 +102,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
 
             writer.Password = _ancryptionAndDecryption.DecodeData(writer.Password);
-            writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+            writer.ConfirmPassword = writer.Password;
+            writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
 
             ValidationResult results = _validator.Validate(writer);
             if (!results.IsValid)
@@ -95,9 +114,20 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 }
                 return View(writer);
             }
+            else if (!_ancryptionAndDecryption.DecodeData(writer.Email).Contains("@"))
+            {
+                ModelState.AddModelError("Email", "Email adresi düzgün daxil edilmeyib.");
+                writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                return View(writer);
+            }
+            else if (!_writerService.IsEmailUnique(writer.Email,writer.ID))
+            {
+                ModelState.AddModelError("Email", "Email ünvanı istifadə edilib. Fərqli ünvan istifadə edin.");
+                writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                return View(writer);
+            }
 
             writer.Password = _ancryptionAndDecryption.EncodeData(writer.Password);
-            writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
             _writerService.Update(writer, writer.ID);
             return RedirectToAction("Index");
         }

@@ -13,7 +13,6 @@ namespace BusinessLayer.Concrete
     public class WriterManager : IWriterService
     {
         private readonly IWriterDal _writerDal;
-
         public WriterManager(IWriterDal writerDal)
         {
             _writerDal = writerDal;
@@ -49,9 +48,9 @@ namespace BusinessLayer.Concrete
             return _writerDal.GetById(Filter);
         }
 
-        public bool IsEmailUnique(string email)
+        public bool IsEmailUnique(string email, int? id)
         {
-            return _writerDal.IsEmailUnique(email);
+            return _writerDal.IsEmailUnique(email, id);
         }
 
         public void Update(Writer t, int id)

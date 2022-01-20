@@ -23,7 +23,7 @@ namespace DataAccessLayer.EntityFramework
 
         public List<Heading> GetAllWithContentAndWriter(Expression<Func<Heading, bool>> Filter)
         {
-            return context.Headings.Include(x => x.Contents).Include(x => x.Writer).Where(Filter).ToList();
+            return context.Headings.Where(Filter).Include(x => x.Contents).Include(x => x.Writer).ToList();
         }
     }
 }
