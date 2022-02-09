@@ -30,7 +30,8 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         // GET: Writer/Content
         public ActionResult Index()
         {
-            var contents = _contentService.GetAllByHeading(x => x.WriterID == _sessionControl.GetWriterID(Session["WriterEmail"].ToString()) && x.Status == true);
+            int writeriId = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
+            var contents = _contentService.GetAllByHeading(x => x.WriterID == writeriId && x.Status == true);
             return View(contents);
         }
 
