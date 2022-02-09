@@ -1,8 +1,7 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.Content>
-
 @{
-    ViewBag.Title = "Yazara görə Məzmunlar";
-    Layout = "~/Views/Shared/_WriterLayout.cshtml";
+    ViewBag.Title = "ContentByHeading";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="timeline timeline-inverse">
@@ -10,10 +9,11 @@
         @if (Model != null)
         {
             <span class="bg-primary">
-                @ViewBag.User
+                @Model.Select(x => x.Heading).Distinct().First().Name
             </span>
         }
     </div>
+    <br />
     @foreach (var item in Model)
     {
         <!-- timeline time label -->
@@ -29,17 +29,18 @@
             <div class="timeline-item">
                 <span class="time"><i class="far fa-clock"></i> @((DateTime.Now - item.CreatedDate).Days) gün əvvəl</span>
 
-                <h3 class="timeline-header">@item.Heading.Name</h3>
+                <h3 class="timeline-header"><a>@item.Writer.Name @item.Writer.Surname</a></h3>
 
                 <div class="timeline-body">
                     @item.Text
-                </div>
-                <div class="timeline-footer">
-                    <a href="/Writer/Content/Edit/@item.ID" class="btn btn-warning btn-flat btn-sm">Düzəliş et</a>
                 </div>
             </div>
         </div>
         <!-- END timeline item -->
     }
 
+
 </div>
+
+
+

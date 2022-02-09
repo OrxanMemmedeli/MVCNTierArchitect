@@ -42,6 +42,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
                 return new HttpNotFoundResult();
             }
             var contents = _contentService.GetAll(x => x.WriterID == id).OrderByDescending(x => x.CreatedDate);
+            ViewBag.User = contents.First().Writer.Name + " " + contents.First().Writer.Surname;
             return View(contents);
         }
 
