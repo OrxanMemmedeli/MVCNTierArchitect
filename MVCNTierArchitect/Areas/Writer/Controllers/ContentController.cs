@@ -46,17 +46,22 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             return View(contents);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
+            Content content = new Content();
             List<SelectListItem> headings = (from c in _headingService.GetAll()
                                              select new SelectListItem
                                              {
                                                  Text = c.Name,
                                                  Value = c.ID.ToString()
                                              }).ToList();
-
+            if (id != null)
+            {
+                content.HeadingID = (int)id;
+            }
+            
             ViewBag.Headings = headings;
-            return View();
+            return View(content);
         }
 
         [HttpPost]

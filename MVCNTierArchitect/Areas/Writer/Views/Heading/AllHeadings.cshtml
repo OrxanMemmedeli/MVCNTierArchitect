@@ -1,17 +1,14 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.Heading>
 
 @{
-    ViewBag.Title = "Başlıqlarım";
+    ViewBag.Title = "Başlıqlar";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
     int counter = 0;
 
 }
 
-<h2>Başlıqlarım</h2>
+<h2>Başlıqlar</h2>
 
-<p>
-    <a href="/Writer/Heading/Create" class="btn btn-primary">Yeni başlıq</a>
-</p>
 <table class="table">
     <tr>
         <th>
@@ -28,6 +25,9 @@
         </th>
         <th>
             Yazılma tarixi
+        </th>
+        <th>
+            Məzmunlar
         </th>
         <th></th>
     </tr>
@@ -58,15 +58,15 @@
                 @item.CreatedDate.ToShortDateString()
             </td>
             <td>
+                <big><span class="badge badge-warning">@item.Contents.Count()</span></big>
+                
+            </td>
+            <td>
                 @if (item.Contents.Count() != 0)
                 {
-                    <a href="/Writer/Content/ContentByWriter/@item.ID" class="badge badge-primary" title="Başlığa uyğun yazılar"><i class="fas fa-clipboard-list"></i></a> <span>|</span>
+                    <a href="/Home/ContentByHeading/@item.ID" class="badge badge-primary" title="Başlığa uyğun yazılar"><i class="fas fa-clipboard-list"></i></a> <span>|</span>
                 }
-                <a href="/Writer/Heading/Edit/@item.ID" class="badge badge-success" title="Düzəliş et"><i class="fas fa-edit"></i></a> |
-
-                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
-
-
+                <a href="/Writer/Content/Create/@item.ID" class="badge badge-success" title="Bu başlığa yaz"><i class="fas fa-plus"></i></a>
             </td>
         </tr>
     }

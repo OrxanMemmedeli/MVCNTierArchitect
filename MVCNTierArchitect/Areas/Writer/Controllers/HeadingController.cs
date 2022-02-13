@@ -35,10 +35,16 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             return View(headings);
         }
 
+        public ActionResult AllHeadings()
+        {
+            var headings = _headingService.GetAllWithContentAndWriter(x => x.Status == true);
+            return View(headings);
+        }
+
         [HttpGet]
         public ActionResult Create()
         {
-            List<SelectListItem> categories = (from c in _categoryService.GetAll()
+            List<SelectListItem> categories = (from c in _categoryService.GetAll(x => x.Status == true)
                                                select new SelectListItem
                                                {
                                                    Text = c.Name,
@@ -62,7 +68,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
-                List<SelectListItem> categories = (from c in _categoryService.GetAll()
+                List<SelectListItem> categories = (from c in _categoryService.GetAll(x => x.Status == true)
                                                    select new SelectListItem
                                                    {
                                                        Text = c.Name,
@@ -84,7 +90,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
                 return new HttpNotFoundResult();
             }
 
-            List<SelectListItem> categories = (from c in _categoryService.GetAll()
+            List<SelectListItem> categories = (from c in _categoryService.GetAll(x => x.Status == true)
                                                select new SelectListItem
                                                {
                                                    Text = c.Name,
@@ -107,7 +113,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
-                List<SelectListItem> categories = (from c in _categoryService.GetAll()
+                List<SelectListItem> categories = (from c in _categoryService.GetAll(x => x.Status == true)
                                                    select new SelectListItem
                                                    {
                                                        Text = c.Name,
