@@ -22,7 +22,7 @@ namespace MVCNTierArchitect.Controllers
         public ActionResult Index()
         {
             var fiveDaysAgo = DateTime.Now.AddDays(-5);
-            var contents = _contentService.GetAll(x => x.CreatedDate >= fiveDaysAgo && x.Status == true).OrderByDescending(x => x.CreatedDate);
+            var contents = _contentService.GetAllByHeading(x => x.CreatedDate >= fiveDaysAgo && x.Status == true).OrderByDescending(x => x.CreatedDate);
             return View(contents);
         }
 
@@ -40,7 +40,7 @@ namespace MVCNTierArchitect.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            var contents = _contentService.GetAll(x => x.HeadingID == id && x.Status == true).OrderByDescending(x => x.CreatedDate);
+            var contents = _contentService.GetAllByHeading(x => x.HeadingID == id && x.Status == true).OrderByDescending(x => x.CreatedDate);
             return View(contents);
         }
 

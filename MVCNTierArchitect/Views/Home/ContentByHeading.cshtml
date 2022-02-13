@@ -9,7 +9,7 @@
         @if (Model != null)
         {
             <span class="bg-primary">
-                @Model.Select(x => x.Heading).Distinct().First().Name
+                @Model.Select(x => x.Heading).First().Name
             </span>
         }
     </div>
