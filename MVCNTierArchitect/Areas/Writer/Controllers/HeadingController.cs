@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +36,9 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             return View(headings);
         }
 
-        public ActionResult AllHeadings()
+        public ActionResult AllHeadings(int page=1)
         {
-            var headings = _headingService.GetAllWithContentAndWriter(x => x.Status == true);
+            var headings = _headingService.GetAllWithContentAndWriter(x => x.Status == true).ToPagedList(page,10);
             return View(headings);
         }
 

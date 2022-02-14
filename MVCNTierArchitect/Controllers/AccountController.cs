@@ -128,5 +128,13 @@ namespace MVCNTierArchitect.Controllers
             return View(model);
 
         }
+
+        public ActionResult Logout()
+        {
+            FormsAuthentication.SignOut();
+            Session.Abandon();
+            return RedirectToAction("Index","Home");
+        }
+
     }
 }
