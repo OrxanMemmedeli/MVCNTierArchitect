@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using FluentValidation.Results;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,45 +59,78 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Edit(EntityLayer.Concrete.Writer writer)
         {
-            if ((writer.Password == "Test123456!!" || string.IsNullOrEmpty(writer.Password)) && (writer.ConfirmPassword == "Test123456!!" || string.IsNullOrEmpty(writer.ConfirmPassword)))
-            {
-                writer.Password = writer.OldPassword;
-                writer.ConfirmPassword = writer.OldPassword;
-            }
-
             writer.Password = _ancryptionAndDecryption.DecodeData(writer.Password);
             writer.ConfirmPassword = writer.Password;
             writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
+
+            List<string> errors = new List<string>();
 
             ValidationResult results = _validator.Validate(writer);
             if (!results.IsValid)
             {
                 foreach (var item in results.Errors)
                 {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                    errors.Add(item.ErrorMessage);
                 }
-                return View(writer);
+                return Json(JsonConvert.SerializeObject(errors));
             }
             else if (!_ancryptionAndDecryption.DecodeData(writer.Email).Contains("@"))
             {
-                ModelState.AddModelError("Email", "Email adresi düzgün daxil edilmeyib.");
+                errors.Add("Email adresi düzgün daxil edilmeyib.");
                 writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
-                return View(writer);
+                return Json(JsonConvert.SerializeObject(errors));
             }
             else if (!_writerService.IsEmailUnique(writer.Email, writer.ID))
             {
-                ModelState.AddModelError("Email", "Email ünvanı istifadə edilib. Fərqli ünvan istifadə edin.");
+                errors.Add("Email ünvanı istifadə edilib. Fərqli ünvan istifadə edin.");
                 writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
-                return View(writer);
+                return Json(JsonConvert.SerializeObject(errors));
             }
-
             writer.Password = _ancryptionAndDecryption.EncodeData(writer.Password);
             _writerService.Update(writer, writer.ID);
-            return RedirectToAction("Index");
+            return Json(200);
         }
 
+
+        [HttpPost]
+        public ActionResult EditPassword(EntityLayer.Concrete.Writer writer)
+        {
+            writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
+
+            List<string> errors = new List<string>();
+            var originalData = _writerService.GetByID(x => x.ID == writer.ID);
+            if (originalData.Password != _ancryptionAndDecryption.EncodeData(writer.OldPassword))
+            {
+                errors.Add("Cari şifrə səhv daxil edilib.");
+                return Json(JsonConvert.SerializeObject(errors));
+            }
+
+            ValidationResult results = _validator.Validate(writer);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    errors.Add(item.ErrorMessage);
+                }
+                return Json(JsonConvert.SerializeObject(errors));
+            }
+            else if (!_ancryptionAndDecryption.DecodeData(writer.Email).Contains("@"))
+            {
+                errors.Add("Email adresi düzgün daxil edilmeyib.");
+                writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                return Json(JsonConvert.SerializeObject(errors));
+            }
+            else if (!_writerService.IsEmailUnique(writer.Email, writer.ID))
+            {
+                errors.Add("Email ünvanı istifadə edilib. Fərqli ünvan istifadə edin.");
+                writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                return Json(JsonConvert.SerializeObject(errors));
+            }
+            writer.Password = _ancryptionAndDecryption.EncodeData(writer.Password);
+            _writerService.Update(writer, writer.ID);
+            return Json(200);
+        }
     }
 }
