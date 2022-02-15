@@ -69,10 +69,13 @@
                             @Html.Action("LastActivity", "Writer", "Writer")
 
                             <div class="tab-pane" id="EditData">
-                                <input type="hidden" id="ID" value="@Model.ID" />
+                                <input type="hidden" id="WriterID" value="@Model.ID" />
                                 <input type="hidden" id="Password" value="@Model.Password" />
                                 <input type="hidden" id="ConfirmPassword" value="@Model.Password" />
                                 <input type="hidden" id="Status" value="@Model.Status" />
+                                <div class="alert alert-danger">
+                                    <p id="EditResponce"></p>
+                                </div>
                                 <div class="form-group row">
                                     <label for="Name" class="col-sm-2 col-form-label">Ad</label>
                                     <div class="col-sm-10">
@@ -111,6 +114,9 @@
                             </div>
 
                             <div class="tab-pane" id="EditPassword">
+                                <div class="alert alert-danger">
+                                    <p id="EditPasswordResponse"></p>
+                                </div>
                                 <div class="form-group row">
                                     <label for="WOldPassword" class="col-sm-2 col-form-label">Cari Şifrəniz</label>
                                     <div class="col-sm-10">
@@ -149,3 +155,89 @@
     </div><!-- /.container-fluid -->
 </section>
 
+@section Scripts{
+    <script>
+        $("#btnEditData").on('click', function (e) {
+            e.preventDefault();
+            var formDataEdit = new FormData();
+            formDataEdit.append('Name', $("#Name").val());
+            formDataEdit.append('ID', $("#WriterID").val());
+            formDataEdit.append('Surname', $("#Surname").val());
+            formDataEdit.append('Email', $("#Email").val());
+            formDataEdit.append('Status', $("#Status").val());
+            formDataEdit.append('Password', $("#Password").val());
+            formDataEdit.append('ConfirmPassword', $("#ConfirmPassword").val());
+            formDataEdit.append('About', $("#About").val());
+            formDataEdit.append('ImageURL', $("#ImageURL").val());
+            //formDataEdit.append('ImageURL', document.getElementById("ImageURL").files[0]);
+            $.ajax({
+                type: "post",
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                data: formDataEdit,
+                url: "/Writer/Writer/Edit",
+                success: function (responce) {
+                    if (responce != 200) {
+                        let data = jQuery.parseJSON(responce);
+                        let alert = "";
+                        $.each(data, (index, value) => {
+                            alert += `*${value}</br>`;
+                        });
+                        $("#EditResponce").html(alert);
+                    }
+                    else {
+                        alert("Məlumatlar yeniləndi.");
+                        location.reload();
+                    }
+                },
+                error: function (e, t, x) {
+                    alert(t);
+                }
+            });
+        });
+
+        $("#btnEditPassword").on('click', function (e) {
+            e.preventDefault();
+            var formDataEdit = new FormData();
+            formDataEdit.append('Name', $("#Name").val());
+            formDataEdit.append('ID', $("#WriterID").val());
+            formDataEdit.append('Surname', $("#Surname").val());
+            formDataEdit.append('Email', $("#Email").val());
+            formDataEdit.append('Status', $("#Status").val());
+            formDataEdit.append('Password', $("#WPassword").val());
+            formDataEdit.append('OldPassword', $("#WOldPassword").val());
+            formDataEdit.append('ConfirmPassword', $("#WConfirmPassword").val());
+            formDataEdit.append('About', $("#About").val());
+            formDataEdit.append('ImageURL', $("#ImageURL").val());
+            //formDataEdit.append('ImageURL', document.getElementById("ImageURL").files[0]);
+            $.ajax({
+                type: "post",
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                data: formDataEdit,
+                url: "/Writer/Writer/EditPassword",
+                success: function (responce) {
+                    if (responce != 200) {
+                        let data = jQuery.parseJSON(responce);
+                        let alert = "";
+                        $.each(data, (index, value) => {
+                            alert += `*${value}</br>`;
+                        });
+                        $("#EditResponce").html(alert);
+                    }
+                    else {
+                        alert("Məlumatlar yeniləndi.");
+
+                        location.replace("/Account/Logout");
+                    }
+                },
+                error: function (e, t, x) {
+                    alert(t);
+                }
+            });
+        });
+    </script>
+    }
+<script>
+
+</script>
