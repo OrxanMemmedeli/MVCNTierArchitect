@@ -2585,6 +2585,8 @@
     <Content Include="Areas\Writer\Views\Message\Sent.cshtml" />
     <Content Include="Areas\Writer\Views\Message\Reply.cshtml" />
     <Content Include="Areas\Writer\Views\Heading\AllHeadings.cshtml" />
+    <Content Include="Areas\Writer\Views\Writer\LastPosts.cshtml" />
+    <Content Include="Areas\Writer\Views\Writer\LastActivity.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

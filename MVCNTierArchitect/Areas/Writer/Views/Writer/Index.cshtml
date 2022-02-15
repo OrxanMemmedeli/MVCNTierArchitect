@@ -1,8 +1,151 @@
-﻿
+﻿@model EntityLayer.Concrete.Writer
+
 @{
     ViewBag.Title = "Profil";
     Layout = "~/Views/Shared/_WriterLayout.cshtml";
 }
 
-<h2>Profil</h2>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            <img class="profile-user-img img-fluid img-circle"
+                                 src="@Model.ImageURL"
+                                 alt="User profile picture">
+                        </div>
+
+                        <h3 class="profile-username text-center">@Model.Name @Model.Surname</h3>
+
+                        <p class="text-muted text-center">@ViewBag.Email</p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Başlıqlarım</b> <a class="float-right">@ViewBag.Headings</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Məzmunlarım</b> <a class="float-right">@ViewBag.Contents</a>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+                <!-- About Me Box -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Haqqımda</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <p class="text-muted">
+                            @Html.Raw(Model.About)
+                        </p>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-md-9">
+                <div class="card">
+                    <div class="card-header p-2">
+                        <ul class="nav nav-pills">
+                            <li class="nav-item"><a class="nav-link active" href="#LastPosts" data-toggle="tab">Son 5 paylaşlan</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#LastActivity" data-toggle="tab">Son 5 aktivliyim</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#EditData" data-toggle="tab">Məlumatları yenilə</a></li>
+                            <li class="nav-item"><a class="nav-link" href="#EditPassword" data-toggle="tab">Şifrəni yenilə</a></li>
+                        </ul>
+                    </div><!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="tab-content">
+                            <!-- /.tab-pane -->
+                            @Html.Action("LastPosts", "Writer", "Writer")
+
+                            <!-- /.tab-pane -->
+                            @Html.Action("LastActivity", "Writer", "Writer")
+
+                            <div class="tab-pane" id="EditData">
+                                <input type="hidden" id="ID" value="@Model.ID" />
+                                <input type="hidden" id="Password" value="@Model.Password" />
+                                <input type="hidden" id="ConfirmPassword" value="@Model.Password" />
+                                <input type="hidden" id="Status" value="@Model.Status" />
+                                <div class="form-group row">
+                                    <label for="Name" class="col-sm-2 col-form-label">Ad</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Name" placeholder="Adınız" value="@Model.Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Surname" class="col-sm-2 col-form-label">Soyad</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="Surname" placeholder="Soyad" value="@Model.Surname">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="Email" class="col-sm-2 col-form-label">Email</label>
+                                    <div class="col-sm-10">
+                                        <input type="email" class="form-control" id="Email" placeholder="Email" value="@ViewBag.Email">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="ImageURL" class="col-sm-2 col-form-label">FotoURL</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="ImageURL" placeholder="FotoURL" value="@Model.ImageURL">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="About" class="col-sm-2 col-form-label">Haqqımda</label>
+                                    <div class="col-sm-10">
+                                        <textarea class="form-control" id="About" placeholder="Haqqımda">@Model.About</textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="offset-sm-2 col-sm-10">
+                                        <button id="btnEditData" type="submit" class="btn btn-danger">Dəyişiklik et</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="tab-pane" id="EditPassword">
+                                <div class="form-group row">
+                                    <label for="WOldPassword" class="col-sm-2 col-form-label">Cari Şifrəniz</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="WOldPassword" placeholder="Cari Şifrəniz">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="WPassword" class="col-sm-2 col-form-label">Yeni Şifrəniz</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="WPassword" placeholder="Yeni Şifrəniz">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="WConfirmPassword" class="col-sm-2 col-form-label">Şifrənin təkrarı</label>
+                                    <div class="col-sm-10">
+                                        <input type="password" class="form-control" id="WConfirmPassword" placeholder="Şifrənin təkrarı">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="offset-sm-2 col-sm-10">
+                                        <button id="btnEditPassword" type="submit" class="btn btn-danger">Dəyişiklik et</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- /.tab-pane -->
+                        </div>
+                        <!-- /.tab-content -->
+                    </div><!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+        </div>
+        <!-- /.row -->
+    </div><!-- /.container-fluid -->
+</section>
 
