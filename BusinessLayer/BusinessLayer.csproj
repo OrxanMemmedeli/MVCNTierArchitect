@@ -55,6 +55,7 @@
   <ItemGroup>
     <Compile Include="Abstract\IAboutService.cs" />
     <Compile Include="Abstract\IAdminService.cs" />
+    <Compile Include="Abstract\IAdressService.cs" />
     <Compile Include="Abstract\ICategoryService.cs" />
     <Compile Include="Abstract\IContactServive.cs" />
     <Compile Include="Abstract\IContentService.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="Abstract\IWriterService.cs" />
     <Compile Include="Concrete\AboutManager.cs" />
     <Compile Include="Concrete\AdminManager.cs" />
+    <Compile Include="Concrete\AdressManager.cs" />
     <Compile Include="Concrete\CategoryManager.cs" />
     <Compile Include="Concrete\ContactManager.cs" />
     <Compile Include="Concrete\ContentManager.cs" />
@@ -80,6 +82,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ValidationRules\AboutValidator.cs" />
     <Compile Include="ValidationRules\AdminValidator.cs" />
+    <Compile Include="ValidationRules\AdressValidator.cs" />
     <Compile Include="ValidationRules\CategoryValidator.cs" />
     <Compile Include="ValidationRules\ContactValidator.cs" />
     <Compile Include="ValidationRules\ContentValidator.cs" />

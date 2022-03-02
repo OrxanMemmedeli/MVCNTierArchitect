@@ -10,7 +10,6 @@ namespace ShowcaseAPI.Models.Context
     public class ShowcaseContext : DbContext
     {
         public DbSet<About> Abouts { get; set; }
-        public DbSet<Adress> Adresses { get; set; }
         public DbSet<Development> Developments { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Notification> Notifications { get; set; }

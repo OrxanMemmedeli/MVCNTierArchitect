@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace ShowcaseAPI.Models.Entity
+namespace EntityLayer.Concrete
 {
     public class Adress
     {
