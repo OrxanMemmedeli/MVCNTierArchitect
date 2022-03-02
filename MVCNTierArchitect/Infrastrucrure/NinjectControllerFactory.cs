@@ -36,6 +36,7 @@ namespace MVCNTierArchitect.Infrastrucrure
             _ninjectKernal.Bind<IWriterService>().To<WriterManager>().WithConstructorArgument("writerDal", new EFWriterRepository());
             _ninjectKernal.Bind<ISkillInfoService>().To<SkillInfoManager>().WithConstructorArgument("skillInfoDal", new EFSkillInfoRepository());
             _ninjectKernal.Bind<ISkillService>().To<SkillManager>().WithConstructorArgument("skillDal", new EFSkillRepository());
+            _ninjectKernal.Bind<IAdressService>().To<AdressManager>().WithConstructorArgument("adressDal", new EFAdressRepository());
         }
 
         private void AddToolsBinding()

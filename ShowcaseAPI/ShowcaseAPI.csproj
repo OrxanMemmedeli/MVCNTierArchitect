@@ -137,7 +137,6 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AboutController.cs" />
-    <Compile Include="Controllers\AdressController.cs" />
     <Compile Include="Controllers\DevelopmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImageController.cs" />
@@ -155,10 +154,13 @@
     <Compile Include="Migrations\202203020736472_CreateAnotherTables.Designer.cs">
       <DependentUpon>202203020736472_CreateAnotherTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203021002033_DeleteAdressTable.cs" />
+    <Compile Include="Migrations\202203021002033_DeleteAdressTable.Designer.cs">
+      <DependentUpon>202203021002033_DeleteAdressTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Context\ShowcaseContext.cs" />
     <Compile Include="Models\Entity\About.cs" />
-    <Compile Include="Models\Entity\Adress.cs" />
     <Compile Include="Models\Entity\Development.cs" />
     <Compile Include="Models\Entity\Notification.cs" />
     <Compile Include="Models\Entity\SosialPage.cs" />
@@ -234,6 +236,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203020736472_CreateAnotherTables.resx">
       <DependentUpon>202203020736472_CreateAnotherTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203021002033_DeleteAdressTable.resx">
+      <DependentUpon>202203021002033_DeleteAdressTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
