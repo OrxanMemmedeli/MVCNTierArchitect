@@ -147,6 +147,8 @@
     <Compile Include="Areas\Admin\Controllers\IstatistikController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessageController.cs" />
     <Compile Include="Areas\Admin\Controllers\WriterController.cs" />
+    <Compile Include="Areas\Showcase\Controllers\NotificationController.cs" />
+    <Compile Include="Areas\Showcase\ShowcaseAreaRegistration.cs" />
     <Compile Include="Areas\Skill\Controllers\SkillController.cs" />
     <Compile Include="Areas\Skill\SkillAreaRegistration.cs" />
     <Compile Include="Areas\Writer\Controllers\ContentController.cs" />
@@ -2642,6 +2644,8 @@
     <Content Include="AdminLTE\Vitrin\webfonts\fa-solid-900.ttf" />
     <Content Include="AdminLTE\Vitrin\webfonts\fa-solid-900.woff" />
     <Content Include="AdminLTE\Vitrin\webfonts\fa-solid-900.woff2" />
+    <Content Include="Areas\Showcase\Views\web.config" />
+    <Content Include="Areas\Showcase\Views\Notification\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2676,11 +2680,14 @@
     <Content Include="Views\Home\HeadigsBar.cshtml" />
     <Content Include="Views\Home\ContentByHeading.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
+    <Content Include="Views\Shared\_ShowcaseLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
+    <Folder Include="Areas\Showcase\Data\" />
+    <Folder Include="Areas\Showcase\Views\Shared\" />
     <Folder Include="Areas\Skill\Data\" />
     <Folder Include="Areas\Skill\Views\Shared\" />
     <Folder Include="Areas\Writer\Data\" />
@@ -2713,6 +2720,10 @@
     <ProjectReference Include="..\EntityLayer\EntityLayer.csproj">
       <Project>{00075c63-3a6f-4beb-b5fd-2ca2116fcd2f}</Project>
       <Name>EntityLayer</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShowcaseAPI\ShowcaseAPI.csproj">
+      <Project>{b5045f86-af1a-4057-8a03-0b87ca74ec8e}</Project>
+      <Name>ShowcaseAPI</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.csproj">
       <Project>{f81af2b5-ac70-436a-8d0c-b51c54fca9a7}</Project>
