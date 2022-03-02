@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLayer", "BusinessLa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools", "Tools\Tools.csproj", "{F81AF2B5-AC70-436A-8D0C-B51C54FCA9A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShowcaseAPI", "ShowcaseAPI\ShowcaseAPI.csproj", "{B5045F86-AF1A-4057-8A03-0B87CA74EC8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{F81AF2B5-AC70-436A-8D0C-B51C54FCA9A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F81AF2B5-AC70-436A-8D0C-B51C54FCA9A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F81AF2B5-AC70-436A-8D0C-B51C54FCA9A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5045F86-AF1A-4057-8A03-0B87CA74EC8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5045F86-AF1A-4057-8A03-0B87CA74EC8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5045F86-AF1A-4057-8A03-0B87CA74EC8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5045F86-AF1A-4057-8A03-0B87CA74EC8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
