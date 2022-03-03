@@ -28,7 +28,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
             var url = _adressService.GetAll().OrderByDescending(x => x.ID).First();
 
             var httpclient = new HttpClient();
-            var responseMessage = await httpclient.GetAsync(url + "api/Notification");
+            var responseMessage = await httpclient.GetAsync(url.URL + "api/Notification");
             var jsonString = await responseMessage.Content.ReadAsStringAsync();
             var values = JsonConvert.DeserializeObject<List<Notification>>(jsonString);
 

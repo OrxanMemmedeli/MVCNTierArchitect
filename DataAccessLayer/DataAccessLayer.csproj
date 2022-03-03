@@ -140,6 +140,14 @@
     <Compile Include="Migrations\202201110814206_NewSkillsTables.Designer.cs">
       <DependentUpon>202201110814206_NewSkillsTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203030600161_CraateNewAPIAdressTable.cs" />
+    <Compile Include="Migrations\202203030600161_CraateNewAPIAdressTable.Designer.cs">
+      <DependentUpon>202203030600161_CraateNewAPIAdressTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203030611088_DeleteAPIAsdressTable.cs" />
+    <Compile Include="Migrations\202203030611088_DeleteAPIAsdressTable.Designer.cs">
+      <DependentUpon>202203030611088_DeleteAPIAsdressTable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -202,6 +210,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202201110814206_NewSkillsTables.resx">
       <DependentUpon>202201110814206_NewSkillsTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203030600161_CraateNewAPIAdressTable.resx">
+      <DependentUpon>202203030600161_CraateNewAPIAdressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203030611088_DeleteAPIAsdressTable.resx">
+      <DependentUpon>202203030611088_DeleteAPIAsdressTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
