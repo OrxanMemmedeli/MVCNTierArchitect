@@ -1,0 +1,61 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Adress>
+
+@{
+    ViewBag.Title = "API Ünvanı";
+    Layout = "~/Views/Shared/_ShowcaseLayout.cshtml";
+}
+
+<h2>API Ünvanı</h2>
+
+<p>
+    <a href="/Showcase/Adress/Create" class="btn btn-primary">Yeni Ünvan</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Ünvan
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.URL)
+            </td>
+            <td>
+                <a href="/Showcase/Adress/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function Delete(id) {
+        var url = "/Showcase/Adress/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Showcase/Adress', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["DeleteAdress"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteAdress"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditAdress"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditAdress"].ToString()))");
+    </script>
+}
