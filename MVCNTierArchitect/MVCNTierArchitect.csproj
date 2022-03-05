@@ -147,7 +147,13 @@
     <Compile Include="Areas\Admin\Controllers\IstatistikController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessageController.cs" />
     <Compile Include="Areas\Admin\Controllers\WriterController.cs" />
+    <Compile Include="Areas\Showcase\Controllers\AboutController.cs" />
+    <Compile Include="Areas\Showcase\Controllers\AdressController.cs" />
+    <Compile Include="Areas\Showcase\Controllers\DevelopmentController.cs" />
+    <Compile Include="Areas\Showcase\Controllers\GaleryController.cs" />
     <Compile Include="Areas\Showcase\Controllers\NotificationController.cs" />
+    <Compile Include="Areas\Showcase\Controllers\SosialPageController.cs" />
+    <Compile Include="Areas\Showcase\Controllers\ToolController.cs" />
     <Compile Include="Areas\Showcase\ShowcaseAreaRegistration.cs" />
     <Compile Include="Areas\Skill\Controllers\SkillController.cs" />
     <Compile Include="Areas\Skill\SkillAreaRegistration.cs" />
@@ -2646,6 +2652,9 @@
     <Content Include="AdminLTE\Vitrin\webfonts\fa-solid-900.woff2" />
     <Content Include="Areas\Showcase\Views\web.config" />
     <Content Include="Areas\Showcase\Views\Notification\Index.cshtml" />
+    <Content Include="Areas\Showcase\Views\Adress\Index.cshtml" />
+    <Content Include="Areas\Showcase\Views\Adress\Create.cshtml" />
+    <Content Include="Areas\Showcase\Views\Adress\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2687,7 +2696,12 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Showcase\Data\" />
+    <Folder Include="Areas\Showcase\Views\About\" />
+    <Folder Include="Areas\Showcase\Views\Development\" />
+    <Folder Include="Areas\Showcase\Views\Galery\" />
     <Folder Include="Areas\Showcase\Views\Shared\" />
+    <Folder Include="Areas\Showcase\Views\SosialPage\" />
+    <Folder Include="Areas\Showcase\Views\Tool\" />
     <Folder Include="Areas\Skill\Data\" />
     <Folder Include="Areas\Skill\Views\Shared\" />
     <Folder Include="Areas\Writer\Data\" />

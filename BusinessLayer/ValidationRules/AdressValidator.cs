@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BusinessLayer.ValidationRules
 {
-    class AdressValidator : AbstractValidator<Adress>
+    public class AdressValidator : AbstractValidator<Adress>
     {
         public AdressValidator()
         {
