@@ -9,5 +9,6 @@ namespace DataAccessLayer.Abstract
 {
     public interface IAdressDal : IGenericDal<Adress>
     {
+        Adress GetLast();
     }
 }

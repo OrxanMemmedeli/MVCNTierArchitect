@@ -4,14 +4,16 @@ using ShowcaseAPI.Models.Entity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
 namespace MVCNTierArchitect.Areas.Showcase.Controllers
 {
-    [RouteArea("Admin")]
+    [RouteArea("Showcase")]
     public class NotificationController : Controller
     {
         private readonly IAdressService _adressService;
@@ -25,7 +27,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         // GET: Showcase/Notification
         public async Task<ActionResult> Index()
         {
-            var url = _adressService.GetAll().OrderByDescending(x => x.ID).First();
+            var url = _adressService.GetLast();
 
             var httpclient = new HttpClient();
             var responseMessage = await httpclient.GetAsync(url.URL + "api/Notification");
@@ -34,5 +36,85 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
             return View(values);
         }
+
+        public ActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<ActionResult> Create(Notification notification)
+        {
+            var url = _adressService.GetLast();
+            var httpclient = new HttpClient();
+            var jsonNotification = JsonConvert.SerializeObject(notification);
+            StringContent content = new StringContent(jsonNotification, Encoding.UTF8, "application/json");
+            var responseMessage = await httpclient.PostAsync(url + "api/Notification", content);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(notification);
+        }
+
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var url = _adressService.GetLast();
+            var httpclient = new HttpClient();
+            var responseMessage = await httpclient.GetAsync(url + "api/Notification/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                var jsonEmployee = await responseMessage.Content.ReadAsStringAsync();
+                var value = JsonConvert.DeserializeObject<Notification>(jsonEmployee);
+                return View(value);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(int id, Notification notification)
+        {
+            if (id != notification.ID)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Uyğunsuz məlumat");
+            }
+            var url = _adressService.GetLast();
+            var httpclient = new HttpClient();
+            var jsonEmployee = JsonConvert.SerializeObject(notification);
+            StringContent content = new StringContent(jsonEmployee, Encoding.UTF8, "application/json");
+            var responseMessage = await httpclient.PutAsync(url + "api/Notification/" + notification.ID, content);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(notification);
+        }
+
+
+        public async Task<ActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult(); 
+            }
+
+            var url = _adressService.GetLast();
+            var httpclient = new HttpClient();
+            var responseMessage = await httpclient.DeleteAsync(url + "api/Notification/" + id);
+            if (responseMessage.IsSuccessStatusCode)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
     }
 }

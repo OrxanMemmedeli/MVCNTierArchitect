@@ -44,6 +44,11 @@ namespace BusinessLayer.Concrete
             return _adressDal.GetById(Filter);
         }
 
+        public Adress GetLast()
+        {
+            return _adressDal.GetLast();
+        }
+
         public void Update(Adress t, int id)
         {
             _adressDal.Update(t, t.ID);
