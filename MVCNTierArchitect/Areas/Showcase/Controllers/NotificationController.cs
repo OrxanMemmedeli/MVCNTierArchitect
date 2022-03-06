@@ -41,14 +41,16 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         {
             return View();
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create(Notification notification)
         {
             var url = _adressService.GetLast();
             var httpclient = new HttpClient();
             var jsonNotification = JsonConvert.SerializeObject(notification);
             StringContent content = new StringContent(jsonNotification, Encoding.UTF8, "application/json");
-            var responseMessage = await httpclient.PostAsync(url + "api/Notification", content);
+            var responseMessage = await httpclient.PostAsync(url.URL + "api/Notification", content);
             if (responseMessage.IsSuccessStatusCode)
             {
                 return RedirectToAction("Index");
@@ -66,11 +68,11 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
             var url = _adressService.GetLast();
             var httpclient = new HttpClient();
-            var responseMessage = await httpclient.GetAsync(url + "api/Notification/" + id);
+            var responseMessage = await httpclient.GetAsync(url.URL + "api/Notification/" + id);
             if (responseMessage.IsSuccessStatusCode)
             {
-                var jsonEmployee = await responseMessage.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<Notification>(jsonEmployee);
+                var jsonNotification = await responseMessage.Content.ReadAsStringAsync();
+                var value = JsonConvert.DeserializeObject<Notification>(jsonNotification);
                 return View(value);
             }
 
@@ -78,6 +80,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(int id, Notification notification)
         {
             if (id != notification.ID)
@@ -86,11 +89,12 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
             }
             var url = _adressService.GetLast();
             var httpclient = new HttpClient();
-            var jsonEmployee = JsonConvert.SerializeObject(notification);
-            StringContent content = new StringContent(jsonEmployee, Encoding.UTF8, "application/json");
-            var responseMessage = await httpclient.PutAsync(url + "api/Notification/" + notification.ID, content);
+            var jsonNotification = JsonConvert.SerializeObject(notification);
+            StringContent content = new StringContent(jsonNotification, Encoding.UTF8, "application/json");
+            var responseMessage = await httpclient.PutAsync(url.URL + "api/Notification/" + notification.ID, content);
             if (responseMessage.IsSuccessStatusCode)
             {
+                TempData["EditNotification"] = "Bildiriş yeniləndi.";
                 return RedirectToAction("Index");
             }
 
@@ -107,9 +111,10 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
             var url = _adressService.GetLast();
             var httpclient = new HttpClient();
-            var responseMessage = await httpclient.DeleteAsync(url + "api/Notification/" + id);
+            var responseMessage = await httpclient.DeleteAsync(url.URL + "api/Notification/" + id);
             if (responseMessage.IsSuccessStatusCode)
-            {
+            {            
+                TempData["DeleteNotification"] = "Bildiriş silindi.";
                 return RedirectToAction("Index");
             }
 
