@@ -9,5 +9,6 @@ namespace BusinessLayer.Abstract
 {
     public interface IAdressService : IGenericService<Adress>
     {
+        Adress GetLast();
     }
 }
