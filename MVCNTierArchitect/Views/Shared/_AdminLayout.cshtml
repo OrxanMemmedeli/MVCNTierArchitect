@@ -187,7 +187,7 @@
                 <nav class="mt-2">
                     <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
-    with font-awesome or any other icon font library -->
+                        with font-awesome or any other icon font library -->
                         <li class="nav-item">
                             <a href="/Admin/Category" class="nav-link">
                                 <i class="nav-icon text-warning fas fa-align-justify"></i>
@@ -335,13 +335,14 @@
     </div>
     <!-- ./wrapper -->
     <!-- jQuery -->
-
     <!-- Bootstrap 4 -->
     <script src="~/AdminLTE/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
     <script src="~/AdminLTE/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/AdminLTE/dist/js/demo.js"></script>
+
+    @RenderSection("AdminScripts", false)
 
 </body>
 </html>
