@@ -26,14 +26,22 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
         public async Task<ActionResult> Index()
         {
+            IEnumerable<About> about = null;
             var url = _adressService.GetLast();
 
             var httpclient = new HttpClient();
             var responseMessage = await httpclient.GetAsync(url.URL + "api/About");
             var jsonstring = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<About>(jsonstring);
+            if (jsonstring != "[]")
+            {
 
-            return View(values);
+                jsonstring = jsonstring.Replace("\\r\\n", "");
+                jsonstring = jsonstring.Replace("\\\\", "");
+                var values = JsonConvert.DeserializeObject<About>(jsonstring);
+                return View(values);
+
+            }
+            return View(about);
         }
 
         public ActionResult Create()
@@ -47,6 +55,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         {
             var url = _adressService.GetLast();
             var httpclient = new HttpClient();
+
             var jsonAbout = JsonConvert.SerializeObject(about);
             StringContent content = new StringContent(jsonAbout, Encoding.UTF8, "application/json");
             var responseMessage = await httpclient.PostAsync(url.URL + "api/About", content);
@@ -118,5 +127,8 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
             return View();
         }
+
+
+
     }
 }

@@ -1,0 +1,85 @@
+﻿@model IEnumerable<ShowcaseAPI.Models.Entity.About>
+
+@{
+    ViewBag.Title = "Əlaqə Vasitəsi";
+    Layout = "~/Views/Shared/_ShowcaseLayout.cshtml";
+}
+
+<h2>Əlaqə Vasitəsi</h2>
+@if (Model == null)
+{
+    <p>
+        <a href="/Showcase/About/Create" class="btn btn-primary">Yeni Əlaqə Vasitəsi</a>
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Ünvan
+        </th>
+        <th>
+            Email
+        </th>
+        <th>
+            Telefon
+        </th>
+        <th>
+            Xəritə
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Adress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Map)
+                </td>
+                <td>
+                    <a href="/Showcase/About/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                    <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
+<script>
+    function Delete(id) {
+        var url = "/Showcase/About/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Showcase/About', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["DeleteAbout"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteAbout"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditAbout"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditAbout"].ToString()))");
+    </script>
+}
