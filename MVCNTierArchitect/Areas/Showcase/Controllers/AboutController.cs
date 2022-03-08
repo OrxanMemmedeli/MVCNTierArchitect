@@ -26,7 +26,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
         public async Task<ActionResult> Index()
         {
-            IEnumerable<About> about = null;
+            IEnumerable<About> abouts = null;
             var url = _adressService.GetLast();
 
             var httpclient = new HttpClient();
@@ -36,12 +36,12 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
             {
 
                 jsonstring = jsonstring.Replace("\\r\\n", "");
-                jsonstring = jsonstring.Replace("\\\\", "");
+                jsonstring = jsonstring.Replace("\\", "");
                 var values = JsonConvert.DeserializeObject<About>(jsonstring);
                 return View(values);
 
             }
-            return View(about);
+            return View(abouts);
         }
 
         public ActionResult Create()
