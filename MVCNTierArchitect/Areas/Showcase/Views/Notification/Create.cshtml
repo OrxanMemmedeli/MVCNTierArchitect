@@ -1,0 +1,35 @@
+﻿@model ShowcaseAPI.Models.Entity.Notification
+
+@{
+    ViewBag.Title = "Yeni Bildiriş";
+    Layout = "~/Views/Shared/_ShowcaseLayout.cshtml";
+}
+
+
+
+@using (Html.BeginForm("Create", "Notification", "Showcase", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Yeni Bildiriş</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <p class="control-label col-md-4">Bildiriş</p>
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Əlavə Et" class="btn btn-success" />
+                <a href="/Showcase/Notification" class="btn btn-dark">Geri</a>
+            </div>
+        </div>
+    </div>
+}
+

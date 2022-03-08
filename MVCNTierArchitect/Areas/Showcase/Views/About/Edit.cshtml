@@ -19,7 +19,7 @@
         <div class="form-group">
             <p class="control-label col-md-4">Ünvan</p>
             <div class="col-md-10">
-                <textarea name="Adress" id="Adress" class="form-control"></textarea>
+                <textarea name="Adress" id="Adress" class="form-control">@Model.Adress</textarea>
                 @Html.ValidationMessageFor(model => model.Adress, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -27,7 +27,7 @@
         <div class="form-group">
             <p class="control-label col-md-4">E-mail</p>
             <div class="col-md-10">
-                <textarea name="Email" id="Email" class="form-control"></textarea>
+                <textarea name="Email" id="Email" class="form-control">@Model.Email</textarea>
                 @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -35,7 +35,7 @@
         <div class="form-group">
             <p class="control-label col-md-4">Telefon</p>
             <div class="col-md-10">
-                <textarea name="Number" id="Number" class="form-control"></textarea>
+                <textarea name="Number" id="Number" class="form-control">@Model.Number</textarea>
                 @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +43,7 @@
         <div class="form-group">
             <p class="control-label col-md-4">Xəritə</p>
             <div class="col-md-10">
-                <textarea name="Map" id="Map" class="form-control"></textarea>
+                <textarea name="Map" id="Map" class="form-control">@Model.Map</textarea>
                 @Html.ValidationMessageFor(model => model.Map, "", new { @class = "text-danger" })
             </div>
         </div>

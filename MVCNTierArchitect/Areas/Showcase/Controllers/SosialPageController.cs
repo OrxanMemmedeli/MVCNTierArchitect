@@ -26,13 +26,20 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         // GET: Showcase/SosialPage
         public async Task<ActionResult> Index()
         {
+            IEnumerable<SosialPage> sosials = null;
+
             var url = _adressService.GetLast();
 
             var httpclient = new HttpClient();
             var responseMessage = await httpclient.GetAsync(url.URL + "api/SosialPage");
             var jsonstring = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<SosialPage>(jsonstring);
-            return View(values);
+            if (jsonstring != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<SosialPage>>(jsonstring);
+                return View(values);
+            }
+
+            return View(sosials);
         }
 
         public ActionResult Create()
@@ -72,7 +79,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonSosialPage = await responseMessage.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<Notification>(jsonSosialPage);
+                var value = JsonConvert.DeserializeObject<SosialPage>(jsonSosialPage);
                 return View(value);
             }
 

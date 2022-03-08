@@ -34,10 +34,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
             var jsonstring = await responseMessage.Content.ReadAsStringAsync();
             if (jsonstring != "[]")
             {
-
-                jsonstring = jsonstring.Replace("\\r\\n", "");
-                jsonstring = jsonstring.Replace("\\", "");
-                var values = JsonConvert.DeserializeObject<About>(jsonstring);
+                var values = JsonConvert.DeserializeObject<List<About>>(jsonstring);
                 return View(values);
 
             }
@@ -79,7 +76,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
             if (responseMessage.IsSuccessStatusCode)
             {
                 var jsonAbout = await responseMessage.Content.ReadAsStringAsync();
-                var value = JsonConvert.DeserializeObject<Notification>(jsonAbout);
+                var value = JsonConvert.DeserializeObject<About>(jsonAbout);
                 return View(value);
             }
 

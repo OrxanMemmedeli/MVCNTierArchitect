@@ -8,7 +8,7 @@
 <h2>Bildirişlər</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    <a href="/Showcase/Notification/Create" class="btn btn-primary">Yeni Bildiriş</a>
 </p>
 <table class="table">
     <tr>
@@ -17,18 +17,46 @@
         </th>
         <th></th>
     </tr>
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a href="/Showcase/Notification/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                    <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    }
+</table>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
+<script>
+    function Delete(id) {
+        var url = "/Showcase/Notification/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Showcase/Notification', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["DeleteNotification"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteNotification"].ToString()))");
+    </script>
 }
 
-</table>
+@if (TempData["EditNotification"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditNotification"].ToString()))");
+    </script>
+}

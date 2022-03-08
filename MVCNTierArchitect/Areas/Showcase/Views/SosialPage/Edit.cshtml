@@ -1,0 +1,70 @@
+﻿@model ShowcaseAPI.Models.Entity.SosialPage
+
+@{
+    ViewBag.Title = "Şəbəkə Yenilə";
+    Layout = "~/Views/Shared/_ShowcaseLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("Edit", "SosialPage", "Showcase", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>Şəbəkə Yenilə</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.ID)
+
+    <div class="form-group">
+        <p class="control-label col-md-4">Şəbəkə adı</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label col-md-4">Səhifə adı</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PageName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PageName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label col-md-4">URL</p>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.URL, new { htmlAttributes = new { @class = "form-control", @type = "url" } })
+            @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <p class="control-label col-md-4">İcon</p>
+        <div class="col-md-10">
+            <select name="Icon" class="form-control">
+                <option value="@Model.Icon">@Model.Icon.Substring(Model.Icon.IndexOf("-")+1)</option>
+                <option>------</option>
+                <option value="fab fa-facebook-f">Facebook</option>
+                <option value="fab fa-instagram">Instagram</option>
+                <option value="fab fa-twitter">Twitter</option>
+                <option value="fab fa-linkedin-in">Linkedin</option>
+                <option value="fab fa-github">Github</option>
+                <option value="fab fa-google-plus-g">Google+</option>
+                <option value="fab fa-telegram">Telegram</option>
+                <option value="fab fa-whatsapp">WhatsApp</option>
+            </select>
+            @Html.ValidationMessageFor(model => model.Icon, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Yenilə" class="btn btn-success" />
+            <a href="/Showcase/SosialPage" class="btn btn-dark">Geri</a>
+        </div>
+    </div>
+</div>
+}
+

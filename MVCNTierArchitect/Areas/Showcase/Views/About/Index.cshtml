@@ -24,9 +24,6 @@
         <th>
             Telefon
         </th>
-        <th>
-            Xəritə
-        </th>
         <th></th>
     </tr>
 
@@ -36,16 +33,13 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Adress)
+                    @Html.Raw(item.Adress)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Email)
+                    @Html.Raw(item.Email)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Number)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Map)
+                    @Html.Raw(item.Number)
                 </td>
                 <td>
                     <a href="/Showcase/About/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
