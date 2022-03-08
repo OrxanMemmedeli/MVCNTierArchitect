@@ -26,14 +26,22 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
         public async Task<ActionResult> Index()
         {
+            IEnumerable<Tool> tools = null;
             var url = _adressService.GetLast();
 
             var httpclient = new HttpClient();
             var responseMessage = await httpclient.GetAsync(url.URL + "api/Tool");
             var jsonstring = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<Tool>(jsonstring);
 
-            return View(values);
+            if (jsonstring != "[]")
+            {
+                jsonstring = jsonstring.Replace(@"\", "");
+                var values = JsonConvert.DeserializeObject<Tool>(jsonstring);
+                return View(values);
+
+            }
+
+            return View(tools);
         }
 
         public ActionResult Create()
