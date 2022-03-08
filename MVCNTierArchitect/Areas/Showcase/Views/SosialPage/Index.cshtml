@@ -1,0 +1,83 @@
+﻿@model IEnumerable<ShowcaseAPI.Models.Entity.SosialPage>
+
+@{
+    ViewBag.Title = "Sosial Şəbəkələr";
+    Layout = "~/Views/Shared/_ShowcaseLayout.cshtml";
+}
+
+<h2>Sosial Şəbəkələr</h2>
+
+<p>
+    <a href="/Showcase/SosialPage/Create" class="btn btn-primary">Yeni Şəbəkə</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Şəbəkə adı
+        </th>
+        <th>
+            Səhifə adı
+        </th>
+        <th>
+            URL
+        </th>
+        <th>
+            İcon
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PageName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.URL)
+                </td>
+                <td>
+                    <i class="@item.Icon"></i>
+                </td>
+                <td>
+                    <a href="/Showcase/SosialPage/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                    <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
+
+<script>
+    function Delete(id) {
+        var url = "/Showcase/SosialPage/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Showcase/SosialPage', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["DeleteSosialPage"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteSosialPage"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditSosialPage"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditSosialPage"].ToString()))");
+    </script>
+}

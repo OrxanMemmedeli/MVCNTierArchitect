@@ -35,8 +35,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
             if (jsonstring != "[]")
             {
-                jsonstring = jsonstring.Replace(@"\", "");
-                var values = JsonConvert.DeserializeObject<Tool>(jsonstring);
+                var values = JsonConvert.DeserializeObject<List<Tool>>(jsonstring);
                 return View(values);
 
             }

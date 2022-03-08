@@ -27,14 +27,20 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         // GET: Showcase/Notification
         public async Task<ActionResult> Index()
         {
+            IEnumerable<Notification> notifications = null;
+
             var url = _adressService.GetLast();
 
             var httpclient = new HttpClient();
             var responseMessage = await httpclient.GetAsync(url.URL + "api/Notification");
             var jsonString = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<List<Notification>>(jsonString);
+            if (jsonString != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<Notification>>(jsonString);
+                return View(values);
 
-            return View(values);
+            }
+            return View(notifications);
         }
 
         public ActionResult Create()

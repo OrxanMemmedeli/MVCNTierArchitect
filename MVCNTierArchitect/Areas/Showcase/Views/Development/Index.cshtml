@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ShowcaseAPI.Models.Entity.Development>
+
+@{
+    ViewBag.Title = "Mərhələlər";
+    Layout = "~/Views/Shared/_ShowcaseLayout.cshtml";
+}
+
+<h2>Mərhələlər</h2>
+
+<p>
+    <a href="/Showcase/Development/Create" class="btn btn-primary">Yeni Mərhələ</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Başlıq
+        </th>
+        <th>
+            İcon
+        </th>
+        <th>
+            Açıqma
+        </th>
+        <th></th>
+    </tr>
+
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Heading)
+                </td>
+                <td>
+                    <i class="fab @item.Icon"></i>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    <a href="/Showcase/Development/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                    <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
+<script>
+    function Delete(id) {
+        var url = "/Showcase/Development/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Showcase/Development', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["DeleteDevelopment"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteDevelopment"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditDevelopment"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditDevelopment"].ToString()))");
+    </script>
+}

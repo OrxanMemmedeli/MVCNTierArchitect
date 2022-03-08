@@ -25,13 +25,19 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         // GET: Showcase/Development
         public async Task<ActionResult> Index()
         {
+            IEnumerable<Development> developments = null;
+
             var url = _adressService.GetLast();
             var httpclient = new HttpClient();
             var responseMessage = await httpclient.GetAsync(url.URL + "api/Development");
             var jsonstring = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.DeserializeObject<Development>(jsonstring);
+            if (jsonstring != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<Development>>(jsonstring);
+                return View(values);
 
-            return View(values);
+            }
+            return View(developments);
         }
         public ActionResult Create()
         {
@@ -111,6 +117,11 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
                 TempData["DeleteDevelopment"] = "Məlumat silindi.";
                 return RedirectToAction("Index");
             }
+            return View();
+        }
+
+        public ActionResult Icons()
+        {
             return View();
         }
     }

@@ -1,0 +1,56 @@
+﻿@model ShowcaseAPI.Models.Entity.Development
+
+@{
+    ViewBag.Title = "Mərhələni Yenilə";
+    Layout = "~/Views/Shared/_ShowcaseLayout.cshtml";
+}
+
+
+@using (Html.BeginForm("Edit", "Development", "Showcase", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Mərhələni Yenilə</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group">
+            <p class="control-label col-md-4">Başlıq</p>
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Heading, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Heading, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-4">İcon</p>
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Icon, new { htmlAttributes = new { @class = "form-control" } })
+                <a href="/Showcase/Development/Icons" target="_blank">icon siyahısı</a>
+                @Html.ValidationMessageFor(model => model.Icon, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <p class="control-label col-md-4">Açıqlama</p>
+
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.Description, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Yenilə" class="btn btn-success" />
+                <a href="/Showcase/Development" class="btn btn-dark">Geri</a>
+            </div>
+        </div>
+    </div>
+}
+
+
