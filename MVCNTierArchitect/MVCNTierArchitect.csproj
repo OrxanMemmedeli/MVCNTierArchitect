@@ -2670,6 +2670,9 @@
     <Content Include="Areas\Showcase\Views\Development\Create.cshtml" />
     <Content Include="Areas\Showcase\Views\Development\Edit.cshtml" />
     <Content Include="Areas\Showcase\Views\Development\Icons.cshtml" />
+    <Content Include="Areas\Showcase\Views\Galery\Index.cshtml" />
+    <Content Include="Areas\Showcase\Views\Galery\Create.cshtml" />
+    <Content Include="Areas\Showcase\Views\Galery\Edit.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2711,7 +2714,6 @@
     <Folder Include="Areas\Admin\Data\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Showcase\Data\" />
-    <Folder Include="Areas\Showcase\Views\Galery\" />
     <Folder Include="Areas\Showcase\Views\Shared\" />
     <Folder Include="Areas\Skill\Data\" />
     <Folder Include="Areas\Skill\Views\Shared\" />

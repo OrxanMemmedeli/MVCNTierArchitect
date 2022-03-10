@@ -1,28 +1,29 @@
-﻿@model IEnumerable<ShowcaseAPI.Models.Entity.Tool>
+﻿@model IEnumerable<ShowcaseAPI.Models.Entity.Image>
 
 @{
-    ViewBag.Title = "Alətlər";
+    ViewBag.Title = "Şəkillər";
     Layout = "~/Views/Shared/_ShowcaseLayout.cshtml";
 }
 
-<h2>Alətlər</h2>
+<h2>Şəkillər</h2>
 
 <p>
-    <a href="/Showcase/Tool/Create" class="btn btn-primary">Yeni Alət</a>
+    <a href="/Showcase/Galery/Create" class="btn btn-primary">Yeni şəkil</a>
 </p>
 <table class="table">
     <tr>
         <th>
-            Alət
+            Ad
         </th>
         <th>
-            Faiz
+            Başlıq
         </th>
         <th>
-            Rəng
+            Şəkil
         </th>
         <th></th>
     </tr>
+
     @if (Model != null)
     {
         foreach (var item in Model)
@@ -32,13 +33,13 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Percent)
+                    @Html.DisplayFor(modelItem => item.Title)
                 </td>
                 <td>
-                    <span class="badge badge-@item.Type.Substring(item.Type.IndexOf("-")+1)">rəng</span>
+                    <img src="@item.URL" alt="Attachment" style="max-width:250px; height:auto">
                 </td>
                 <td>
-                    <a href="/Showcase/Tool/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                    <a href="/Showcase/Galery/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
                     <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
                 </td>
             </tr>
@@ -49,27 +50,28 @@
 
 <script>
     function Delete(id) {
-        var url = "/Showcase/Tool/Delete/" + id;
+        var url = "/Showcase/Galery/Delete/" + id;
         if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
             window.open(url, '_self');
         } else {
-            window.open('/Showcase/Tool', '_self');
+            window.open('/Showcase/Galery', '_self');
         }
     };
 </script>
 
 
 
-@if (TempData["DeleteTool"] != null)
+@if (TempData["DeleteImage"] != null)
 {
     <script>
-        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteTool"].ToString()))");
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteImage"].ToString()))");
     </script>
 }
 
-@if (TempData["EditTool"] != null)
+@if (TempData["EditImage"] != null)
 {
     <script>
-        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditTool"].ToString()))");
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditImage"].ToString()))");
     </script>
 }
+
