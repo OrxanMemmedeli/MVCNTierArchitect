@@ -2708,6 +2708,7 @@
     <Content Include="Views\Home\ContentByHeading.cshtml" />
     <Content Include="Views\Default\Index.cshtml" />
     <Content Include="Views\Shared\_ShowcaseLayout.cshtml" />
+    <Content Include="Views\Default\Tools.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

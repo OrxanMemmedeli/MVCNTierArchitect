@@ -40,11 +40,9 @@
                 @Html.ValidationMessageFor(model => model.URL, "", new { @class = "text-danger" })
             </div>
             <hr />
-            @if (string.IsNullOrEmpty(Model.URL))
+            @if (!string.IsNullOrEmpty(Model.URL))
             {
-                <span class="mailbox-attachment-icon has-img">
-                    <img src="@Model.URL" alt="Attachment">
-                </span>
+                <img src="@Model.URL" alt="Attachment" style="max-width:500px; height:auto">
             }
         </div>
 
