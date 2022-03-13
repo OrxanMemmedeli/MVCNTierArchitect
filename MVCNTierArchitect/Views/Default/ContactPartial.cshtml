@@ -1,0 +1,68 @@
+﻿@model IEnumerable<ShowcaseAPI.Models.Entity.About>
+
+<div class="address row mt-lg-5">
+
+    <div class="col-md-4 address-grid" data-aos="flip-up">
+        <div class="address-info">
+            <div class="address-left text-center">
+                <i class="far fa-map"></i>
+            </div>
+            <div class="address-right text-center">
+                <h6 class="my-3">Ünvan</h6>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <p>
+                            @item.Adress
+                        </p>
+                    }
+                }
+
+            </div>
+        </div>
+
+    </div>
+    <div class="col-md-4 address-grid" data-aos="flip-up">
+        <div class="address-info">
+            <div class="address-left text-center">
+                <i class="far fa-envelope"></i>
+            </div>
+            <div class="address-right text-center">
+                <h6 class="my-3">Email</h6>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <p>
+                            <a href="mailto:@item.Email"> @item.Email</a>
+                        </p>
+                    }
+                }
+
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-4 address-grid" data-aos="flip-up">
+        <div class="address-info">
+            <div class="address-left text-center">
+                <i class="fas fa-mobile-alt"></i>
+            </div>
+            <div class="address-right text-center">
+                <h6 class="my-3">Telefon</h6>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        <p>
+                            @item.Number
+                        </p>
+                    }
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>

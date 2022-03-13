@@ -1,0 +1,9 @@
+﻿@model IEnumerable<ShowcaseAPI.Models.Entity.Notification>
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <p>@item.Description</p>
+    }
+}
+

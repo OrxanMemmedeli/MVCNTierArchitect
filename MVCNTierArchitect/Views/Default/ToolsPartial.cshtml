@@ -1,0 +1,21 @@
+﻿@model IEnumerable<ShowcaseAPI.Models.Entity.Tool>
+
+<div class="col-lg-4 progress-info-content text-left ">
+    @if (Model != null)
+    {
+        foreach (var item in Model)
+        {
+            <div class="progress-one my-lg-5" data-aos="fade-up" id="ToolsPanel">
+                <h4 class="progress-tittle-w3">@item.Name</h4>
+                <div class="progress">
+                    <div class="progress-bar progress-bar-striped @item.Type" role="progressbar" style="width: @item.Percent%" aria-valuenow="@item.Percent" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        }
+
+    }
+
+</div>
+
+
+                      
