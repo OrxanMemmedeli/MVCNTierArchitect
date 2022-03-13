@@ -1,0 +1,13 @@
+﻿@model IEnumerable<ShowcaseAPI.Models.Entity.SosialPage>
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <li class="ml-lg-5">
+            <a href="@item.URL">
+                <i class="@item.Icon"></i>
+            </a>
+        </li>
+    }
+}

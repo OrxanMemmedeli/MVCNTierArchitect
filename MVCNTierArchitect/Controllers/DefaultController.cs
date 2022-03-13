@@ -15,27 +15,124 @@ namespace MVCNTierArchitect.Controllers
     public class DefaultController : Controller
     {
         private readonly IAdressService _adressService;
+        private readonly IHeadingService _headingService;
+        private readonly IContentService _contentService;
+        private readonly IContactService _contactService;
+        private readonly IWriterService _writerService;
 
-        public DefaultController(IAdressService adressService)
+        public DefaultController(IAdressService adressService, IHeadingService headingService, IContentService contentService, IContactService contactService, IWriterService writerService)
         {
             _adressService = adressService;
+            _headingService = headingService;
+            _contentService = contentService;
+            _contactService = contactService;
+            _writerService = writerService;
         }
+
+
         // GET: Default
         public ActionResult Index()
         {
+            ViewBag.Url = _adressService.GetLast().URL;
             return View();
         }
 
-        public async Task<ActionResult> Tools()
+
+        public PartialViewResult ToolsPartial()
+        {
+
+            var jsonstring = Task.Run(async () => await CallAPI("api/Tool"));
+
+            if (jsonstring.Result != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<Tool>>(jsonstring.Result);
+                return PartialView(values);
+            }
+            return PartialView();
+        }
+
+        public PartialViewResult DevelopmentPartial()
+        {
+
+            var jsonstring = Task.Run(async () => await CallAPI("api/Development"));
+            
+            if (jsonstring.Result != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<Development>>(jsonstring.Result);
+                return PartialView(values);
+            }
+            return PartialView();
+        }
+
+        public PartialViewResult GaleryPartial()
+        {
+
+            var jsonstring = Task.Run(async () => await CallAPI("api/Image"));
+
+            if (jsonstring.Result != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<Image>>(jsonstring.Result);
+                return PartialView(values);
+            }
+            return PartialView();
+        }
+
+        public PartialViewResult CounterPartial()
+        {
+            ViewBag.Headings = _headingService.GetAll(x => x.Status == true).Count();
+            ViewBag.Contents = _contentService.GetAll(x => x.Status == true).Count();
+            ViewBag.Contacts = _contactService.GetAll(x => x.IsDeleted == false).Count();
+            ViewBag.Writers = _writerService.GetAll(x => x.Status == true).Count();
+            return PartialView();
+        }
+
+        public PartialViewResult NotificationPartial()
+        {
+
+            var jsonstring = Task.Run(async () => await CallAPI("api/Notification"));
+
+            if (jsonstring.Result != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<Notification>>(jsonstring.Result);
+                return PartialView(values);
+            }
+            return PartialView();
+        }
+
+        public PartialViewResult ContactPartial()
+        {
+
+            var jsonstring = Task.Run(async () => await CallAPI("api/About"));
+
+            if (jsonstring.Result != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<About>>(jsonstring.Result);
+                return PartialView(values);
+            }
+            return PartialView();
+        }
+
+        public PartialViewResult SosialPartial()
+        {
+
+            var jsonstring = Task.Run(async () => await CallAPI("api/SosialPage"));
+
+            if (jsonstring.Result != "[]")
+            {
+                var values = JsonConvert.DeserializeObject<List<SosialPage>>(jsonstring.Result);
+                return PartialView(values);
+            }
+            return PartialView();
+        }
+
+        private async Task<string> CallAPI(string adress)
         {
             var url = _adressService.GetLast();
 
             var httpClient = new HttpClient();
-            var responseMessage = await httpClient.GetAsync(url.URL + "api/Tool");
-            var jsonstring = await responseMessage.Content.ReadAsStringAsync();
-            var values = JsonConvert.SerializeObject(jsonstring);
-            return Json(values);
-
+            HttpResponseMessage responseMessage = await httpClient.GetAsync(url.URL + adress);
+            string jsonstring = await responseMessage.Content.ReadAsStringAsync();
+            return jsonstring;
         }
     }
 }
