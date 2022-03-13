@@ -1,0 +1,28 @@
+﻿@model EntityLayer.Concrete.Contact
+
+@using (Html.BeginForm("Message", "Default", FormMethod.Post, new { id = "__AjaxAntiForgeryForm" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row contact_left_grid">
+        <div class="col-md-6 con-left" data-aos="fade-up">
+            <div class="form-group">
+                <input class="form-control" type="text" name="UserName" placeholder="Ad və Soyad" required id="messageUserName">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="email" name="Email" placeholder="Email adresi" required id="messageEmail">
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="text" name="Subject" placeholder="Başlıq" required id="messageSubject">
+            </div>
+        </div>
+        <div class="col-md-6 con-right" data-aos="fade-up">
+            <div class="form-group">
+                <textarea placeholder="Mətn mesajı" required="" name="Message" id="messageText"></textarea>
+            </div>
+        </div>
+        <div class="sub-honey mx-auto mt-3">
+            <input class="form-control" type="submit" value="Göndər" id="btnMessage">
+        </div>
+    </div>
+}

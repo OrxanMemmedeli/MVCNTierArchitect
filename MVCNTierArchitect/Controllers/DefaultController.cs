@@ -1,4 +1,7 @@
 ﻿using BusinessLayer.Abstract;
+using BusinessLayer.ValidationRules;
+using EntityLayer.Concrete;
+using FluentValidation.Results;
 using Newtonsoft.Json;
 using ShowcaseAPI.Models.Entity;
 using System;
@@ -19,6 +22,7 @@ namespace MVCNTierArchitect.Controllers
         private readonly IContentService _contentService;
         private readonly IContactService _contactService;
         private readonly IWriterService _writerService;
+        private readonly ContactValidator _validator;
 
         public DefaultController(IAdressService adressService, IHeadingService headingService, IContentService contentService, IContactService contactService, IWriterService writerService)
         {
@@ -27,6 +31,7 @@ namespace MVCNTierArchitect.Controllers
             _contentService = contentService;
             _contactService = contactService;
             _writerService = writerService;
+            _validator = new ContactValidator();
         }
 
 
@@ -99,6 +104,33 @@ namespace MVCNTierArchitect.Controllers
             return PartialView();
         }
 
+        public PartialViewResult MessagePartial()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Message(Contact contact)
+        {
+            contact.CreatedDate = DateTime.Now;
+            List<string> errors = new List<string>();
+            ValidationResult results = _validator.Validate(contact);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    errors.Add(item.ErrorMessage);
+                }
+
+                return Json(new { alert = JsonConvert.SerializeObject(errors) });
+            }
+
+            _contactService.Add(contact);
+            //return Json(new { alert = "XƏTA. Mesaj göndərilmədi" });            
+            return Json(new { alert = JsonConvert.SerializeObject("Mesaj göndərildi") });
+        }
+
         public PartialViewResult ContactPartial()
         {
 
@@ -106,7 +138,7 @@ namespace MVCNTierArchitect.Controllers
 
             if (jsonstring.Result != "[]")
             {
-                var values = JsonConvert.DeserializeObject<List<About>>(jsonstring.Result);
+                var values = JsonConvert.DeserializeObject<List<ShowcaseAPI.Models.Entity.About>>(jsonstring.Result);
                 return PartialView(values);
             }
             return PartialView();

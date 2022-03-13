@@ -14,7 +14,7 @@
                     foreach (var item in Model)
                     {
                         <p>
-                            @item.Adress
+                            @Html.Raw(item.Adress)
                         </p>
                     }
                 }
@@ -35,7 +35,7 @@
                     foreach (var item in Model)
                     {
                         <p>
-                            <a href="mailto:@item.Email"> @item.Email</a>
+                            @Html.Raw(item.Email)
                         </p>
                     }
                 }
@@ -56,7 +56,7 @@
                     foreach (var item in Model)
                     {
                         <p>
-                            @item.Number
+                            @Html.Raw(item.Number)
                         </p>
                     }
                 }
@@ -66,3 +66,14 @@
         </div>
     </div>
 </div>
+
+
+@if (Model != null)
+{
+    foreach (var item in Model)
+    {
+        <p>
+            @Html.Raw(item.Map)
+        </p>
+    }
+}
