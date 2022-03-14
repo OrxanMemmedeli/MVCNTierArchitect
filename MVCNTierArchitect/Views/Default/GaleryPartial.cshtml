@@ -4,15 +4,18 @@
 {
     foreach (var item in Model)
     {
-        <div class="section_1_gallery_grid">
-            <a title="@item.Title" href="@item.URL">
-                <div class="section_1_gallery_grid1">
-                    <img src="@item.URL" alt=" " class="img-fluid" />
-                    <div class="proj_gallery_grid1_pos">
-                        <h3>@item.Name</h3>
+        <div class="col-md-4 proj_gallery_grid" data-aos="zoom-in">
+            <div class="section_1_gallery_grid">
+                <a title="@item.Title" href="@item.URL">
+                    <div class="section_1_gallery_grid1">
+                        <img src="@item.URL" alt=" " class="img-fluid" />
+                        <div class="proj_gallery_grid1_pos">
+                            <h3>@item.Name</h3>
+                        </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         </div>
+
     }
 }
