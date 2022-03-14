@@ -1,4 +1,5 @@
 ﻿using EntityLayer.Concrete;
+using EntityLayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,6 @@ namespace BusinessLayer.Abstract
     public interface IContentService : IGenericService<Content>
     {
         List<Content> GetAllByHeading(Expression<Func<Content, bool>> Filter);
+        List<Content> GetAllBySearchModel(Expression<Func<Content, bool>> Filter, HeadingSearchViewModel search);
     }
 }

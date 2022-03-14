@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
+using EntityLayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,11 @@ namespace BusinessLayer.Concrete
         public List<Content> GetAllByHeading(Expression<Func<Content, bool>> Filter)
         {
             return _contentDal.GetAllByHeading(Filter);
+        }
+
+        public List<Content> GetAllBySearchModel(Expression<Func<Content, bool>> Filter, HeadingSearchViewModel search)
+        {
+            return _contentDal.GetAllBySearchModel(Filter, search);
         }
 
         public Content GetByID(Expression<Func<Content, bool>> Filter)
