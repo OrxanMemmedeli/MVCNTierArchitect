@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using EntityLayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,10 +20,10 @@ namespace MVCNTierArchitect.Controllers
             _contentService = contentService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(HeadingSearchViewModel search)
         {
             var fiveDaysAgo = DateTime.Now.AddDays(-5);
-            var contents = _contentService.GetAllByHeading(x => x.CreatedDate >= fiveDaysAgo && x.Status == true).OrderByDescending(x => x.CreatedDate);
+            var contents = _contentService.GetAllBySearchModel(x => x.CreatedDate >= fiveDaysAgo && x.Status == true, search).OrderByDescending(x => x.CreatedDate);
             return View(contents);
         }
 
@@ -33,14 +34,19 @@ namespace MVCNTierArchitect.Controllers
             return PartialView(selectedHeadings);
         }
 
+        public PartialViewResult SearchBox()
+        {
+            return PartialView();
+        }
 
-        public ActionResult ContentByHeading(int? id)
+        public ActionResult ContentByHeading(int? id, HeadingSearchViewModel search)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
-            var contents = _contentService.GetAllByHeading(x => x.HeadingID == id && x.Status == true).OrderByDescending(x => x.CreatedDate);
+            ViewBag.ID = id;
+            var contents = _contentService.GetAllBySearchModel(x => x.HeadingID == id && x.Status == true, search).OrderByDescending(x => x.CreatedDate);
             return View(contents);
         }
 

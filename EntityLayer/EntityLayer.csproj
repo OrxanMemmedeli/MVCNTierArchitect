@@ -78,6 +78,7 @@
     <Compile Include="Concrete\TestTable.cs" />
     <Compile Include="Concrete\Writer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\HeadingSearchViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

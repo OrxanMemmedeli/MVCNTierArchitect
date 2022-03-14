@@ -2716,6 +2716,7 @@
     <Content Include="Views\Default\ContactPartial.cshtml" />
     <Content Include="Views\Default\SosialPartial.cshtml" />
     <Content Include="Views\Default\MessagePartial.cshtml" />
+    <Content Include="Views\Home\SearchBox.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
