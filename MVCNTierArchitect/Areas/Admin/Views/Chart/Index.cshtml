@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Kateqoriya - Başlıq Qrafiki";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div id="Piechart_div"></div>
+
+@section AdminScripts{
+    @*<script type="text/javascript" src="https://www.google.com/jsapi"></script>*@
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                contentType: "application/json",
+                url: '/Admin/Chart/GetCategoryChart',
+                success: function (result) {
+                    google.charts.load('current', {
+                        'packages': ['corechart']
+                    });
+                    google.charts.setOnLoadCallback(function () {
+                        drawChart(result);
+                    });
+                }
+            });
+        });
+
+        function drawChart(result) {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Name');
+            data.addColumn('number', 'Count');
+            var dataArray = [];
+
+            $.each(result, function (i, obj) {
+                dataArray.push([obj.CategoryName, obj.HeadingCount]);
+            });
+            data.addRows(dataArray);
+
+            var columnChartOptions = {
+                title: "Kateqoriya - Başlıq Qrafiki",
+                width: 1000,
+                height: 800,
+                bar: { groupWidth: "20%" },
+            };
+
+            var columnChart = new google.visualization.PieChart(document
+                .getElementById('Piechart_div'));
+
+            columnChart.draw(data, columnChartOptions);
+        }
+    </script>
+}
