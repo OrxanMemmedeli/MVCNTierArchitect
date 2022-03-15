@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using DataAccessLayer.Abstract;
 using EntityLayer.Concrete;
+using EntityLayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -47,6 +48,16 @@ namespace BusinessLayer.Concrete
         public Category GetByID(Expression<Func<Category, bool>> Filter)
         {
             return _categoryDal.GetById(Filter);
+        }
+
+        public List<CategoryChartViewModal> GetCountHeading()
+        {
+            return _categoryDal.GetCountHeading();
+        }
+
+        public List<CategoryChartViewModal> GetCountHeading(Expression<Func<Category, bool>> Filter)
+        {
+            return _categoryDal.GetCountHeading(Filter);
         }
 
         public void Update(Category t, int id)
