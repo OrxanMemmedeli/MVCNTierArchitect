@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using Newtonsoft.Json;
 using ShowcaseAPI.Models.Entity;
 using System;
@@ -35,7 +36,7 @@ namespace MVCNTierArchitect.Controllers
         }
 
 
-        // GET: Default
+        // GET: Default    
         public ActionResult Index()
         {
             ViewBag.Url = _adressService.GetLast().URL;

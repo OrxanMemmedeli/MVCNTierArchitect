@@ -32,7 +32,12 @@ namespace EntityLayer.Concrete
         public virtual string ConfirmPassword { get; set; }
         [NotMapped]
         public string OldPassword { get; set; }
-        public ICollection<Heading> Headings { get; set; }
-        public ICollection<Content> Contents { get; set; }
+
+        [ForeignKey("Role")]
+        public int? RoleID { get; set; }
+
+        public virtual Role Role { get; set; }
+        public virtual ICollection<Heading> Headings { get; set; }
+        public virtual ICollection<Content> Contents { get; set; }
     }
 }

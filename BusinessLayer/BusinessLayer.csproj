@@ -63,6 +63,9 @@
     <Compile Include="Abstract\IHeadingService.cs" />
     <Compile Include="Abstract\IImageFileService.cs" />
     <Compile Include="Abstract\IMessageService.cs" />
+    <Compile Include="Abstract\IMethodNameService.cs" />
+    <Compile Include="Abstract\IRoleMethodService.cs" />
+    <Compile Include="Abstract\IRoleService.cs" />
     <Compile Include="Abstract\ISkillInfoService.cs" />
     <Compile Include="Abstract\ISkillService.cs" />
     <Compile Include="Abstract\IWriterService.cs" />
