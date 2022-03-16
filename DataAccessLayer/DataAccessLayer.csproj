@@ -60,6 +60,9 @@
     <Compile Include="Abstract\IHeadingDal.cs" />
     <Compile Include="Abstract\IImageFileDal.cs" />
     <Compile Include="Abstract\IMessageDal.cs" />
+    <Compile Include="Abstract\IMethodNameDal.cs" />
+    <Compile Include="Abstract\IRoleDal.cs" />
+    <Compile Include="Abstract\IRoleMethodDal.cs" />
     <Compile Include="Abstract\ISkillDal.cs" />
     <Compile Include="Abstract\ISkillInfoDal.cs" />
     <Compile Include="Abstract\IWriterDal.cs" />
@@ -73,6 +76,9 @@
     <Compile Include="EntityFramework\EFHeadingRepository.cs" />
     <Compile Include="EntityFramework\EFImageFileRepository.cs" />
     <Compile Include="EntityFramework\EFMessageRepository.cs" />
+    <Compile Include="EntityFramework\EFMethodNameRepository.cs" />
+    <Compile Include="EntityFramework\EFRoleMethodRepository.cs" />
+    <Compile Include="EntityFramework\EFRoleRepository.cs" />
     <Compile Include="EntityFramework\EFSkillInfoRepository.cs" />
     <Compile Include="EntityFramework\EFSkillRepository.cs" />
     <Compile Include="EntityFramework\EFWriterRepository.cs" />
@@ -148,6 +154,10 @@
     <Compile Include="Migrations\202203030611088_DeleteAPIAsdressTable.Designer.cs">
       <DependentUpon>202203030611088_DeleteAPIAsdressTable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203161655111_AddNewTablesForRole.cs" />
+    <Compile Include="Migrations\202203161655111_AddNewTablesForRole.Designer.cs">
+      <DependentUpon>202203161655111_AddNewTablesForRole.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -216,6 +226,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203030611088_DeleteAPIAsdressTable.resx">
       <DependentUpon>202203030611088_DeleteAPIAsdressTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203161655111_AddNewTablesForRole.resx">
+      <DependentUpon>202203161655111_AddNewTablesForRole.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

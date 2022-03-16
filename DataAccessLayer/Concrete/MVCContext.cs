@@ -23,6 +23,9 @@ namespace DataAccessLayer.Concrete
         public DbSet<SkillInfo> SkillInfos { get; set; }
         public DbSet<Skill> Skills { get; set; }
         public DbSet<Adress> Adresses { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<MethodName> MethodNames { get; set; }
+        public DbSet<RoleMethod> RoleMethods { get; set; }
 
     }
 }
