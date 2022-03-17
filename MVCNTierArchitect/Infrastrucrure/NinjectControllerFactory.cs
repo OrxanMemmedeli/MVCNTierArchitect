@@ -37,6 +37,9 @@ namespace MVCNTierArchitect.Infrastrucrure
             _ninjectKernal.Bind<ISkillInfoService>().To<SkillInfoManager>().WithConstructorArgument("skillInfoDal", new EFSkillInfoRepository());
             _ninjectKernal.Bind<ISkillService>().To<SkillManager>().WithConstructorArgument("skillDal", new EFSkillRepository());
             _ninjectKernal.Bind<IAdressService>().To<AdressManager>().WithConstructorArgument("adressDal", new EFAdressRepository());
+            _ninjectKernal.Bind<IRoleService>().To<RoleManager>().WithConstructorArgument("roleDal", new EFRoleRepository());
+            _ninjectKernal.Bind<IMethodNameService>().To<MethodNameManager>().WithConstructorArgument("methodNameDal", new EFMethodNameRepository());
+            _ninjectKernal.Bind<IRoleMethodService>().To<RoleMethodManager>().WithConstructorArgument("roleMethodDal", new EFRoleMethodRepository());
         }
 
         private void AddToolsBinding()

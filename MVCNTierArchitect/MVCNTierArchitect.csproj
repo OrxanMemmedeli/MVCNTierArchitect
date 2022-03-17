@@ -147,6 +147,9 @@
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
     <Compile Include="Areas\Admin\Controllers\IstatistikController.cs" />
     <Compile Include="Areas\Admin\Controllers\MessageController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MethodNameController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MethodRoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\WriterController.cs" />
     <Compile Include="Areas\Showcase\Controllers\AboutController.cs" />
     <Compile Include="Areas\Showcase\Controllers\AdressController.cs" />
@@ -2724,6 +2727,9 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\MethodName\" />
+    <Folder Include="Areas\Admin\Views\MethodRole\" />
+    <Folder Include="Areas\Admin\Views\Role\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Showcase\Data\" />
     <Folder Include="Areas\Showcase\Views\Shared\" />

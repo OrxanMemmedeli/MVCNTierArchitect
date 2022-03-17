@@ -79,6 +79,9 @@
     <Compile Include="Concrete\IAncryptionAndDecryption.cs" />
     <Compile Include="Concrete\ImageFileManager.cs" />
     <Compile Include="Concrete\MessageManager.cs" />
+    <Compile Include="Concrete\MethodNameManager.cs" />
+    <Compile Include="Concrete\RoleManager.cs" />
+    <Compile Include="Concrete\RoleMethodManager.cs" />
     <Compile Include="Concrete\SkillInfoManager.cs" />
     <Compile Include="Concrete\SkillManager.cs" />
     <Compile Include="Concrete\WriterManager.cs" />
@@ -92,6 +95,9 @@
     <Compile Include="ValidationRules\HeadingValidator.cs" />
     <Compile Include="ValidationRules\ImageFileValidator.cs" />
     <Compile Include="ValidationRules\MessageValidator.cs" />
+    <Compile Include="ValidationRules\MethodNameValidator.cs" />
+    <Compile Include="ValidationRules\RoleMethodValidator.cs" />
+    <Compile Include="ValidationRules\RoleValidator.cs" />
     <Compile Include="ValidationRules\WriterValidator.cs" />
   </ItemGroup>
   <ItemGroup>
