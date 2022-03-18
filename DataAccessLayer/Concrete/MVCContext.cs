@@ -10,6 +10,13 @@ namespace DataAccessLayer.Concrete
 {
     public class MVCContext : DbContext
     {
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<RoleMethod>().HasKey(x => new { x.RoleID, x.MethodNameID });
+            modelBuilder.Entity<RoleMethod>().HasRequired(x => x.Role).WithMany(x => x.RoleMethods).HasForeignKey(x => x.RoleID);
+            modelBuilder.Entity<RoleMethod>().HasRequired(x => x.MethodName).WithMany(x => x.RoleMethods).HasForeignKey(x => x.MethodNameID);
+            base.OnModelCreating(modelBuilder);
+        }
         public DbSet<About> Abouts { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Content> Contents { get; set; }

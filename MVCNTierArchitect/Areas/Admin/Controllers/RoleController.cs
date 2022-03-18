@@ -140,8 +140,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public ActionResult Relation(int roleID, int[] methodID)
         {
             List<RoleMethod> ListAdd = new List<RoleMethod>();
-            List<RoleMethod> ListDelete = new List<RoleMethod>();
             var roleMethods = _roleMethodService.GetAll(x => x.RoleID == roleID);
+            List<RoleMethod> ListDelete = roleMethods;
 
             if (methodID != null)
             {
@@ -156,13 +156,9 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                             RoleID = roleID
                         });
                     }
-                }
 
-                foreach (var item in methodID)
-                {
-                    roleMethods = roleMethods.Where(x => x.MethodNameID != item).ToList();
+                    ListDelete = ListDelete.Where(x => x.MethodNameID != item).ToList();
                 }
-                ListDelete.AddRange(roleMethods);
             }
 
             if (ListAdd.Count() != 0)

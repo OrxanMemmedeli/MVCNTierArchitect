@@ -158,6 +158,10 @@
     <Compile Include="Migrations\202203161655111_AddNewTablesForRole.Designer.cs">
       <DependentUpon>202203161655111_AddNewTablesForRole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203181450470_UpdateRelationForRoleTables.cs" />
+    <Compile Include="Migrations\202203181450470_UpdateRelationForRoleTables.Designer.cs">
+      <DependentUpon>202203181450470_UpdateRelationForRoleTables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -229,6 +233,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203161655111_AddNewTablesForRole.resx">
       <DependentUpon>202203161655111_AddNewTablesForRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203181450470_UpdateRelationForRoleTables.resx">
+      <DependentUpon>202203181450470_UpdateRelationForRoleTables.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

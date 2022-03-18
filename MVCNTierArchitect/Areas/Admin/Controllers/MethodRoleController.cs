@@ -53,60 +53,60 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpNotFoundResult();
-            }
+        //[HttpGet]
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpNotFoundResult();
+        //    }
 
-            var roleMethod = _roleMethodService.GetByID(x => x.ID == id);
-            if (roleMethod == null)
-            {
-                return new HttpNotFoundResult();
-            }
+        //    var roleMethod = _roleMethodService.GetByID(x => x.ID == id);
+        //    if (roleMethod == null)
+        //    {
+        //        return new HttpNotFoundResult();
+        //    }
 
-            return View(roleMethod);
-        }
+        //    return View(roleMethod);
+        //}
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(RoleMethod roleMethod)
-        {
-            ValidationResult results = _validator.Validate(roleMethod);
-            if (!results.IsValid)
-            {
-                foreach (var item in results.Errors)
-                {
-                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
-                }
-                return View(roleMethod);
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Edit(RoleMethod roleMethod)
+        //{
+        //    ValidationResult results = _validator.Validate(roleMethod);
+        //    if (!results.IsValid)
+        //    {
+        //        foreach (var item in results.Errors)
+        //        {
+        //            ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+        //        }
+        //        return View(roleMethod);
+        //    }
 
-            _roleMethodService.Update(roleMethod, roleMethod.ID);
-            TempData["EditRoleMethod"] = "Məlumat yeniləndi.";
-            return RedirectToAction("Index");
-        }
+        //    _roleMethodService.Update(roleMethod, roleMethod.ID);
+        //    TempData["EditRoleMethod"] = "Məlumat yeniləndi.";
+        //    return RedirectToAction("Index");
+        //}
 
 
-        [HttpGet]
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpNotFoundResult();
-            }
+        //[HttpGet]
+        //public ActionResult Delete(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpNotFoundResult();
+        //    }
 
-            var roleMethod = _roleMethodService.GetByID(x => x.ID == id);
-            if (roleMethod == null)
-            {
-                return new HttpNotFoundResult();
-            }
+        //    var roleMethod = _roleMethodService.GetByID(x => x.ID == id);
+        //    if (roleMethod == null)
+        //    {
+        //        return new HttpNotFoundResult();
+        //    }
 
-            _roleMethodService.Delete(roleMethod);
-            TempData["DeleteRoleMethod"] = "Məlumat silindi.";
-            return RedirectToAction("Index");
-        }
+        //    _roleMethodService.Delete(roleMethod);
+        //    TempData["DeleteRoleMethod"] = "Məlumat silindi.";
+        //    return RedirectToAction("Index");
+        //}
     }
 }

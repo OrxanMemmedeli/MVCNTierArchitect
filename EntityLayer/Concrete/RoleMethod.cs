@@ -10,8 +10,6 @@ namespace EntityLayer.Concrete
 {
     public class RoleMethod
     {
-        [Key]
-        public int ID { get; set; }
 
         [ForeignKey("Role")]
         public int? RoleID { get; set; }
