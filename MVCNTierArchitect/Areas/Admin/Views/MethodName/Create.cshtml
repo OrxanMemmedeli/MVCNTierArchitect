@@ -1,0 +1,35 @@
+﻿@model EntityLayer.Concrete.MethodName
+
+@{
+    ViewBag.Title = "Yeni Metod";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+@using (Html.BeginForm(Html.BeginForm("Create", "MethodName", "Admin", FormMethod.Post)))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Yeni Metod</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            <p class="control-label col-md-4">Metod Adı</p>
+
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Əlavə Et" class="btn btn-success" />
+                <a href="/Admin/MethodName" class="btn btn-dark">Geri</a>
+            </div>
+        </div>
+    </div>
+}
+
+

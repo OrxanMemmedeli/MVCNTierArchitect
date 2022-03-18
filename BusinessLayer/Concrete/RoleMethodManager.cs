@@ -24,9 +24,19 @@ namespace BusinessLayer.Concrete
             _roleMethodDal.Create(t);
         }
 
+        public void AddRange(List<RoleMethod> t)
+        {
+            _roleMethodDal.AddRange(t);
+        }
+
         public void Delete(RoleMethod t)
         {
             _roleMethodDal.Delete(t);
+        }
+
+        public void DeleteRange(List<RoleMethod> t)
+        {
+            _roleMethodDal.DeleteRange(t);
         }
 
         public List<RoleMethod> GetAll()

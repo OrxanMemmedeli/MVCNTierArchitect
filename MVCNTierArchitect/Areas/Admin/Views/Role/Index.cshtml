@@ -1,0 +1,63 @@
+﻿@model IEnumerable<EntityLayer.Concrete.Role>
+
+@{
+    ViewBag.Title = "Rollar";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Rollar</h2>
+
+<p>
+    <a href="/Admin/Role/Create" class="btn btn-primary">Yeni Rol</a>
+    <a href="/Admin/MethodName" class="btn btn-dark">Metodlar</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Rol
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a href="/Admin/Role/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a href="/Admin/Role/Relation/@item.ID" class="badge badge-warning" title="düzəliş et"><i class="fas fa-file-contract"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<script>
+    function Delete(id) {
+        var url = "/Admin/Role/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/Role', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["DeleteRole"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteRole"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditRole"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditRole"].ToString()))");
+    </script>
+}

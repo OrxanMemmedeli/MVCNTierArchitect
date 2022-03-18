@@ -1,0 +1,62 @@
+﻿@model IEnumerable<EntityLayer.Concrete.MethodName>
+
+@{
+    ViewBag.Title = "Metod Adları";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Metod Adları</h2>
+
+<p>
+    <a href="/Admin/MethodName/Create" class="btn btn-primary">Yeni Metod</a>
+    <a href="/Admin/Role" class="btn btn-dark">Rollar</a>
+
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Metod
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                <a href="/Admin/MethodName/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    function Delete(id) {
+        var url = "/Admin/MethodName/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/MethodName', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["DeleteMethodName"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteMethodName"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditMethodName"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditMethodName"].ToString()))");
+    </script>
+}

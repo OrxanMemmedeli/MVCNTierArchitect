@@ -25,8 +25,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         // GET: Admin/MethodName
         public ActionResult Index()
         {
-            var categories = _methodNameService.GetAll();
-            return View(categories);
+            var methodName = _methodNameService.GetAll();
+            return View(methodName);
         }
 
         [HttpGet]

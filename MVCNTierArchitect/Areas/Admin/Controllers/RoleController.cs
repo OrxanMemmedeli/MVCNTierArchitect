@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,15 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;
+        private readonly IMethodNameService _methodNameService;
+        private readonly IRoleMethodService _roleMethodService;
         private readonly RoleValidator _validator;
 
-        public RoleController(IRoleService roleService, RoleValidator validator)
+        public RoleController(IRoleService roleService, IMethodNameService methodNameService, IRoleMethodService roleMethodService, RoleValidator validator)
         {
             _roleService = roleService;
+            _methodNameService = methodNameService;
+            _roleMethodService = roleMethodService;
             _validator = validator;
         }
 
@@ -106,6 +111,68 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             _roleService.Delete(role);
             TempData["DeleteRole"] = "Rol silindi.";
+            return RedirectToAction("Index");
+        }
+
+
+        [HttpGet]
+        public ActionResult Relation(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            RelationViewModel model = new RelationViewModel();
+            var methods = _methodNameService.GetAll();
+            var roleMethods = _roleMethodService.GetAll();
+            if (methods == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            model.MethodNames = methods;
+            model.RoleMethods = roleMethods;
+            ViewBag.RoleID = id;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Relation(int roleID, int[] methodID)
+        {
+            List<RoleMethod> ListAdd = new List<RoleMethod>();
+            List<RoleMethod> ListDelete = new List<RoleMethod>();
+            var roleMethods = _roleMethodService.GetAll(x => x.RoleID == roleID);
+
+            if (methodID != null)
+            {
+                foreach (var item in methodID)
+                {
+                    var control = roleMethods.FirstOrDefault(x => x.MethodNameID == item);
+                    if (control == null)
+                    {
+                        ListAdd.Add(new RoleMethod()
+                        {
+                            MethodNameID = item,
+                            RoleID = roleID
+                        });
+                    }
+                }
+
+                foreach (var item in methodID)
+                {
+                    roleMethods = roleMethods.Where(x => x.MethodNameID != item).ToList();
+                }
+                ListDelete.AddRange(roleMethods);
+            }
+
+            if (ListAdd.Count() != 0)
+            {
+                _roleMethodService.AddRange(ListAdd);
+            }
+            if (ListDelete.Count() != 0)
+            {
+                _roleMethodService.DeleteRange(ListDelete);
+            }
             return RedirectToAction("Index");
         }
     }

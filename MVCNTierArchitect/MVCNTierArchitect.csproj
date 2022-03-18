@@ -178,6 +178,7 @@
     <Compile Include="Infrastrucrure\NinjectControllerFactory.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModelValidator.cs" />
+    <Compile Include="Models\ViewModels\RelationViewModel.cs" />
     <Compile Include="Models\ViewModels\WriterLoginViewModel.cs" />
     <Compile Include="Models\ViewModels\WriterLoginViewModelValidator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -2679,6 +2680,14 @@
     <Content Include="Areas\Showcase\Views\Galery\Create.cshtml" />
     <Content Include="Areas\Showcase\Views\Galery\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Chart\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MethodName\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MethodName\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MethodName\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\Relation.cshtml" />
+    <Content Include="Areas\Admin\Views\MethodRole\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2727,9 +2736,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Views\MethodName\" />
-    <Folder Include="Areas\Admin\Views\MethodRole\" />
-    <Folder Include="Areas\Admin\Views\Role\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
     <Folder Include="Areas\Showcase\Data\" />
     <Folder Include="Areas\Showcase\Views\Shared\" />

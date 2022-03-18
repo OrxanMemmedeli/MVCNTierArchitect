@@ -9,5 +9,8 @@ namespace BusinessLayer.Abstract
 {
     public interface IRoleMethodService : IGenericService<RoleMethod>
     {
+        void AddRange(List<RoleMethod> t);
+        void DeleteRange(List<RoleMethod> t);
+
     }
 }
