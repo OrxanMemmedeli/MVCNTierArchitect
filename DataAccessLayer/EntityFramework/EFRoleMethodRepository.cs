@@ -25,13 +25,20 @@ namespace DataAccessLayer.EntityFramework
 
         public void DeleteRange(List<RoleMethod> t)
         {
-            foreach (var item in t)
+            using (var cx = new MVCContext())
             {
-                var deletedEntity = context.Entry(item);
-                deletedEntity.State = EntityState.Deleted;
+                var roleMethods = cx.RoleMethods.ToList();
+
+                foreach (var item in t)
+                {
+                    var deletedEntity = roleMethods.SingleOrDefault(x => x.RoleID == item.RoleID && x.MethodNameID == item.MethodNameID);
+                    cx.RoleMethods.Remove(deletedEntity);
+                }
+
+
+                cx.SaveChanges();
             }
 
-            context.SaveChanges();
         }
     }
 }
