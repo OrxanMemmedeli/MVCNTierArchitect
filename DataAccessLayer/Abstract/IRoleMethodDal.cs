@@ -9,5 +9,7 @@ namespace DataAccessLayer.Abstract
 {
     public interface IRoleMethodDal :IGenericDal<RoleMethod>
     {
+        void AddRange(List<RoleMethod> t);
+        void DeleteRange(List<RoleMethod> t);
     }
 }
