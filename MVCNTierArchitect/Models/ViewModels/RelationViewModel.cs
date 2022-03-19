@@ -10,5 +10,6 @@ namespace MVCNTierArchitect.Models.ViewModels
     {
         public List<MethodName> MethodNames { get; set; }
         public List<RoleMethod> RoleMethods { get; set; }
+        public List<Role> Roles { get; set; }
     }
 }

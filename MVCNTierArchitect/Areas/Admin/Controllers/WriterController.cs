@@ -17,27 +17,25 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
         private readonly IWriterService _writerService;
         private readonly WriterValidator _validator;
-
-        public WriterController(IAncryptionAndDecryption ancryptionAndDecryption,IWriterService writerService)
+        private readonly IRoleService _roleService;
+        public WriterController(IAncryptionAndDecryption ancryptionAndDecryption, IWriterService writerService, IRoleService roleService)
         {
             _ancryptionAndDecryption = ancryptionAndDecryption;
             _writerService = writerService;
             _validator = new WriterValidator(_writerService);
+            _roleService = roleService;
         }
 
         public ActionResult Index()
         {
-            var writers = _writerService.GetAll();
-            foreach (var item in writers)
-            {
-                item.Email = _ancryptionAndDecryption.DecodeData(item.Email);
-            }
+            var writers = _writerService.GetAllWithRole();
             return View(writers);
         }
 
         [HttpGet]
         public ActionResult Create()
         {
+            ViewBag.RoleID = GetRoles();
             return View();
         }
 
@@ -54,18 +52,21 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+                ViewBag.RoleID = GetRoles();
                 return View(writer);
             }
             else if (!_ancryptionAndDecryption.DecodeData(writer.Email).Contains("@"))
             {
                 ModelState.AddModelError("Email", "Email adresi düzgün daxil edilmeyib.");
                 writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                ViewBag.RoleID = GetRoles();
                 return View(writer);
             }
             else if (!_writerService.IsEmailUnique(writer.Email, null))
             {
                 ModelState.AddModelError("Email", "Email ünvanı istifadə edilib. Fərqli ünvan istifadə edin.");
                 writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                ViewBag.RoleID = GetRoles();
                 return View(writer);
             }
             writer.Password = _ancryptionAndDecryption.EncodeData(writer.Password);
@@ -88,6 +89,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
             Writer.Email = _ancryptionAndDecryption.DecodeData(Writer.Email);
+            ViewBag.RoleID = GetRoles();
             return View(Writer);
         }
 
@@ -99,10 +101,12 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 writer.Password = writer.OldPassword;
                 writer.ConfirmPassword = writer.OldPassword;
+
+                writer.Password = _ancryptionAndDecryption.DecodeData(writer.Password);
+                writer.ConfirmPassword = writer.Password;
             }
 
-            writer.Password = _ancryptionAndDecryption.DecodeData(writer.Password);
-            writer.ConfirmPassword = writer.Password;
+
             writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
 
             ValidationResult results = _validator.Validate(writer);
@@ -112,18 +116,21 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+                ViewBag.RoleID = GetRoles();
                 return View(writer);
             }
             else if (!_ancryptionAndDecryption.DecodeData(writer.Email).Contains("@"))
             {
                 ModelState.AddModelError("Email", "Email adresi düzgün daxil edilmeyib.");
                 writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                ViewBag.RoleID = GetRoles();
                 return View(writer);
             }
-            else if (!_writerService.IsEmailUnique(writer.Email,writer.ID))
+            else if (!_writerService.IsEmailUnique(writer.Email, writer.ID))
             {
                 ModelState.AddModelError("Email", "Email ünvanı istifadə edilib. Fərqli ünvan istifadə edin.");
                 writer.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
+                ViewBag.RoleID = GetRoles();
                 return View(writer);
             }
 
@@ -131,5 +138,16 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             _writerService.Update(writer, writer.ID);
             return RedirectToAction("Index");
         }
+
+        private List<SelectListItem> GetRoles()
+        {
+            return (from c in _roleService.GetAll()
+                    select new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.ID.ToString()
+                    }).ToList();
+        }
+
     }
 }
