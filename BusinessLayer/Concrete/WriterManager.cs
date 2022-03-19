@@ -43,6 +43,16 @@ namespace BusinessLayer.Concrete
             return _writerDal.GetAll(Filter);
         }
 
+        public List<Writer> GetAllWithRole(Expression<Func<Writer, bool>> Filter)
+        {
+            return _writerDal.GetAllWithRole(Filter);
+        }
+
+        public List<Writer> GetAllWithRole()
+        {
+            return _writerDal.GetAllWithRole();
+        }
+
         public Writer GetByID(Expression<Func<Writer, bool>> Filter)
         {
             return _writerDal.GetById(Filter);

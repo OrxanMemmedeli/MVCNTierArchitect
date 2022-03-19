@@ -12,6 +12,8 @@ namespace DataAccessLayer.Abstract
     {
         bool IsEmailUnique(string email, int? id);
         Writer Get(Expression<Func<Writer, bool>> Filter);
+        List<Writer> GetAllWithRole(Expression<Func<Writer, bool>> Filter);
+        List<Writer> GetAllWithRole();
 
     }
 }
