@@ -13,8 +13,8 @@ namespace MVCNTierArchitect
     {
         protected void Application_Start()
         {
-            GlobalFilters.Filters.Add(new AuthorizeAttribute()); //All controller same time authorize
-            //GlobalFilters.Filters.Add(new AuthorizeAttribute() { Roles = "{action}" }); //All controller same time authorize
+            //GlobalFilters.Filters.Add(new AuthorizeAttribute()); //All controller same time authorize
+            GlobalFilters.Filters.Add(new AuthorizeAttribute() { Roles = "{action}" }); //All controller same time authorize
 
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
