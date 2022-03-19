@@ -88,7 +88,6 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 return new HttpNotFoundResult();
             }
-            Writer.Email = _ancryptionAndDecryption.DecodeData(Writer.Email);
             ViewBag.RoleID = GetRoles();
             return View(Writer);
         }

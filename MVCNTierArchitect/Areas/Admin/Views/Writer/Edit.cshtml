@@ -1,8 +1,10 @@
 ﻿@model EntityLayer.Concrete.Writer
+@using Tools.Concrete
 
 @{
     ViewBag.Title = "Yazar Düzəlişləri";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    AncryptionAndDecryption ancryptionAndDecryption = new AncryptionAndDecryption();
 }
 
 
@@ -15,7 +17,7 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
-    <input type="hidden" name="OldPassword" value="@Model.Password" />
+        <input type="hidden" name="OldPassword" value="@Model.Password" />
 
         <div class="row">
             <div class="form-group col-md-4">
@@ -37,7 +39,7 @@
             <div class="form-group col-md-4">
                 <label class="control-label col-md-12">Email</label>
                 <div class="col-md-12">
-                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @type = "email" } })
+                    <input type="email" name="Email" value="@ancryptionAndDecryption.DecodeData(Model.Email)" class = "form-control"/>
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -95,7 +97,7 @@
                         {
                             <option value="@item.Value" @(item.Value == Model.RoleID.ToString() ? "selected" : "")>@item.Text</option>
                         }
-                    </select>                    
+                    </select>
                 </div>
             </div>
         </div>
