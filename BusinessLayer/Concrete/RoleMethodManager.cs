@@ -54,6 +54,11 @@ namespace BusinessLayer.Concrete
             return _roleMethodDal.GetById(Filter);
         }
 
+        public string[] GetRoleMethodNames(int roleID)
+        {
+            return _roleMethodDal.GetRoleMethodNames(roleID);
+        }
+
         public void Update(RoleMethod t, int id)
         {
             _roleMethodDal.Update(t,id);

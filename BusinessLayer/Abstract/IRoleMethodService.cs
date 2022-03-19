@@ -11,6 +11,6 @@ namespace BusinessLayer.Abstract
     {
         void AddRange(List<RoleMethod> t);
         void DeleteRange(List<RoleMethod> t);
-
+        string[] GetRoleMethodNames(int roleID);
     }
 }

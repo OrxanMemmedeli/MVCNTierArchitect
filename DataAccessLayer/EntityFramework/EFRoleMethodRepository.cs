@@ -40,5 +40,21 @@ namespace DataAccessLayer.EntityFramework
             }
 
         }
+
+        public string[] GetRoleMethodNames(int roleID)
+        {
+            var roleMethods = context.RoleMethods.Where(x => x.RoleID == roleID).Include(x => x.MethodName);
+            string[] names = new string[roleMethods.Count()];
+            if (roleMethods != null)
+            {
+                int index = 0;
+                foreach (var item in roleMethods)
+                {
+                    names[index] = item.MethodName.Name;
+                    index++;
+                }
+            }
+            return names;
+        }
     }
 }
