@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             _aboutService = aboutService;
             _validator = new AboutValidator();
         }
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Index()
         {
             var abouts = _aboutService.GetAll();
@@ -35,6 +37,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Create(About about)
         {
             ValidationResult results = _validator.Validate(about);
@@ -51,6 +54,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Status(int? id)
         {
             if (id == null)

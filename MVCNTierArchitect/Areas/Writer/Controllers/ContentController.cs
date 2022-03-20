@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ using Tools.Abstract;
 namespace MVCNTierArchitect.Areas.Writer.Controllers
 {
     [RouteArea("Writer")]
+    [CustomWriterAuthorizeAttribute]
     public class ContentController : Controller
     {
         private readonly IContentService _contentService;
@@ -30,7 +32,9 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         // GET: Writer/Content
         public ActionResult Index()
         {
-            int writeriId = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
+            int writeriId = _sessionControl.GetWriterID(); 
+            if (writeriId == 0)
+                return RedirectToAction("Login", "Account");
             var contents = _contentService.GetAllByHeading(x => x.WriterID == writeriId && x.Status == true);
             return View(contents);
         }
@@ -68,9 +72,11 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Content content)
         {
-             content.CreatedDate = DateTime.Now;
+            content.CreatedDate = DateTime.Now;
             content.Status = true;
-            content.WriterID = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
+            content.WriterID = _sessionControl.GetWriterID();
+            if (content.WriterID == 0)
+                return RedirectToAction("Login", "Account");
             ValidationResult results = _validator.Validate(content);
             if (!results.IsValid)
             {

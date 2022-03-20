@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,8 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
         public PartialViewResult MailLeftMenu()
         {
-            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
+            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"] == null ? "" : Session["WriterEmail"].ToString());
+
             var messages = _messageService.GetAll();
 
             var newSystemMessageCount = messages.Where(x => x.IsResponded == false && x.IsDeleted == false && x.IsDraft == false && x.ReceiverEmail == writer).Count();
@@ -53,14 +55,16 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         }
 
         // GET: Writer/Message
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Index()
         {
-            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
-
+            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"] == null ? "" : Session["WriterEmail"].ToString());
+            if (string.IsNullOrEmpty(writer))
+                return RedirectToAction("Login", "Account");
             var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false && x.ReceiverEmail == writer).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
-
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -79,11 +83,12 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             }
             return View(message);
         }
-
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Deleteds()
         {
-            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
-
+            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"] == null ? "" : Session["WriterEmail"].ToString());
+            if (string.IsNullOrEmpty(writer))
+                return RedirectToAction("Login", "Account");
             var messages = _messageService.GetAll(x => x.IsDeleted == true).OrderByDescending(x => x.CreatedDate);
             var writerMessages = messages.Where(x => x.ReceiverEmail == writer || x.SenderEmail == writer).OrderByDescending(x => x.CreatedDate);
             DeleteOldMessage(writerMessages);
@@ -107,7 +112,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
                 _messageService.DeleteAll(models);
             }
         }
-
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Create(int? id)
         {
             Message message = new Message();
@@ -128,9 +133,12 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Create(Message message)
         {
-            message.SenderEmail = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
+            message.SenderEmail = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"] == null ? "" : Session["WriterEmail"].ToString());
+            if (string.IsNullOrEmpty(message.SenderEmail))
+                return RedirectToAction("Login", "Account");
             message.CreatedDate = DateTime.Now;
             message.IsResponded = true;
 
@@ -148,7 +156,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             _messageService.Add(message);
             return RedirectToAction("Sent", "Message", "Writer");
         }
-
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -171,14 +179,18 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             return RedirectToAction("Index");
         }
 
-
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Drafts()
         {
+            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"] == null ? "" : Session["WriterEmail"].ToString());
+            if (string.IsNullOrEmpty(writer))
+                return RedirectToAction("Login", "Account");
+
             var drafts = _messageService.GetAll(x => x.IsDraft == true && x.IsDeleted == false).OrderByDescending(x => x.CreatedDate);
-            var writerDrafts = drafts.Where(x => x.SenderEmail == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()) || x.ReceiverEmail == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString()));
+            var writerDrafts = drafts.Where(x => x.SenderEmail == writer || x.ReceiverEmail == writer);
             return View(writerDrafts);
         }
-
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Draft(int? id)
         {
             if (id == null)
@@ -199,13 +211,17 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             }
             return RedirectToAction("Index");
         }
-
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Sent()
         {
-            var sents = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true && x.SenderEmail == _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString())).OrderByDescending(x => x.CreatedDate);
+            var writer = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"] == null ? "" : Session["WriterEmail"].ToString());
+            if (string.IsNullOrEmpty(writer))
+                return RedirectToAction("Login", "Account");
+
+            var sents = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true && x.SenderEmail == writer).OrderByDescending(x => x.CreatedDate);
             return View(sents);
         }
-
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Reply(int? id)
         {
             if (id == null)
@@ -223,9 +239,12 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Reply(Message message)
         {
-            message.SenderEmail = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"].ToString());
+            message.SenderEmail = _ancryptionAndDecryption.EncodeData(Session["WriterEmail"] == null ? "" : Session["WriterEmail"].ToString());
+            if (string.IsNullOrEmpty(message.SenderEmail))
+                return RedirectToAction("Login", "Account");
             message.IsDraft = false;
             message.CreatedDate = DateTime.Now;
             ValidationResult results = _validator.Validate(message);

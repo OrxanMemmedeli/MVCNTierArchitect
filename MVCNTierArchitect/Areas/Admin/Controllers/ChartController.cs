@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
     [RouteArea("Admin")]
+    [CustomAdminAuthorizeAttribute]
     public class ChartController : Controller
     {
         private readonly ICategoryService _categoryService;

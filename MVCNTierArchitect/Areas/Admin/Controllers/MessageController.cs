@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,12 +23,14 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             _validator = new MessageValidator();
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Index()
         {
             var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -47,6 +50,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return View(message);
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Deleteds()
         {
             var messages = _messageService.GetAll(x => x.IsDeleted == true).OrderByDescending(x => x.CreatedDate);
@@ -73,6 +77,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Create(int? id)
         {
             Message message = new Message();
@@ -93,6 +98,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Create(Message message)
         {
             //*******************************************************************
@@ -115,6 +121,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Sent", "Message", "Admin");
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -138,12 +145,14 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         }
 
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Drafts()
         {
             var drafts = _messageService.GetAll(x => x.IsDraft == true && x.IsDeleted == false).OrderByDescending(x => x.CreatedDate);
             return View(drafts);
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Draft(int? id)
         {
             if (id == null)
@@ -164,12 +173,14 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Sent()
         {
             var sents = _messageService.GetAll(x => x.IsDraft == false && x.IsDeleted == false && x.IsResponded == true).OrderByDescending(x => x.CreatedDate);
             return View(sents);
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Reply(int? id)
         {
             if (id == null)
@@ -187,6 +198,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Reply(Message message)
         {
             //*******************************************************************

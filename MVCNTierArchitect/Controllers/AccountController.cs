@@ -71,6 +71,7 @@ namespace MVCNTierArchitect.Controllers
             {
                 FormsAuthentication.SetAuthCookie(admin.UserName, false);
                 Session["AdminUserName"] = _ancryptionAndDecryption.DecodeData(admin.UserName);
+                Session["WriterEmail"] = null;
                 if (!string.IsNullOrEmpty(returnURL))
                 {
                     return Redirect(returnURL);
@@ -115,6 +116,7 @@ namespace MVCNTierArchitect.Controllers
             {
                 FormsAuthentication.SetAuthCookie(writer.Email, false);
                 Session["WriterEmail"] = _ancryptionAndDecryption.DecodeData(writer.Email);
+                Session["AdminUserName"] = null;
                 if (!string.IsNullOrEmpty(returnURL))
                 {
                     return Redirect(returnURL);
@@ -134,6 +136,11 @@ namespace MVCNTierArchitect.Controllers
             FormsAuthentication.SignOut();
             Session.Abandon();
             return RedirectToAction("Index","Home");
+        }
+
+        public ActionResult Denied()
+        {
+            return View();
         }
 
     }

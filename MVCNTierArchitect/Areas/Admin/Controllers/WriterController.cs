@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,8 @@ using Tools.Abstract;
 
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
+    [RouteArea("Admin")]
+    [CustomAdminAuthorizeAttribute]
     public class WriterController : Controller
     {
         private readonly IAncryptionAndDecryption _ancryptionAndDecryption;

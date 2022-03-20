@@ -8,7 +8,7 @@ namespace Tools.Abstract
 {
     public interface ISessionControl
     {
-        int GetAdminID(string userName);
-        int GetWriterID(string email);
+        int GetAdminID();
+        int GetWriterID();
     }
 }
