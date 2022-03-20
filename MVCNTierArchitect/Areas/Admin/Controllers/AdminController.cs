@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ using Tools.Abstract;
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
     [RouteArea("Admin")]
+    [CustomAdminAuthorizeAttribute]
     public class AdminController : Controller
     {
         private readonly IAdminService _adminService;

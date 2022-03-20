@@ -174,7 +174,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Infrastrucrure\CustomAuthorizeAttribute.cs" />
+    <Compile Include="Infrastrucrure\CustomWriterAuthorizeAttribute.cs" />
+    <Compile Include="Infrastrucrure\CustomAdminAuthorizeAttribute.cs" />
     <Compile Include="Infrastrucrure\NinjectControllerFactory.cs" />
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\LoginViewModelValidator.cs" />
@@ -2733,6 +2734,7 @@
     <Content Include="Views\Default\SosialPartial.cshtml" />
     <Content Include="Views\Default\MessagePartial.cshtml" />
     <Content Include="Views\Home\SearchBox.cshtml" />
+    <Content Include="Views\Account\Denied.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

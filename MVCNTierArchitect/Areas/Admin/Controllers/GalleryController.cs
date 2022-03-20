@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
     [RouteArea("Admin")]
+    [CustomAdminAuthorizeAttribute]
     public class GalleryController : Controller
     {
         private readonly IImageFileService _imageFileService;

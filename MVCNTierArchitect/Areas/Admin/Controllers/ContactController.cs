@@ -3,6 +3,7 @@ using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             _messageService = messageService;            
             _validator = new MessageValidator();
         }
-
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Index()
         {
             var messages = _contactService.GetAll(x => x.IsDeleted == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
@@ -55,7 +56,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             ViewData["DeletedMessageCount"] = deletedMessageCount;
             return PartialView();
         }
-
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -74,7 +75,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
             return View(message);
         }
-
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -103,6 +104,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Draft(Contact contact)
         {
             if (contact == null)
@@ -124,6 +126,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Create(int? id)
         {
             if (id == null)
@@ -141,6 +144,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Create(Contact contactMessage)
         {
             Message message = new Message();

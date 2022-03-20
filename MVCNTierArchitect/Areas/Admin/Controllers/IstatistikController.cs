@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.Concrete;
 using DataAccessLayer.EntityFramework;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
+    [RouteArea("Admin")]
     public class IstatistikController : Controller
     {
         private readonly ICategoryService _categoryService;
@@ -21,7 +23,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             _headingService = headingService;
             _writerService = writerService;
         }
-
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Index()
         {
             return View();

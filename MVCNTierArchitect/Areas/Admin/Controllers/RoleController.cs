@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using MVCNTierArchitect.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
     [RouteArea("Admin")]
+    [CustomAdminAuthorizeAttribute]
     public class RoleController : Controller
     {
         private readonly IRoleService _roleService;

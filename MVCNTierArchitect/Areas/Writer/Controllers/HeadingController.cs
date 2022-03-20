@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using PagedList;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using Tools.Abstract;
 namespace MVCNTierArchitect.Areas.Writer.Controllers
 {
     [RouteArea("Writer")]
+    [CustomWriterAuthorizeAttribute]
     public class HeadingController : Controller
     {
         private readonly IHeadingService _headingService;
@@ -31,7 +33,9 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         // GET: Writer/Heading
         public ActionResult Index()
         {
-            int writeriId = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
+            int writeriId = _sessionControl.GetWriterID();
+            if (writeriId == 0)
+                return RedirectToAction("Login", "Account");
             var headings = _headingService.GetAllWithContentAndWriter(x => x.WriterID == writeriId && x.Status == true);
             return View(headings);
         }
@@ -60,7 +64,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         public ActionResult Create(Heading heading)
         {
             heading.CreatedDate = DateTime.Now;
-            heading.WriterID = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
+            heading.WriterID = _sessionControl.GetWriterID();
 
             ValidationResult results = _validator.Validate(heading);
             if (!results.IsValid)

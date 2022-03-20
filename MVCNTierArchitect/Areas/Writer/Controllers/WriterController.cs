@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using BusinessLayer.ValidationRules;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -33,9 +34,12 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
 
         // GET: Writer/Writer
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Index()
         {
-            int writeriId = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
+            int writeriId = _sessionControl.GetWriterID();
+            if (writeriId == 0)
+                return RedirectToAction("Login", "Account");
             var writer = _writerService.GetByID(x => x.ID == writeriId);
             ViewBag.Email = _ancryptionAndDecryption.DecodeData(writer.Email);
 
@@ -46,19 +50,24 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
         public ActionResult LastActivity()
         {
-            int writeriId = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
+            int writeriId = _sessionControl.GetWriterID();
+            if (writeriId == 0)
+                return RedirectToAction("Login", "Account"); 
             var lastActivity = _contentService.GetAllByHeading(x => x.Status == true && x.WriterID == writeriId).OrderByDescending(x => x.CreatedDate).Take(5);
             return PartialView(lastActivity);
         }
 
         public ActionResult LastPosts()
         {
-            int writeriId = _sessionControl.GetWriterID(Session["WriterEmail"].ToString());
+            int writeriId = _sessionControl.GetWriterID();
+            if (writeriId == 0)
+                return RedirectToAction("Login", "Account");
             var lastPosts = _contentService.GetAllByHeading(x => x.Status == true).OrderByDescending(x => x.CreatedDate).Take(5);
             return PartialView(lastPosts);
         }
 
         [HttpPost]
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Edit(EntityLayer.Concrete.Writer writer)
         {
             writer.Password = _ancryptionAndDecryption.DecodeData(writer.Password);
@@ -95,6 +104,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
 
 
         [HttpPost]
+        [CustomWriterAuthorizeAttribute]
         public ActionResult EditPassword(EntityLayer.Concrete.Writer writer)
         {
             writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
