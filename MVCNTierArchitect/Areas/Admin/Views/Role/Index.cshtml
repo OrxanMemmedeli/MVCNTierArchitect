@@ -10,6 +10,7 @@
 <p>
     <a href="/Admin/Role/Create" class="btn btn-primary">Yeni Rol</a>
     <a href="/Admin/MethodName" class="btn btn-dark">Metodlar</a>
+    <a href="/Admin/ControllerName" class="btn btn-dark">Controllerlər</a>
 </p>
 <table class="table">
     <tr>
@@ -27,7 +28,8 @@
             </td>
             <td>
                 <a href="/Admin/Role/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
-                <a href="/Admin/Role/Relation/@item.ID" class="badge badge-warning" title="əlaqələndir"><i class="fas fa-file-contract"></i></a> |
+                <a href="/Admin/Role/RelationMethod/@item.ID" class="badge badge-warning" title="Metdola əlaqələndir"><i class="fas fa-file-contract"></i></a> -
+                <a href="/Admin/Role/RelationControllerName/@item.ID" class="badge badge-warning" title="Controllerlə əlaqələndir"><i class="fas fa-file-contract"></i></a> |
                 <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
             </td>
         </tr>

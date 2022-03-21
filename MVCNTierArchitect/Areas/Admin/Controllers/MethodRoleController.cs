@@ -16,19 +16,17 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     public class MethodRoleController : Controller
     {
         private readonly IRoleMethodService _roleMethodService;
-        private readonly RoleMethodValidator _validator;
 
-        public MethodRoleController(IRoleMethodService roleMethodService, RoleMethodValidator validator)
+        public MethodRoleController(IRoleMethodService roleMethodService)
         {
             _roleMethodService = roleMethodService;
-            _validator = validator;
         }
 
         // GET: Admin/MethodRole
         public ActionResult Index()
         {
-            var categories = _roleMethodService.GetAll();
-            return View(categories);
+            var roleMethods = _roleMethodService.GetAll();
+            return View(roleMethods);
         }
 
   

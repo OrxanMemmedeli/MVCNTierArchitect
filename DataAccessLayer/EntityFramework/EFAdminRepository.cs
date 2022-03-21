@@ -4,6 +4,7 @@ using DataAccessLayer.Repositories;
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -18,6 +19,16 @@ namespace DataAccessLayer.EntityFramework
         public Admin Get(Expression<Func<Admin, bool>> Filter)
         {
             return context.Admins.FirstOrDefault(Filter);
+        }
+
+        public List<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter)
+        {
+            return context.Admins.Where(Filter).Include(x => x.Role).ToList();
+        }
+
+        public List<Admin> GetAllWithRole()
+        {
+            return context.Admins.Include(x => x.Role).ToList();
         }
 
         public bool IsUserNameUnique(string username)

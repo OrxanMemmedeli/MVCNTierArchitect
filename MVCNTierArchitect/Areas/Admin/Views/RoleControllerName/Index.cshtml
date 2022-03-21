@@ -1,0 +1,31 @@
+﻿@model IEnumerable<EntityLayer.Concrete.RoleControllerName>
+
+@{
+    ViewBag.Title = "Role-Controller əlaqəsi";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<h2>Role-Controller əlaqəsi</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            Controller
+        </th>
+        <th>
+            Rol
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ControllerName.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Role.Name)
+            </td>
+        </tr>
+    }
+
+</table>

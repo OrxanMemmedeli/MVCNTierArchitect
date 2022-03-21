@@ -18,22 +18,26 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         private readonly IAdminService _adminService;
         private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
         private readonly AdminValidator _validator;
-        public AdminController(IAdminService adminService, IAncryptionAndDecryption ancryptionAndDecryption)
+        private readonly IRoleService _roleService;
+
+        public AdminController(IAdminService adminService, IAncryptionAndDecryption ancryptionAndDecryption, AdminValidator validator, IRoleService roleService)
         {
             _adminService = adminService;
             _ancryptionAndDecryption = ancryptionAndDecryption;
-            _validator = new AdminValidator(_adminService);
+            _validator = validator;
+            _roleService = roleService;
         }
 
         // GET: Admin/Admin
         public ActionResult Index()
         {
-            var admins = _adminService.GetAll();
+            var admins = _adminService.GetAllWithRole();
             return View(admins);
         }
 
         public ActionResult Create()
         {
+            ViewBag.RoleID = GetRoles();
             return View();
         }
 
@@ -55,6 +59,16 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             admin.UserName = _ancryptionAndDecryption.EncodeData(admin.UserName);
             _adminService.Add(admin);
             return RedirectToAction("Index");
+        }
+
+        private List<SelectListItem> GetRoles()
+        {
+            return (from c in _roleService.GetAll()
+                    select new SelectListItem
+                    {
+                        Text = c.Name,
+                        Value = c.ID.ToString()
+                    }).ToList();
         }
     }
 }

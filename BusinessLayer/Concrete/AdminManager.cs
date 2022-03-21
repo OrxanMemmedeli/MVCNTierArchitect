@@ -44,6 +44,16 @@ namespace BusinessLayer.Concrete
             return _adminDal.GetAll(Filter);
         }
 
+        public List<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter)
+        {
+            return _adminDal.GetAllWithRole(Filter);
+        }
+
+        public List<Admin> GetAllWithRole()
+        {
+            return _adminDal.GetAllWithRole();
+        }
+
         public Admin GetByID(Expression<Func<Admin, bool>> Filter)
         {
             return _adminDal.GetById(Filter);

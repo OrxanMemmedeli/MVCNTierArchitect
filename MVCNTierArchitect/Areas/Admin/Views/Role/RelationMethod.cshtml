@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm("Relation", "Role", "Admin", FormMethod.Post))
+@using (Html.BeginForm("RelationMethod", "Role", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
@@ -23,7 +23,7 @@
                 {
                     if (Model.RoleMethods.Any(x => x.MethodNameID == item.ID && x.RoleID == ViewBag.RoleID))
                     {
-                        <input type="checkbox" name="methodID" id="@item.Name" value="@item.ID" checked="checked" /> <label for="@item.Name">@item.Name</label> <br />
+                        <input type="checkbox" name="methodID" id="@item.Name" value="@item.ID" checked="checked" /> <label class="text-danger" for="@item.Name">@item.Name</label> <br />
                     }
                     else
                     {
