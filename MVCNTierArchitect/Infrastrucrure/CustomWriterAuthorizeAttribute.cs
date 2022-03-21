@@ -31,7 +31,7 @@ namespace MVCNTierArchitect.Infrastrucrure
                 var writer = writerManager.Get(x => x.Email == ancrypt);
                 var actions = roleMethodManager.GetRoleMethodNames((int)writer.RoleID);
                 if (!actions.Contains(actionName))
-                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "controller", "Account" }, { "action", "Denied" } });
+                    filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary { { "area", "" }, { "controller", "Account" }, { "action", "Denied" } });
 
             }
 
