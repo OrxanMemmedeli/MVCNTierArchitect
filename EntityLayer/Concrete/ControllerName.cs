@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace EntityLayer.Concrete
 {
-    public class Role
+    public  class ControllerName
     {
-        public Role()
+        public ControllerName()
         {
             this.RoleControllerNames = new HashSet<RoleControllerName>();
         }
@@ -19,7 +19,6 @@ namespace EntityLayer.Concrete
         [StringLength(100)]
         public string Name { get; set; }
 
-        public virtual ICollection<RoleMethod> RoleMethods { get; set; }
         public virtual ICollection<RoleControllerName> RoleControllerNames { get; set; }
     }
 }

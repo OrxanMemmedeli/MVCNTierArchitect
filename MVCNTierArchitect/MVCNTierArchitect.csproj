@@ -2735,6 +2735,7 @@
     <Content Include="Views\Default\MessagePartial.cshtml" />
     <Content Include="Views\Home\SearchBox.cshtml" />
     <Content Include="Views\Account\Denied.cshtml" />
+    <Content Include="Views\ErrorPage\Responce403.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

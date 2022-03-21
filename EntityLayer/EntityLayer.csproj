@@ -70,11 +70,13 @@
     <Compile Include="Concrete\Category.cs" />
     <Compile Include="Concrete\Contact.cs" />
     <Compile Include="Concrete\Content.cs" />
+    <Compile Include="Concrete\ControllerName.cs" />
     <Compile Include="Concrete\Heading.cs" />
     <Compile Include="Concrete\ImageFile.cs" />
     <Compile Include="Concrete\Message.cs" />
     <Compile Include="Concrete\MethodName.cs" />
     <Compile Include="Concrete\Role.cs" />
+    <Compile Include="Concrete\RoleControllerName.cs" />
     <Compile Include="Concrete\RoleMethod.cs" />
     <Compile Include="Concrete\Skill.cs" />
     <Compile Include="Concrete\SkillInfo.cs" />
