@@ -1,22 +1,19 @@
 ﻿@model IEnumerable<EntityLayer.Concrete.RoleMethod>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Role-Method əlaqəsi";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Role-Method əlaqəsi</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.MethodName.Name)
+            Metod
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Role.Name)
+            Rol
         </th>
 
     </tr>

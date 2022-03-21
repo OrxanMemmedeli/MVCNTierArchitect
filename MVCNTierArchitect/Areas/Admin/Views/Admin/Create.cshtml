@@ -41,8 +41,12 @@
         <div class="form-group">
             <p class="control-label col-md-4">Rol</p>
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Role, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Role, "", new { @class = "text-danger" })
+                <select name="RoleID" class="form-control">
+                    @foreach (var item in ViewBag.RoleID)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
             </div>
         </div>
 

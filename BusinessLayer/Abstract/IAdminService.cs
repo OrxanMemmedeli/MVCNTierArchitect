@@ -12,5 +12,7 @@ namespace BusinessLayer.Abstract
     {
         bool IsUserNameUnique(string username);
         Admin Get(Expression<Func<Admin, bool>> Filter);
+        List<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter);
+        List<Admin> GetAllWithRole();
     }
 }

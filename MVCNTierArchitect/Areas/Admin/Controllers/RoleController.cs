@@ -19,15 +19,21 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         private readonly IRoleService _roleService;
         private readonly IMethodNameService _methodNameService;
         private readonly IRoleMethodService _roleMethodService;
+        private readonly IControllerNameService _controllerNameService;
+        private readonly IRoleControllerNameService _roleControllerNameService;
         private readonly RoleValidator _validator;
 
-        public RoleController(IRoleService roleService, IMethodNameService methodNameService, IRoleMethodService roleMethodService, RoleValidator validator)
+        public RoleController(IRoleService roleService, IMethodNameService methodNameService, IRoleMethodService roleMethodService, IControllerNameService controllerNameService, IRoleControllerNameService roleControllerNameService, RoleValidator validator)
         {
             _roleService = roleService;
             _methodNameService = methodNameService;
             _roleMethodService = roleMethodService;
+            _controllerNameService = controllerNameService;
+            _roleControllerNameService = roleControllerNameService;
             _validator = validator;
         }
+
+
 
         // GET: Admin/Role
         public ActionResult Index()
@@ -118,7 +124,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
 
         [HttpGet]
-        public ActionResult Relation(int? id)
+        public ActionResult RelationMethod(int? id)
         {
             if (id == null)
             {
@@ -139,7 +145,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Relation(int roleID, int[] methodID)
+        public ActionResult RelationMethod(int roleID, int[] methodID)
         {
             List<RoleMethod> ListAdd = new List<RoleMethod>();
             var roleMethods = _roleMethodService.GetAll(x => x.RoleID == roleID);
@@ -170,6 +176,63 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             if (ListDelete.Count() != 0)
             {
                 _roleMethodService.DeleteRange(ListDelete);
+            }
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult RelationControllerName(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            RelationViewModel model = new RelationViewModel();
+            var controllerNames = _controllerNameService.GetAll();
+            var roleControllerNames = _roleControllerNameService.GetAll();
+            if (controllerNames == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            model.ControllerNames = controllerNames;
+            model.RoleControllerNames = roleControllerNames;
+            ViewBag.RoleID = id;
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RelationControllerName(int roleID, int[] controllerID)
+        {
+            List<RoleControllerName> ListAdd = new List<RoleControllerName>();
+            var roleControllerNames = _roleControllerNameService.GetAll(x => x.RoleID == roleID);
+            List<RoleControllerName> ListDelete = roleControllerNames;
+
+            if (controllerID != null)
+            {
+                foreach (var item in controllerID)
+                {
+                    var control = roleControllerNames.FirstOrDefault(x => x.ControllerNameID == item);
+                    if (control == null)
+                    {
+                        ListAdd.Add(new RoleControllerName()
+                        {
+                            ControllerNameID = item,
+                            RoleID = roleID
+                        });
+                    }
+
+                    ListDelete = ListDelete.Where(x => x.ControllerNameID != item).ToList();
+                }
+            }
+
+            if (ListAdd.Count() != 0)
+            {
+                _roleControllerNameService.AddRange(ListAdd);
+            }
+            if (ListDelete.Count() != 0)
+            {
+                _roleControllerNameService.DeleteRange(ListDelete);
             }
             return RedirectToAction("Index");
         }

@@ -56,11 +56,13 @@
     <Compile Include="Abstract\ICategoryDal.cs" />
     <Compile Include="Abstract\IContactDal.cs" />
     <Compile Include="Abstract\IContentDal.cs" />
+    <Compile Include="Abstract\IControllerNameDal.cs" />
     <Compile Include="Abstract\IGenericDal.cs" />
     <Compile Include="Abstract\IHeadingDal.cs" />
     <Compile Include="Abstract\IImageFileDal.cs" />
     <Compile Include="Abstract\IMessageDal.cs" />
     <Compile Include="Abstract\IMethodNameDal.cs" />
+    <Compile Include="Abstract\IRoleControllerNameDal.cs" />
     <Compile Include="Abstract\IRoleDal.cs" />
     <Compile Include="Abstract\IRoleMethodDal.cs" />
     <Compile Include="Abstract\ISkillDal.cs" />
@@ -73,10 +75,12 @@
     <Compile Include="EntityFramework\EFCategoryRepository.cs" />
     <Compile Include="EntityFramework\EFContactRepository.cs" />
     <Compile Include="EntityFramework\EFContentRepository.cs" />
+    <Compile Include="EntityFramework\EFControllerNameRepository.cs" />
     <Compile Include="EntityFramework\EFHeadingRepository.cs" />
     <Compile Include="EntityFramework\EFImageFileRepository.cs" />
     <Compile Include="EntityFramework\EFMessageRepository.cs" />
     <Compile Include="EntityFramework\EFMethodNameRepository.cs" />
+    <Compile Include="EntityFramework\EFRoleControllerNameRepository.cs" />
     <Compile Include="EntityFramework\EFRoleMethodRepository.cs" />
     <Compile Include="EntityFramework\EFRoleRepository.cs" />
     <Compile Include="EntityFramework\EFSkillInfoRepository.cs" />
@@ -166,6 +170,14 @@
     <Compile Include="Migrations\202203210701435_CustomRelationAddControllerNameTables.Designer.cs">
       <DependentUpon>202203210701435_CustomRelationAddControllerNameTables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203211239158_AddNewColumnForControllerName.cs" />
+    <Compile Include="Migrations\202203211239158_AddNewColumnForControllerName.Designer.cs">
+      <DependentUpon>202203211239158_AddNewColumnForControllerName.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202203211350463_AddNewColumnForAdmin.cs" />
+    <Compile Include="Migrations\202203211350463_AddNewColumnForAdmin.Designer.cs">
+      <DependentUpon>202203211350463_AddNewColumnForAdmin.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -243,6 +255,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203210701435_CustomRelationAddControllerNameTables.resx">
       <DependentUpon>202203210701435_CustomRelationAddControllerNameTables.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203211239158_AddNewColumnForControllerName.resx">
+      <DependentUpon>202203211239158_AddNewColumnForControllerName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203211350463_AddNewColumnForAdmin.resx">
+      <DependentUpon>202203211350463_AddNewColumnForAdmin.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

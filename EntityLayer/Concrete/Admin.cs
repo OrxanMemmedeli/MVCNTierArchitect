@@ -16,8 +16,11 @@ namespace EntityLayer.Concrete
         public string Password { get; set; }
         [NotMapped]
         public virtual string ConfirmPassword { get; set; }
-        [StringLength(1)] 
-        public string Role { get; set; }
         public bool Status { get; set; } = true;
+
+        [ForeignKey("Role")]
+        public int? RoleID { get; set; }
+
+        public virtual Role Role { get; set; }
     }
 }

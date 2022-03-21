@@ -12,6 +12,9 @@ namespace EntityLayer.Concrete
         public Role()
         {
             this.RoleControllerNames = new HashSet<RoleControllerName>();
+            this.RoleMethods = new HashSet<RoleMethod>();
+            this.Writers = new HashSet<Writer>();
+            this.Admins = new HashSet<Admin>();
         }
 
         [Key]
@@ -21,5 +24,7 @@ namespace EntityLayer.Concrete
 
         public virtual ICollection<RoleMethod> RoleMethods { get; set; }
         public virtual ICollection<RoleControllerName> RoleControllerNames { get; set; }
+        public virtual ICollection<Writer> Writers { get; set; }
+        public virtual ICollection<Admin> Admins { get; set; }
     }
 }

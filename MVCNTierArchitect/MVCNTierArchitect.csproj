@@ -142,6 +142,7 @@
     <Compile Include="Areas\Admin\Controllers\ChartController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContactController.cs" />
     <Compile Include="Areas\Admin\Controllers\ContentController.cs" />
+    <Compile Include="Areas\Admin\Controllers\ControllerNameController.cs" />
     <Compile Include="Areas\Admin\Controllers\GalleryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HeadingController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
@@ -150,6 +151,7 @@
     <Compile Include="Areas\Admin\Controllers\MethodNameController.cs" />
     <Compile Include="Areas\Admin\Controllers\MethodRoleController.cs" />
     <Compile Include="Areas\Admin\Controllers\RoleController.cs" />
+    <Compile Include="Areas\Admin\Controllers\RoleControllerNameController.cs" />
     <Compile Include="Areas\Admin\Controllers\WriterController.cs" />
     <Compile Include="Areas\Showcase\Controllers\AboutController.cs" />
     <Compile Include="Areas\Showcase\Controllers\AdressController.cs" />
@@ -2687,9 +2689,15 @@
     <Content Include="Areas\Admin\Views\MethodName\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Role\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\MethodName\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\Role\Relation.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\RelationMethod.cshtml" />
     <Content Include="Areas\Admin\Views\MethodRole\Index.cshtml" />
     <Content Include="Areas\Admin\Views\MethodName\Relation.cshtml" />
+    <Content Include="Areas\Admin\Views\RoleControllerName\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ControllerName\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\ControllerName\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\ControllerName\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\ControllerName\Relation.cshtml" />
+    <Content Include="Areas\Admin\Views\Role\RelationControllerName.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

@@ -59,11 +59,13 @@
     <Compile Include="Abstract\ICategoryService.cs" />
     <Compile Include="Abstract\IContactServive.cs" />
     <Compile Include="Abstract\IContentService.cs" />
+    <Compile Include="Abstract\IControllerNameService.cs" />
     <Compile Include="Abstract\IGenericService.cs" />
     <Compile Include="Abstract\IHeadingService.cs" />
     <Compile Include="Abstract\IImageFileService.cs" />
     <Compile Include="Abstract\IMessageService.cs" />
     <Compile Include="Abstract\IMethodNameService.cs" />
+    <Compile Include="Abstract\IRoleControllerNameService.cs" />
     <Compile Include="Abstract\IRoleMethodService.cs" />
     <Compile Include="Abstract\IRoleService.cs" />
     <Compile Include="Abstract\ISkillInfoService.cs" />
@@ -75,11 +77,13 @@
     <Compile Include="Concrete\CategoryManager.cs" />
     <Compile Include="Concrete\ContactManager.cs" />
     <Compile Include="Concrete\ContentManager.cs" />
+    <Compile Include="Concrete\ControllerNameManager.cs" />
     <Compile Include="Concrete\HeadingManager.cs" />
     <Compile Include="Concrete\IAncryptionAndDecryption.cs" />
     <Compile Include="Concrete\ImageFileManager.cs" />
     <Compile Include="Concrete\MessageManager.cs" />
     <Compile Include="Concrete\MethodNameManager.cs" />
+    <Compile Include="Concrete\RoleControllerNameManager.cs" />
     <Compile Include="Concrete\RoleManager.cs" />
     <Compile Include="Concrete\RoleMethodManager.cs" />
     <Compile Include="Concrete\SkillInfoManager.cs" />
@@ -92,6 +96,7 @@
     <Compile Include="ValidationRules\CategoryValidator.cs" />
     <Compile Include="ValidationRules\ContactValidator.cs" />
     <Compile Include="ValidationRules\ContentValidator.cs" />
+    <Compile Include="ValidationRules\ControllerNameValidator.cs" />
     <Compile Include="ValidationRules\HeadingValidator.cs" />
     <Compile Include="ValidationRules\ImageFileValidator.cs" />
     <Compile Include="ValidationRules\MessageValidator.cs" />

@@ -40,6 +40,8 @@ namespace MVCNTierArchitect.Infrastrucrure
             _ninjectKernal.Bind<IRoleService>().To<RoleManager>().WithConstructorArgument("roleDal", new EFRoleRepository());
             _ninjectKernal.Bind<IMethodNameService>().To<MethodNameManager>().WithConstructorArgument("methodNameDal", new EFMethodNameRepository());
             _ninjectKernal.Bind<IRoleMethodService>().To<RoleMethodManager>().WithConstructorArgument("roleMethodDal", new EFRoleMethodRepository());
+            _ninjectKernal.Bind<IRoleControllerNameService>().To<RoleControllerNameManager>().WithConstructorArgument("roleControllerNameDal", new EFRoleControllerNameRepository());
+            _ninjectKernal.Bind<IControllerNameService>().To<ControllerNameManager>().WithConstructorArgument("controllerNameDal", new EFControllerNameRepository());
         }
 
         private void AddToolsBinding()

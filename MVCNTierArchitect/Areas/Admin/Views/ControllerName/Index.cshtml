@@ -1,0 +1,68 @@
+﻿@model IEnumerable<EntityLayer.Concrete.ControllerName>
+
+@{
+    ViewBag.Title = "Controller Adları";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Controller Adları</h2>
+
+<p>
+    <a href="/Admin/ControllerName/Create" class="btn btn-primary">Yeni Controller</a>
+    <a href="/Admin/Role" class="btn btn-dark">Rollar</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Controller
+        </th>
+        <th>
+            Açıqlama
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a href="/Admin/ControllerName/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |
+                <a href="/Admin/ControllerName/Relation/@item.ID" class="badge badge-warning" title="əlaqələndir"><i class="fas fa-file-contract"></i></a> |
+                <a class="badge badge-danger" title="Sil" onclick="Delete(@item.ID)"><i class="fas fa-trash-alt"></i></a>
+            </td>
+        </tr>
+    }
+
+</table>
+<script>
+    function Delete(id) {
+        var url = "/Admin/ControllerName/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/ControllerName', '_self');
+        }
+    };
+</script>
+
+
+
+@if (TempData["DeleteControllerName"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["DeleteControllerName"].ToString()))");
+    </script>
+}
+
+@if (TempData["EditControllerName"] != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(TempData["EditControllerName"].ToString()))");
+    </script>
+}
