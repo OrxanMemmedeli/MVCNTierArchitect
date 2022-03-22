@@ -21,12 +21,12 @@ namespace DataAccessLayer.EntityFramework
             return context.Admins.FirstOrDefault(Filter);
         }
 
-        public List<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter)
+        public IEnumerable<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter)
         {
-            return context.Admins.Where(Filter).Include(x => x.Role).ToList();
+            return context.Admins.Include(x => x.Role).Where(Filter).ToList();
         }
 
-        public List<Admin> GetAllWithRole()
+        public IEnumerable<Admin> GetAllWithRole()
         {
             return context.Admins.Include(x => x.Role).ToList();
         }
@@ -36,6 +36,20 @@ namespace DataAccessLayer.EntityFramework
             var responce = context.Admins.FirstOrDefault(x => x.UserName == username);
             if (responce != null)
             {
+                return false;
+            }
+            return true;
+        }
+
+        public bool IsUserNameUnique(string username, int? id = 0)
+        {
+            var responce = context.Admins.FirstOrDefault(x => x.UserName == username);
+            if (responce != null)
+            {
+                if (responce.ID == id)
+                {
+                    return true;
+                }
                 return false;
             }
             return true;

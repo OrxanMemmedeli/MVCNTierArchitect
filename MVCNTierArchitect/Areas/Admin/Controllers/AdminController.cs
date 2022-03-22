@@ -31,7 +31,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         // GET: Admin/Admin
         public ActionResult Index()
         {
-            var admins = _adminService.GetAllWithRole();
+            var admins = _adminService.GetAll();
             return View(admins);
         }
 
@@ -52,13 +52,20 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+                ViewBag.RoleID = GetRoles(); 
                 return View(admin);
             }
-
+            if (!_adminService.IsUserNameUnique(_ancryptionAndDecryption.EncodeData(admin.UserName)))
+            {
+                ViewBag.Unique =  "User adı təkrar edilə bilməz.";
+                ViewBag.RoleID = GetRoles(); 
+                return View(admin);
+            }
             admin.Password = _ancryptionAndDecryption.EncodeData(admin.Password);
             admin.UserName = _ancryptionAndDecryption.EncodeData(admin.UserName);
             _adminService.Add(admin);
             return RedirectToAction("Index");
+
         }
 
         private List<SelectListItem> GetRoles()
@@ -69,6 +76,74 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                         Text = c.Name,
                         Value = c.ID.ToString()
                     }).ToList();
+        }
+
+
+        [HttpGet]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var admin = _adminService.GetByID(x => x.ID == id);
+            if (admin == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            ViewBag.RoleID = GetRoles();
+            return View(admin);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(EntityLayer.Concrete.Admin admin)
+        {
+            ValidationResult results = _validator.Validate(admin);
+            if (!results.IsValid)
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+                ViewBag.RoleID = GetRoles();
+                admin.Password = _ancryptionAndDecryption.EncodeData(admin.Password);
+                admin.UserName = _ancryptionAndDecryption.EncodeData(admin.UserName);
+                return View(admin);
+            }
+
+            admin.Password = _ancryptionAndDecryption.EncodeData(admin.Password);
+            admin.UserName = _ancryptionAndDecryption.EncodeData(admin.UserName);
+
+            if (!_adminService.IsUserNameUnique(admin.UserName, admin.ID))
+            {
+                ViewBag.Unique = "User adı təkrar edilə bilməz.";
+                ViewBag.RoleID = GetRoles(); 
+                return View(admin);
+            }
+            TempData["EditAdmin"] = "Admin yeniləndi.";
+            _adminService.Update(admin, admin.ID);
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var admin = _adminService.GetByID(x => x.ID == id);
+            if (admin == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            _adminService.Delete(admin);
+            TempData["DeleteAdmin"] = "Admin silindi.";
+            return RedirectToAction("Index");
         }
     }
 }
