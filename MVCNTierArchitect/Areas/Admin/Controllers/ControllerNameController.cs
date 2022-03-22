@@ -33,7 +33,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         // GET: Admin/MethodName
         public ActionResult Index()
         {
-            var controllerNames = _controllerNameService.GetAll();
+            var controllerNames = _controllerNameService.GetAll().OrderBy(x => x.Name);
             return View(controllerNames);
         }
 

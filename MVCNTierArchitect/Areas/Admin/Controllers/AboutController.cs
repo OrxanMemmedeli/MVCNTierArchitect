@@ -51,7 +51,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
 
             _aboutService.Add(about);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "About");
         }
 
         [CustomAdminAuthorizeAttribute]
@@ -71,7 +71,32 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             about.Status = !about.Status;
             _aboutService.Update(about, about.ID);
-            return RedirectToAction("Index");
+            TempData["EditAbout"] = "Məlumat yeniləndi.";
+            return RedirectToAction("Index", "About");
+        }
+
+        [CustomAdminAuthorizeAttribute]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+            return Redirect("/admin/About/DeleteConfirm/" + id);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
+            var about = _aboutService.GetByID(x => x.ID == id);
+            if (about == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            _aboutService.Delete(about);
+            TempData["DeleteAbout"] = "Məlumat silindi.";
+            return RedirectToAction("Index", "About");
         }
     }
 }

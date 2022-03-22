@@ -1,4 +1,5 @@
 ﻿using BusinessLayer.Abstract;
+using MVCNTierArchitect.Infrastrucrure;
 using Newtonsoft.Json;
 using ShowcaseAPI.Models.Entity;
 using System;
@@ -14,6 +15,7 @@ using System.Web.Mvc;
 namespace MVCNTierArchitect.Areas.Showcase.Controllers
 {
     [Route("Showcase")]
+    [CustomAdminAuthorizeAttribute]
     public class DevelopmentController : Controller
     {
         private readonly IAdressService _adressService;
