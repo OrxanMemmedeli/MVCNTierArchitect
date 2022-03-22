@@ -20,12 +20,12 @@ namespace DataAccessLayer.EntityFramework
             return context.Writers.FirstOrDefault(Filter);
         }
 
-        public List<Writer> GetAllWithRole(Expression<Func<Writer, bool>> Filter)
+        public IEnumerable<Writer> GetAllWithRole(Expression<Func<Writer, bool>> Filter)
         {
-            return context.Writers.Where(Filter).Include(x => x.Role).ToList();
+            return context.Writers.Include(x => x.Role).Where(Filter).ToList();
         }
 
-        public List<Writer> GetAllWithRole()
+        public IEnumerable<Writer> GetAllWithRole()
         {
             return context.Writers.Include(x => x.Role).ToList();
         }

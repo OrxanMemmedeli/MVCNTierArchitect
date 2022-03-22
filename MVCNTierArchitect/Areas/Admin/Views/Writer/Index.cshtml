@@ -53,6 +53,9 @@
                         <a href="/Admin/Writer/Edit/@item.ID" class="btn btn-sm btn-primary">
                             <i class="fas fa-user"></i> Düzəliş et
                         </a>
+                        <a onclick="Delete(@item.ID)" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash-alt"></i> Sil
+                        </a>
                     </div>
                 </div>
             </div>
@@ -60,3 +63,28 @@
     }
 </div>
 
+
+<script>
+    function Delete(id) {
+        var url = "/Admin/Writer/Delete/" + id;
+        if (confirm("Silmək isdədiyinizdən əminsinizmi?")) {
+            window.open(url, '_self');
+        } else {
+            window.open('/Admin/Writer', '_self');
+        }
+    };
+</script>
+
+@if (ViewBag.DeleteWriter != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(ViewBag.DeleteWriter.ToString()))");
+    </script>
+}
+
+@if (ViewBag.EditWriter != null)
+{
+    <script>
+        swal("@Html.Raw(System.Web.HttpUtility.JavaScriptStringEncode(ViewBag.EditWriter.ToString()))");
+    </script>
+}

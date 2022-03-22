@@ -43,12 +43,12 @@ namespace BusinessLayer.Concrete
             return _writerDal.GetAll(Filter);
         }
 
-        public List<Writer> GetAllWithRole(Expression<Func<Writer, bool>> Filter)
+        public IEnumerable<Writer> GetAllWithRole(Expression<Func<Writer, bool>> Filter)
         {
             return _writerDal.GetAllWithRole(Filter);
         }
 
-        public List<Writer> GetAllWithRole()
+        public IEnumerable<Writer> GetAllWithRole()
         {
             return _writerDal.GetAllWithRole();
         }

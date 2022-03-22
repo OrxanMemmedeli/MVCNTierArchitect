@@ -1,27 +1,30 @@
 ﻿@model EntityLayer.Concrete.Admin
-
+@using Tools.Concrete
 @{
-    ViewBag.Title = "Yeni Admin";
+    ViewBag.Title = "Admini Yenilə";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    AncryptionAndDecryption ancryptionAndDecryption = new AncryptionAndDecryption();
 }
 
 
-@using (Html.BeginForm("Create", "Admin", "Admin", FormMethod.Post))
+@using (Html.BeginForm("Edit", "Admin", "Admin", FormMethod.Post))
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Yeni Admin</h4>
+        <h4>Admini Yenilə</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
         <div class="form-group">
             <p class="control-label col-md-4">İstifadəçi Adı</p>
             <div class="col-md-10">
-                <input type="text" name="UserName" class = "form-control"/>
+                <input type="text" name="UserName" class="form-control" value="@ancryptionAndDecryption.DecodeData(Model.UserName)" />
                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                 @if (ViewBag.Unique != null)
                 {
-                    <span class ="text-danger">@ViewBag.Unique</span>
+                    <span class="text-danger">@ViewBag.Unique</span>
                 }
             </div>
         </div>
@@ -29,7 +32,7 @@
         <div class="form-group">
             <p class="control-label col-md-4">Şifrə</p>
             <div class="col-md-10">
-                <input type="password" name="Password" class="form-control" />
+                <input type="password" class = "form-control" name="Password" value="@ancryptionAndDecryption.DecodeData(Model.Password)" />
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,7 +40,7 @@
         <div class="form-group">
             <p class="control-label col-md-4">Şifrənin Təkrarı</p>
             <div class="col-md-10">
-                <input type="password" name="ConfirmPassword" class="form-control" />
+                <input type="password" class="form-control" name="ConfirmPassword" value="@ancryptionAndDecryption.DecodeData(Model.Password)" />
                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -48,7 +51,7 @@
                 <select name="RoleID" class="form-control">
                     @foreach (var item in ViewBag.RoleID)
                     {
-                        <option value="@item.Value">@item.Text</option>
+                        <option value="@item.Value" @(item.Value == Model.RoleID.ToString() ? "selected" : "")>@item.Text</option>
                     }
                 </select>
             </div>
@@ -66,7 +69,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Əlavə Et" class="btn btn-success" />
+                <input type="submit" value="Yenilə" class="btn btn-success" />
                 <a href="/Admin/Admin" class="btn btn-dark">Geri</a>
             </div>
         </div>

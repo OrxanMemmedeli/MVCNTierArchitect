@@ -10,9 +10,9 @@ namespace BusinessLayer.Abstract
 {
     public interface IAdminService : IGenericService<Admin>
     {
-        bool IsUserNameUnique(string username);
+        bool IsUserNameUnique(string username, int? id = 0);
         Admin Get(Expression<Func<Admin, bool>> Filter);
-        List<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter);
-        List<Admin> GetAllWithRole();
+        IEnumerable<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter);
+        IEnumerable<Admin> GetAllWithRole();
     }
 }

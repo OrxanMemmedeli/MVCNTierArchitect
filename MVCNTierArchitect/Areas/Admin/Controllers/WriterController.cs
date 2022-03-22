@@ -31,7 +31,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
         public ActionResult Index()
         {
-            var writers = _writerService.GetAllWithRole();
+            var writers = _writerService.GetAll();
             return View(writers);
         }
 
@@ -138,6 +138,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             writer.Password = _ancryptionAndDecryption.EncodeData(writer.Password);
             _writerService.Update(writer, writer.ID);
+            TempData["EditWriter"] = "Admin yeniləndi.";
             return RedirectToAction("Index");
         }
 
@@ -151,5 +152,23 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                     }).ToList();
         }
 
+        [HttpGet]
+        public ActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            var writer = _writerService.GetByID(x => x.ID == id);
+            if (writer == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            _writerService.Delete(writer);
+            TempData["DeleteWriter"] = "Yazar silindi.";
+            return RedirectToAction("Index");
+        }
     }
 }

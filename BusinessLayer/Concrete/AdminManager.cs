@@ -44,12 +44,12 @@ namespace BusinessLayer.Concrete
             return _adminDal.GetAll(Filter);
         }
 
-        public List<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter)
+        public IEnumerable<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter)
         {
             return _adminDal.GetAllWithRole(Filter);
         }
 
-        public List<Admin> GetAllWithRole()
+        public IEnumerable<Admin> GetAllWithRole()
         {
             return _adminDal.GetAllWithRole();
         }
@@ -59,9 +59,9 @@ namespace BusinessLayer.Concrete
             return _adminDal.GetById(Filter);
         }
 
-        public bool IsUserNameUnique(string username)
+        public bool IsUserNameUnique(string username, int? id = 0)
         {
-            return _adminDal.IsUserNameUnique(username);
+            return _adminDal.IsUserNameUnique(username, id);
         }
 
         public void Update(Admin t, int id)
