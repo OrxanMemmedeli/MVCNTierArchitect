@@ -23,11 +23,11 @@
                 {
                     if (Model.RoleMethods.Any(x => x.MethodNameID == item.ID && x.RoleID == ViewBag.RoleID))
                     {
-                        <input type="checkbox" name="methodID" id="@item.Name" value="@item.ID" checked="checked" /> <label class="text-danger" for="@item.Name">@item.Name</label> <br />
+                        <input type="checkbox" name="methodID" id="@item.Name" value="@item.ID" checked="checked" /> <label class="text-danger" for="@item.Name">@item.Name (@item.Description)</label> <br />
                     }
                     else
                     {
-                        <input type="checkbox" name="methodID" id="@item.Name" value="@item.ID" /> <label for="@item.Name">@item.Name</label> <br />
+                        <input type="checkbox" name="methodID" id="@item.Name" value="@item.ID" /> <label for="@item.Name">@item.Name <i class="text-secondary">(@item.Description)</i></label> <br />
                     }
                 }
             </div>

@@ -22,7 +22,13 @@
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
-
+        <div class="form-group">
+            <p class="control-label col-md-4">Açıqlama</p>
+            <div class="col-md-10">
+                <input type="text" name="Description" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Əlavə Et" class="btn btn-success" />

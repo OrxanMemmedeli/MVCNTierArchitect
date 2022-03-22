@@ -17,6 +17,9 @@
         <th>
             Metod
         </th>
+        <th>
+            Açıqlama
+        </th>
         <th></th>
     </tr>
 
@@ -25,6 +28,9 @@
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td>
                 <a href="/Admin/MethodName/Edit/@item.ID" class="badge badge-success" title="düzəliş et"><i class="fas fa-edit"></i></a> |

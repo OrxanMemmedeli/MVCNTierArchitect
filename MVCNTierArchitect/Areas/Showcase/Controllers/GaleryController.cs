@@ -11,10 +11,12 @@ using ShowcaseAPI.Models.Entity;
 using System.Text;
 using System.Net;
 using System.IO;
+using MVCNTierArchitect.Infrastrucrure;
 
 namespace MVCNTierArchitect.Areas.Showcase.Controllers
 {
     [Route("Showcase")]
+    [CustomAdminAuthorizeAttribute]
     public class GaleryController : Controller
     {
         private readonly IAdressService _adressService;

@@ -50,7 +50,7 @@ namespace DataAccessLayer.EntityFramework
                 int index = 0;
                 foreach (var item in roleMethods)
                 {
-                    names[index] = item.MethodName.Name;
+                    names[index] = item.MethodName.Name.ToLower();
                     index++;
                 }
             }

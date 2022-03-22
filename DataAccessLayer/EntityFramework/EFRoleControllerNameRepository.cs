@@ -47,7 +47,7 @@ namespace DataAccessLayer.EntityFramework
                 int index = 0;
                 foreach (var item in roleControllerNames)
                 {
-                    names[index] = item.ControllerName.Name;
+                    names[index] = item.ControllerName.Name.ToLower();
                     index++;
                 }
             }

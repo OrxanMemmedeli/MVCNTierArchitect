@@ -63,7 +63,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
 
             _roleService.Add(role);
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Role");
         }
 
         [HttpGet]
@@ -99,7 +99,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             _roleService.Update(role, role.ID);
             TempData["EditRole"] = "Rol yeniləndi.";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Role");
         }
 
 
@@ -119,7 +119,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             _roleService.Delete(role);
             TempData["DeleteRole"] = "Rol silindi.";
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Role");
         }
 
 
@@ -177,7 +177,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 _roleMethodService.DeleteRange(ListDelete);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Role");
         }
 
         [HttpGet]
@@ -234,7 +234,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 _roleControllerNameService.DeleteRange(ListDelete);
             }
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Role");
         }
     }
 }

@@ -2,6 +2,7 @@
 using BusinessLayer.ValidationRules;
 using EntityLayer.Concrete;
 using FluentValidation.Results;
+using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,8 @@ using System.Web.Mvc;
 
 namespace MVCNTierArchitect.Areas.Showcase.Controllers
 {
+    [Route("Showcase")]
+    [CustomAdminAuthorizeAttribute]
     public class AdressController : Controller
     {
         private readonly IAdressService _adressService;
