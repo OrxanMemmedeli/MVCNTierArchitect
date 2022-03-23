@@ -9,7 +9,7 @@
 <h2>Haqqımda</h2>
 
 <p>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#Modal1">Yeni</button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#ModalCreate">Yeni</button>
 </p>
 
 <table class="table">
@@ -83,6 +83,7 @@
 
 @Html.Action("CreatePartial", "About", "Admin")
 
+
 <script>
     function Delete(id) {
         var url = "/Admin/About/Delete/" + id;
@@ -92,6 +93,7 @@
             window.open('/Admin/About', '_self');
         }
     };
+
 </script>
 
 

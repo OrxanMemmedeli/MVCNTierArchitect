@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace EntityLayer.Concrete
 {
@@ -32,6 +33,9 @@ namespace EntityLayer.Concrete
         public virtual string ConfirmPassword { get; set; }
         [NotMapped]
         public string OldPassword { get; set; }
+
+        [NotMapped] 
+        public virtual HttpPostedFileBase imageFile { get; set; }
 
         [ForeignKey("Role")]
         public int? RoleID { get; set; }
