@@ -128,6 +128,12 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Message/DeleteConfirm/" + id);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var message = _messageService.GetByID(x => x.ID == id);
             if (message == null)
             {

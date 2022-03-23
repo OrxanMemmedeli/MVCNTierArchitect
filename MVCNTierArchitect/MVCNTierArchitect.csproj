@@ -169,7 +169,6 @@
     <Compile Include="Areas\Writer\Controllers\WriterController.cs" />
     <Compile Include="Areas\Writer\WriterAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\ErrorPageController.cs" />
     <Compile Include="Controllers\HomeController.cs" />

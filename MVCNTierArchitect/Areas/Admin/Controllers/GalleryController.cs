@@ -35,14 +35,19 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return View(files);
         }
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Gallery/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var image = _imageFileService.GetByID(x => x.ID == id);
             if (image == null)
             {

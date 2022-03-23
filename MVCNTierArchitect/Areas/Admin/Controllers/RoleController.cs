@@ -103,21 +103,31 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         }
 
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Role/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var role = _roleService.GetByID(x => x.ID == id);
             if (role == null)
             {
                 return new HttpNotFoundResult();
             }
+            var roleMethods = _roleMethodService.GetAll(x => x.RoleID == role.ID);
+            var roleControllers = _roleControllerNameService.GetAll(x => x.RoleID == role.ID);
 
-            _roleService.Delete(role);
+            _roleService.Delete(role); 
+            _roleMethodService.DeleteRange(roleMethods);
+            _roleControllerNameService.DeleteRange(roleControllers);
+
             TempData["DeleteRole"] = "Rol silindi.";
             return RedirectToAction("Index", "Role");
         }
@@ -131,7 +141,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
             RelationViewModel model = new RelationViewModel();
-            var methods = _methodNameService.GetAll();
+            var methods = _methodNameService.GetAll().OrderBy(x => x.Name).ToList();
             var roleMethods = _roleMethodService.GetAll();
             if (methods == null)
             {
@@ -188,13 +198,13 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 return new HttpNotFoundResult();
             }
             RelationViewModel model = new RelationViewModel();
-            var controllerNames = _controllerNameService.GetAll();
+            var controllerNames = _controllerNameService.GetAll().OrderBy(x => x.Name).ToList();
             var roleControllerNames = _roleControllerNameService.GetAll();
             if (controllerNames == null)
             {
                 return new HttpNotFoundResult();
             }
-            model.ControllerNames = controllerNames;
+            model.ControllerNames = controllerNames; 
             model.RoleControllerNames = roleControllerNames;
             ViewBag.RoleID = id;
             return View(model);

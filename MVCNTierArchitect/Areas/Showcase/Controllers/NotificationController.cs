@@ -110,13 +110,18 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         }
 
 
-        public async Task<ActionResult> Delete(int? id)
+        [CustomAdminAuthorizeAttribute]
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
-                return new HttpNotFoundResult(); 
+                return new HttpNotFoundResult();
             }
+            return Redirect("/Showcase/Notification/DeleteConfirm/" + id);
+        }
 
+        public async Task<ActionResult> DeleteConfirm(int id)
+        {
             var url = _adressService.GetLast();
             var httpclient = new HttpClient();
             var responseMessage = await httpclient.DeleteAsync(url.URL + "api/Notification/" + id);

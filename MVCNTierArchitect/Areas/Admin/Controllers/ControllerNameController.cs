@@ -98,21 +98,29 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         }
 
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/ControllerName/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var controllerName = _controllerNameService.GetByID(x => x.ID == id);
             if (controllerName == null)
             {
                 return new HttpNotFoundResult();
             }
+            var controllerNames = _roleControllerNameService.GetAll(x => x.ControllerNameID == controllerName.ID);
 
             _controllerNameService.Delete(controllerName);
+            _roleControllerNameService.DeleteRange(controllerNames);
+
             TempData["DeleteControllerName"] = "Controller silindi.";
             return RedirectToAction("Index");
         }

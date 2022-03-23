@@ -142,13 +142,19 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             return Redirect("/Writer/Content");
         }
 
+        [CustomWriterAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/Writer/Content/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var content = _contentService.GetByID(x => x.ID == id);
             if (content == null)
             {

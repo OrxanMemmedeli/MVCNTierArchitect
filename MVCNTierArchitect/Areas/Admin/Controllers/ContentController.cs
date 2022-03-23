@@ -171,13 +171,19 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Content/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var content = _contentService.GetByID(x => x.ID == id);
             if (content == null)
             {
@@ -189,13 +195,19 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Restore(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Content/RestoreConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult RestoreConfirm(int id)
+        {
             var content = _contentService.GetByID(x => x.ID == id);
             if (content == null)
             {

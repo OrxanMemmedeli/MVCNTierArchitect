@@ -99,21 +99,29 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         }
 
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/MethodName/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var methodName = _methodNameService.GetByID(x => x.ID == id);
             if (methodName == null)
             {
                 return new HttpNotFoundResult();
             }
-
+            var roleMethods = _roleMethodService.GetAll(x => x.MethodNameID == methodName.ID);
+            
             _methodNameService.Delete(methodName);
+            _roleMethodService.DeleteRange(roleMethods);
+
             TempData["DeleteMethodName"] = "Metod silindi.";
             return RedirectToAction("Index");
         }

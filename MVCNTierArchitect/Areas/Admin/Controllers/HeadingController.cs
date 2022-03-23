@@ -136,14 +136,19 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Heading/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var heading = _headingService.GetByID(x => x.ID == id);
             if (heading == null)
             {
@@ -155,14 +160,19 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Restore(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Heading/RestoreConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult RestoreConfirm(int id)
+        {
             var heading = _headingService.GetByID(x => x.ID == id);
             if (heading == null)
             {
