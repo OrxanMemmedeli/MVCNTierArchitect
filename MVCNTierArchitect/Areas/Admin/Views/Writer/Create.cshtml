@@ -6,7 +6,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "Writer", "Admin", FormMethod.Post))
+@using (Html.BeginForm("Create", "Writer", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -57,9 +57,9 @@
             </div>
 
             <div class="form-group col-md-4">
-                <label class="control-label col-md-12">FotoURL</label>
+                <label class="control-label col-md-12">Foto</label>
                 <div class="col-md-12">
-                    <input type="text" name="ImageURL" class="form-control" />
+                    <input type="file" name="imageFile" class="form-control" accept="image/png, image/gif, image/jpeg, image/jpg"/>
                     @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-danger" })
                 </div>
             </div>

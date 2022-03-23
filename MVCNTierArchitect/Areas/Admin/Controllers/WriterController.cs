@@ -6,6 +6,7 @@ using FluentValidation.Results;
 using MVCNTierArchitect.Infrastrucrure;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -48,6 +49,10 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         {
             writer.Status = true;
             writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
+            if (writer.imageFile != null)
+            {
+                UploadImage(writer);
+            }
             ValidationResult results = _validator.Validate(writer);
             if (!results.IsValid)
             {
@@ -111,6 +116,11 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
 
             writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
 
+            if (writer.imageFile != null)
+            {
+                UploadImage(writer);
+            }
+
             ValidationResult results = _validator.Validate(writer);
             if (!results.IsValid)
             {
@@ -142,6 +152,15 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
+        private void UploadImage(EntityLayer.Concrete.Writer writer)
+        {
+            string fileName = Guid.NewGuid().ToString();
+            string extension = Path.GetExtension(writer.imageFile.FileName);
+            string path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName + extension);
+            writer.imageFile.SaveAs(path);
+            writer.ImageURL = "/UploadedFiles/" + fileName + extension;
+        }
+
         private List<SelectListItem> GetRoles()
         {
             return (from c in _roleService.GetAll()
@@ -171,4 +190,5 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
     }
+
 }

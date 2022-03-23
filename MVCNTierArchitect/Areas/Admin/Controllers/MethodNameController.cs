@@ -34,7 +34,7 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         // GET: Admin/MethodName
         public ActionResult Index()
         {
-            var methodName = _methodNameService.GetAll();
+            var methodName = _methodNameService.GetAll().OrderBy(x => x.Name);
             return View(methodName);
         }
 

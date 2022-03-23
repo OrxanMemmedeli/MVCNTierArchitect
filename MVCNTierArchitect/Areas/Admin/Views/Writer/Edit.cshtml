@@ -8,7 +8,7 @@
 }
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Writer", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -18,7 +18,10 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
         <input type="hidden" name="OldPassword" value="@Model.Password" />
-
+        @if (!string.IsNullOrEmpty(Model.ImageURL))
+        {
+            <img src="@Model.ImageURL" alt="user-avatar" class="img-circle img-fluid" style="max-width:300px">
+        }
         <div class="row">
             <div class="form-group col-md-4">
                 <label class="control-label col-md-12">Yazar Adı</label>
@@ -39,7 +42,7 @@
             <div class="form-group col-md-4">
                 <label class="control-label col-md-12">Email</label>
                 <div class="col-md-12">
-                    <input type="email" name="Email" value="@ancryptionAndDecryption.DecodeData(Model.Email)" class = "form-control"/>
+                    <input type="email" name="Email" value="@ancryptionAndDecryption.DecodeData(Model.Email)" class="form-control" />
                     @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -64,9 +67,9 @@
             </div>
 
             <div class="form-group col-md-3">
-                <label class="control-label col-md-12">FotoURL</label>
+                <label class="control-label col-md-12">Foto</label>
                 <div class="col-md-12">
-                    @Html.EditorFor(model => model.ImageURL, new { htmlAttributes = new { @class = "form-control" } })
+                    <input type="file" name="imageFile" class="form-control" accept="image/png, image/gif, image/jpeg, image/jpg"  />
                     @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-danger" })
                 </div>
             </div>
