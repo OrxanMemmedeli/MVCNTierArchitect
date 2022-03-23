@@ -20,15 +20,15 @@
     <link rel="stylesheet" href="~/AdminLTE/dist/css/adminlte.min.css">
 
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="background-image: url('/AdminLTE/dist/img/photo2.png'); background-repeat: no-repeat; background-size: cover;">
     <div class="login-box">
-        <div class="login-logo">
+        <div class="login-logo" style="background-color:whitesmoke">
             <a ><b>MVC 5 </b>Blog Page</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
             <div class="card-body login-card-body">
-                <p class="login-box-msg">Admin Panelə keçid</p>
+                <p class="login-box-msg text-danger">ADMİN Panelə keçid</p>
 
                 @using (Html.BeginForm("AdminLogin", "Account", FormMethod.Post))
                 {
