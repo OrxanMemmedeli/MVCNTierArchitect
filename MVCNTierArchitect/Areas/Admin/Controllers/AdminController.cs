@@ -127,14 +127,19 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Admin/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var admin = _adminService.GetByID(x => x.ID == id);
             if (admin == null)
             {

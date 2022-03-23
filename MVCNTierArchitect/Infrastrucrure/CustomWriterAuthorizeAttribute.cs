@@ -26,8 +26,8 @@ namespace MVCNTierArchitect.Infrastrucrure
             }
             else
             {
-                var controllerName = filterContext.RouteData.Values["controller"].ToString();
-                var actionName = filterContext.RouteData.Values["action"].ToString();
+                var controllerName = filterContext.RouteData.Values["controller"].ToString().ToLower();
+                var actionName = filterContext.RouteData.Values["action"].ToString().ToLower();
 
                 var ancrypt = ancryptionAndDecryption.EncodeData(cookieWriter.ToString());
                 var writer = writerManager.Get(x => x.Email == ancrypt);

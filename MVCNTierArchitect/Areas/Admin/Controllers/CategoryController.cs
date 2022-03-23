@@ -91,14 +91,19 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         }
 
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/admin/Category/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var category = _categoryService.GetByID(x => x.ID == id);
             if (category == null)
             {

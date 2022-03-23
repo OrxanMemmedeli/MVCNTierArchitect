@@ -163,6 +163,12 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/Writer/Message/DeleteConfirm/" + id);
+        }
+
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var message = _messageService.GetByID(x => x.ID == id);
             if (message == null)
             {

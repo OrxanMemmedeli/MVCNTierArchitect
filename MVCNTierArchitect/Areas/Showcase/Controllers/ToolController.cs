@@ -15,7 +15,6 @@ using System.Web.Mvc;
 namespace MVCNTierArchitect.Areas.Showcase.Controllers
 {
     [Route("Showcase")]
-    [CustomAdminAuthorizeAttribute]
     public class ToolController : Controller
     {
         private readonly IAdressService _adressService;
@@ -25,7 +24,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
             _adressService = adressService;
         }
 
-
+        [CustomAdminAuthorizeAttribute]
         public async Task<ActionResult> Index()
         {
             IEnumerable<Tool> tools = null;
@@ -44,7 +43,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
             return View(tools);
         }
-
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Create()
         {
             return View();
@@ -52,6 +51,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAdminAuthorizeAttribute]
         public async Task<ActionResult> Create(Tool tool)
         {
             var url = _adressService.GetLast();
@@ -69,7 +69,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
         }
 
-
+        [CustomAdminAuthorizeAttribute]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +92,7 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [CustomAdminAuthorizeAttribute]
         public async Task<ActionResult> Edit(int id, Tool tool)
         {
             if (id != tool.ID)
@@ -113,13 +114,18 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
             return View(tool);
         }
 
-        public async Task<ActionResult> Delete(int? id)
+        [CustomAdminAuthorizeAttribute]
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/Showcase/Tool/DeleteConfirm/" + id);
+        }
 
+        public async Task<ActionResult> DeleteConfirm(int id)
+        {
             var url = _adressService.GetLast();
             var httpclient = new HttpClient();
             var responseMessage = await httpclient.DeleteAsync(url.URL + "api/Tool/" + id);

@@ -92,14 +92,19 @@ namespace MVCNTierArchitect.Areas.Showcase.Controllers
         }
 
 
-        [HttpGet]
+        [CustomAdminAuthorizeAttribute]
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpNotFoundResult();
             }
+            return Redirect("/Showcase/Adress/DeleteConfirm/" + id);
+        }
 
+        [HttpGet]
+        public ActionResult DeleteConfirm(int id)
+        {
             var adress = _adressService.GetByID(x => x.ID == id);
             if (adress == null)
             {
