@@ -23,7 +23,7 @@
 <body class="hold-transition login-page" style="background-image: url('/AdminLTE/dist/img/photo2.png'); background-repeat: no-repeat; background-size: cover;">
     <div class="login-box">
         <div class="login-logo" style="background-color:whitesmoke">
-            <a ><b>MVC 5 </b>Blog Page</a>
+            <a><b>MVC 5 </b>Blog Page</a>
         </div>
         <!-- /.login-logo -->
         <div class="card">
@@ -54,7 +54,10 @@
                             </div>
                         </div>
                     </div>
-
+                    <div class="input-group mb-3">
+                        <div id="googleRecaptcha"></div>
+                        <input id="txtcaptcha" type="text" name="Captcha" style="display:none" required />
+                    </div>
                     <div class="row">
                         <div class="col-8">
                             <div class="icheck-primary">
@@ -102,6 +105,20 @@
     <script src="~/AdminLTE/dist/js/adminlte.min.js"></script>
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+
+    <script type="text/javascript">
+        var onloadCallback = function () {
+            grecaptcha.render('googleRecaptcha', {
+                'sitekey': '@ViewBag.Key',
+                'callback': function (response) {
+                    document.getElementById("txtcaptcha").value = response;
+                }
+            });
+        };
+    </script>
+
     @if (ViewBag.LoginMessage != null)
     {
         <script>
