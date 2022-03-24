@@ -1,9 +1,12 @@
 ﻿using BusinessLayer.Abstract;
 using FluentValidation.Results;
+using MVCNTierArchitect.Models;
 using MVCNTierArchitect.Models.ViewModels;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -19,15 +22,16 @@ namespace MVCNTierArchitect.Controllers
         private readonly IWriterService _writerService;
         private readonly LoginViewModelValidator _validator;
         private readonly WriterLoginViewModelValidator _writerValidator;
+        private readonly GoogleConfigModel _googleConfigModel;
 
-
-        public AccountController(IAncryptionAndDecryption ancryptionAndDecryption, IAdminService adminService, IWriterService writerService)
+        public AccountController(IAncryptionAndDecryption ancryptionAndDecryption, IAdminService adminService, IWriterService writerService, GoogleConfigModel googleConfigModel)
         {
             _ancryptionAndDecryption = ancryptionAndDecryption;
             _adminService = adminService;
             _writerService = writerService;
             _validator = new LoginViewModelValidator();
             _writerValidator = new WriterLoginViewModelValidator();
+            _googleConfigModel = googleConfigModel;
         }
 
         // GET: Account
@@ -45,6 +49,7 @@ namespace MVCNTierArchitect.Controllers
             //        return Redirect("/Admin");
             //    }
             //}
+            ViewBag.Key = _googleConfigModel.Key;
             return View();
         }
 
@@ -52,6 +57,16 @@ namespace MVCNTierArchitect.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AdminLogin(LoginViewModel model, string returnURL)
         {
+            ViewBag.ReturnURL = returnURL;
+            ViewBag.Key = _googleConfigModel.Key;
+
+            var status = GoogleReCaptchaControl(model);
+            if (!status)
+            {
+                ViewBag.LoginMessage = "Google reCaptcha doğrulaması uğursuz oldu";
+                return View(model);
+            }
+
             ValidationResult results = _validator.Validate(model);
             if (!results.IsValid)
             {
@@ -90,6 +105,7 @@ namespace MVCNTierArchitect.Controllers
         public ActionResult Login(string returnURL)
         {
             ViewBag.ReturnURL = returnURL;
+            ViewBag.Key = _googleConfigModel.Key;
             return View();
         }
 
@@ -97,6 +113,16 @@ namespace MVCNTierArchitect.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(WriterLoginViewModel model, string returnURL)
         {
+            ViewBag.ReturnURL = returnURL;
+            ViewBag.Key = _googleConfigModel.Key;
+
+            var status = GoogleReCaptchaControl(model);
+            if (!status)
+            {
+                ViewBag.WriterLoginMessage = "Google reCaptcha doğrulaması uğursuz oldu";
+                return View(model);
+            }
+
             ValidationResult results = _writerValidator.Validate(model);
             if (!results.IsValid)
             {
@@ -127,11 +153,28 @@ namespace MVCNTierArchitect.Controllers
                     return Redirect("/Writer/Writer");
                 }
             }
+
             ViewBag.WriterLoginMessage = "Uğursuz əməliyat";
             return View(model);
 
         }
 
+        private bool GoogleReCaptchaControl(WriterLoginViewModel model)
+        {
+            var client = new WebClient();
+            var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", _googleConfigModel.Secret, model.Captcha));
+            var obj = JObject.Parse(result);
+            var status = (bool)obj.SelectToken("success");
+            return status;
+        }
+        private bool GoogleReCaptchaControl(LoginViewModel model)
+        {
+            var client = new WebClient();
+            var result = client.DownloadString(string.Format("https://www.google.com/recaptcha/api/siteverify?secret={0}&response={1}", _googleConfigModel.Secret, model.Captcha));
+            var obj = JObject.Parse(result);
+            var status = (bool)obj.SelectToken("success");
+            return status;
+        }
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
