@@ -53,7 +53,7 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
         public ActionResult Create(int? id)
         {
             Content content = new Content();
-            List<SelectListItem> headings = (from c in _headingService.GetAll()
+            List<SelectListItem> headings = (from c in _headingService.GetAll(x => x.Status == true)
                                              select new SelectListItem
                                              {
                                                  Text = c.Name,
