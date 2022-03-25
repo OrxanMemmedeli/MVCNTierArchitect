@@ -24,21 +24,21 @@ namespace DataAccessLayer.EntityFramework
 
         public List<Content> GetAllBySearchModel(Expression<Func<Content, bool>> Filter, HeadingSearchViewModel search)
         {
-            var contents = context.Contents.Include(x => x.Heading).Where(Filter);
+            var contents = context.Contents.Include(x => x.Heading).Where(Filter).ToList();
 
             if (!string.IsNullOrEmpty(search.Writer) || !string.IsNullOrWhiteSpace(search.Writer))
             {
-                contents = contents.Where(x => x.Writer.Name.Contains(search.Writer.Trim()) || x.Writer.Surname.Contains(search.Writer.Trim()));
+                contents = contents.Where(x => x.Writer.Name.Contains(search.Writer.Trim()) || x.Writer.Surname.Contains(search.Writer.Trim())).ToList();
             }
 
             if (!string.IsNullOrEmpty(search.Content) || !string.IsNullOrWhiteSpace(search.Content))
             {
-                contents = contents.Where(x => x.Text.Contains(search.Content.Trim()));
+                contents = contents.Where(x => x.Text.Contains(search.Content.Trim())).ToList();
             }
 
             if (search.Date.ToString("dd/MM/yyyy") != "01/01/0001")
             {
-                contents = contents.Where(x => x.Writer.Name.Contains(search.Writer.Trim()));
+                contents = contents.Where(x => x.CreatedDate.ToString("dd/MM/yyyy") == search.Date.ToString("dd/MM/yyyy")).ToList();
             }
 
             return contents.ToList();

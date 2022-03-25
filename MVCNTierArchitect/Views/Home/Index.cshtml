@@ -6,9 +6,10 @@
 
 
 <div class="time-label" style="margin-bottom:25px">
-    <form action="Index" method="post">
+    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+    {
         @Html.Action("SearchBox", "Home")
-    </form>
+    }
 </div>
 <div class="timeline timeline-inverse">
 
