@@ -1,6 +1,7 @@
 ﻿using BusinessLayer.Abstract;
 using EntityLayer.ViewModels;
 using MVCNTierArchitect.Infrastrucrure;
+using MVCNTierArchitect.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,34 @@ namespace MVCNTierArchitect.Controllers
             return View(contents);
         }
 
+        public ActionResult Calendar()
+        {
+            return View();
+        }
 
+        public JsonResult GetCalendarData()
+        {
+            List<CalendarViewModel> events = new List<CalendarViewModel>();
+            Random random = new Random();
+            string[] colors = new string[] { "red", "green", "blue", "yellow", "purple", "pink", "crimson", "maroon", "coral", "orange", "gold", "olive", "lime", "turquoise", "cyan", "teal", "navy", "indigo", "tan" };
+
+            var contents = _contentService.GetAllByHeading(x => x.Status == true);
+
+            if (contents.Count > 0)
+            {
+                foreach (var item in contents)
+                {
+                    events.Add(new CalendarViewModel
+                    {
+                        Subject = item.Heading.Name,
+                        Description = "",
+                        Start = item.CreatedDate,
+                        Color = colors[random.Next(colors.Count())]
+                    });
+                }
+            }
+
+            return new JsonResult { Data = events, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+        }
     }
 }
