@@ -28,11 +28,21 @@
                 }
             </div>
         </div>
-
+        <div class="form-group">
+            <p class="control-label col-md-4">Email</p>
+            <div class="col-md-10">
+                <input type="text" name="Email" class="form-control" value="@ancryptionAndDecryption.DecodeData(Model.Email)"  />
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                @if (ViewBag.Unique != null)
+                {
+                    <span class="text-danger">@ViewBag.Unique</span>
+                }
+            </div>
+        </div>
         <div class="form-group">
             <p class="control-label col-md-4">Şifrə</p>
             <div class="col-md-10">
-                <input type="password" class = "form-control" name="Password" value="@ancryptionAndDecryption.DecodeData(Model.Password)" />
+                <input type="password" class="form-control" name="Password" value="@ancryptionAndDecryption.DecodeData(Model.Password)" />
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
             </div>
         </div>

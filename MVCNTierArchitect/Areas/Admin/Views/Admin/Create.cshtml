@@ -17,15 +17,25 @@
         <div class="form-group">
             <p class="control-label col-md-4">İstifadəçi Adı</p>
             <div class="col-md-10">
-                <input type="text" name="UserName" class = "form-control"/>
+                <input type="text" name="UserName" class="form-control" />
                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                 @if (ViewBag.Unique != null)
                 {
-                    <span class ="text-danger">@ViewBag.Unique</span>
+                    <span class="text-danger">@ViewBag.Unique</span>
                 }
             </div>
         </div>
-
+        <div class="form-group">
+            <p class="control-label col-md-4">Email</p>
+            <div class="col-md-10">
+                <input type="text" name="Email" class="form-control" />
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                @if (ViewBag.Unique != null)
+                {
+                    <span class="text-danger">@ViewBag.Unique</span>
+                }
+            </div>
+        </div>
         <div class="form-group">
             <p class="control-label col-md-4">Şifrə</p>
             <div class="col-md-10">

@@ -182,6 +182,10 @@
     <Compile Include="Migrations\202203221218342_AddNewColumnForMethodName.Designer.cs">
       <DependentUpon>202203221218342_AddNewColumnForMethodName.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202203250847219_AdminTableNewColumn.cs" />
+    <Compile Include="Migrations\202203250847219_AdminTableNewColumn.Designer.cs">
+      <DependentUpon>202203250847219_AdminTableNewColumn.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\GenericRepository.cs" />
@@ -268,6 +272,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202203221218342_AddNewColumnForMethodName.resx">
       <DependentUpon>202203221218342_AddNewColumnForMethodName.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202203250847219_AdminTableNewColumn.resx">
+      <DependentUpon>202203250847219_AdminTableNewColumn.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

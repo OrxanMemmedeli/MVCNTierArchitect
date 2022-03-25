@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Tools.Abstract;
 
 namespace MVCNTierArchitect.Areas.Admin.Controllers
 {
@@ -17,16 +18,23 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
     {
         private readonly IMessageService _messageService;
         private readonly MessageValidator _validator;
-        public MessageController(IMessageService messageService)
+        private readonly IAdminService _adminService;
+        private readonly IWriterService _writerService;
+        private readonly IAncryptionAndDecryption _ancryptionAndDecryption;
+        public MessageController(IMessageService messageService, IAdminService adminService, IWriterService writerService, IAncryptionAndDecryption ancryptionAndDecryption)
         {
             _messageService = messageService;
+            _adminService = adminService;
+            _writerService = writerService;
+            _ancryptionAndDecryption = ancryptionAndDecryption;
             _validator = new MessageValidator();
         }
 
         [CustomAdminAuthorizeAttribute]
         public ActionResult Index()
         {
-            var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.IsResponded == false).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
+            var email = Session["AdminEmail"].ToString();
+            var messages = _messageService.GetAll(x => x.IsDeleted == false && x.IsDraft == false && x.ReceiverEmail == email).OrderByDescending(x => x.CreatedDate).ThenByDescending(x => x.IsResponded);
             return View(messages);
         }
 
@@ -81,6 +89,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
         public ActionResult Create(int? id)
         {
             Message message = new Message();
+            List<SelectListItem> emails = GetEmails();
+            ViewBag.Emails = emails;
             if (id == null)
             {
                 return View(message);
@@ -96,13 +106,32 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
             }
         }
 
+        private List<SelectListItem> GetEmails()
+        {
+            List<SelectListItem> emails = (from c in _writerService.GetAll(x => x.Status == true)
+                                           select new SelectListItem
+                                           {
+                                               Text = _ancryptionAndDecryption.DecodeData(c.Email) + "- Writer",
+                                               Value = _ancryptionAndDecryption.DecodeData(c.Email)
+                                           }).ToList();
+            var adminEmails = (from c in _adminService.GetAll(x => x.Status == true)
+                               select new SelectListItem
+                               {
+                                   Text = _ancryptionAndDecryption.DecodeData(c.Email) + "- Admin",
+                                   Value = _ancryptionAndDecryption.DecodeData(c.Email)
+                               }).ToList();
+
+            emails.AddRange(adminEmails);
+            return emails;
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [CustomAdminAuthorizeAttribute]
         public ActionResult Create(Message message)
         {
             //*******************************************************************
-            message.SenderEmail = "memmedeli.orxan.om@gmail.com";
+            message.SenderEmail = Session["AdminEmail"].ToString();
             message.CreatedDate = DateTime.Now;
             message.IsResponded = true;
 
@@ -113,6 +142,8 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 {
                     ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
                 }
+                List<SelectListItem> emails = GetEmails();
+                ViewBag.Emails = emails;
                 return View(message);
             }
             TempData["MessageSent"] = "Mesaj Göndərildi.";

@@ -11,6 +11,7 @@ namespace DataAccessLayer.Abstract
     public interface IAdminDal : IGenericDal<Admin>
     {
         bool IsUserNameUnique(string username, int? id=0);
+        bool IsEmailUnique(string email, int? id=0);
         Admin Get(Expression<Func<Admin, bool>> Filter);
         IEnumerable<Admin> GetAllWithRole(Expression<Func<Admin, bool>> Filter);
         IEnumerable<Admin> GetAllWithRole();

@@ -20,6 +20,9 @@
             İstifadəçi adı
         </th>
         <th>
+            Email
+        </th>
+        <th>
             Səlahiyyət
         </th>
         <th>
@@ -37,6 +40,9 @@
             </td>
             <td>
                 @ancryptionAndDecryption.DecodeData(item.UserName)
+            </td>
+            <td>
+                @ancryptionAndDecryption.DecodeData(item.Email)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Role.Name)

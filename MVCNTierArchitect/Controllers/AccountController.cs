@@ -86,6 +86,7 @@ namespace MVCNTierArchitect.Controllers
             {
                 FormsAuthentication.SetAuthCookie(admin.UserName, false);
                 Session["AdminUserName"] = _ancryptionAndDecryption.DecodeData(admin.UserName);
+                Session["AdminEmail"] = _ancryptionAndDecryption.DecodeData(admin.Email);
                 Session["WriterEmail"] = null;
                 if (!string.IsNullOrEmpty(returnURL))
                 {
