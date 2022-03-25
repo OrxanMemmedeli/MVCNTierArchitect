@@ -1,0 +1,77 @@
+﻿
+@{
+    ViewBag.Title = "Calendar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link href="~/AdminLTE/plugins/fullcalendar/main.css" rel="stylesheet" />
+
+
+<div class="col-md-12">
+    <div class="card card-primary">
+        <div class="card-body p-0">
+            <!-- THE CALENDAR -->
+            <div id="calendar"></div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    <!-- /.card -->
+</div>
+
+
+@section scripts{
+    <!-- fullCalendar 2.2.5 -->
+    <script src="~/AdminLTE/plugins/moment/moment.min.js"></script>
+    <script src="~/AdminLTE/plugins/fullcalendar/main.js"></script>
+
+    <script>
+
+
+        $(document).ready(function () {
+
+            var events = [];
+            $.ajax({
+                type: "GET",
+                url: "/home/GetCalendarData",
+                success: function (data) {
+                    $.each(data, function (i, v) {
+                        events.push({
+                            title: v.Subject,
+                            description: v.Description,
+                            start: moment(v.Start),
+                            end: v.End != null ? moment(v.End) : null,
+                            color: v.ThemeColor,
+                            allDay: v.IsFullDay
+                        });
+                    })
+
+                    GenerateCalender(events);
+                },
+                error: function (error) {
+                    alert('failed');
+                }
+            });
+
+
+            function GenerateCalender(events) {
+                $('#calendar').fullCalendar('destroy');
+                $('#calendar').fullCalendar({
+                    contentHeight: 400,
+                    defaultDate: new Date(),
+                    timeFormat: 'h(:mm)a',
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,basicWeek,basicDay,agenda'
+                    },
+                    eventLimit: true,
+                    eventColor: '#378006',
+                    events: events,
+                });
+            }
+        });
+    </script>
+}
+
+@*https://www.youtube.com/watch?v=wA-Iy6ThYz4&t=437s*@
