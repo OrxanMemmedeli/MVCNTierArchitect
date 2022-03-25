@@ -15,7 +15,11 @@ namespace BusinessLayer.ValidationRules
         {
             RuleFor(x => x.UserName).NotEmpty().WithMessage("İstifadəçi adı boş ola bilməz")
                 .MinimumLength(3).WithMessage("İstifadəçi adı minimum 3 simvol ola biler")
-                .MaximumLength(50).WithMessage("İstifadəçi adı maksimum 50 simvol ola biler"); 
+                .MaximumLength(50).WithMessage("İstifadəçi adı maksimum 50 simvol ola biler");
+            RuleFor(x => x.Email).NotEmpty().WithMessage("Email boş ola bilməz")
+                .MinimumLength(3).WithMessage("Email minimum 3 simvol ola biler")
+                .MaximumLength(50).WithMessage("Email maksimum 50 simvol ola biler")
+                .EmailAddress().WithMessage("Email adrsi doğru yazılmayıb");
             RuleFor(x => x.Password)
                 .NotEmpty().WithMessage("Şifrə boş ola bilməz")
                 .MinimumLength(6).WithMessage("Şifrə minimum 6 simvol ola bilər. (nümunə Aa123!!)")

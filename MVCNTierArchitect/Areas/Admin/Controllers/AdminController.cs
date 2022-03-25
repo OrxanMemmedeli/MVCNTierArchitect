@@ -60,9 +60,16 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 ViewBag.Unique =  "User adı təkrar edilə bilməz.";
                 ViewBag.RoleID = GetRoles(); 
                 return View(admin);
+            }            
+            if (!_adminService.IsEmailUnique(_ancryptionAndDecryption.EncodeData(admin.Email)))
+            {
+                ViewBag.Unique =  "Email təkrar edilə bilməz.";
+                ViewBag.RoleID = GetRoles(); 
+                return View(admin);
             }
             admin.Password = _ancryptionAndDecryption.EncodeData(admin.Password);
             admin.UserName = _ancryptionAndDecryption.EncodeData(admin.UserName);
+            admin.Email = _ancryptionAndDecryption.EncodeData(admin.Email);
             _adminService.Add(admin);
             return RedirectToAction("Index");
 
@@ -110,18 +117,27 @@ namespace MVCNTierArchitect.Areas.Admin.Controllers
                 ViewBag.RoleID = GetRoles();
                 admin.Password = _ancryptionAndDecryption.EncodeData(admin.Password);
                 admin.UserName = _ancryptionAndDecryption.EncodeData(admin.UserName);
+                admin.Email = _ancryptionAndDecryption.EncodeData(admin.Email);
                 return View(admin);
             }
 
             admin.Password = _ancryptionAndDecryption.EncodeData(admin.Password);
             admin.UserName = _ancryptionAndDecryption.EncodeData(admin.UserName);
+            admin.Email = _ancryptionAndDecryption.EncodeData(admin.Email);
 
             if (!_adminService.IsUserNameUnique(admin.UserName, admin.ID))
             {
                 ViewBag.Unique = "User adı təkrar edilə bilməz.";
-                ViewBag.RoleID = GetRoles(); 
+                ViewBag.RoleID = GetRoles();
                 return View(admin);
             }
+            if (!_adminService.IsEmailUnique(admin.Email, admin.ID))
+            {
+                ViewBag.Unique = "Email təkrar edilə bilməz.";
+                ViewBag.RoleID = GetRoles();
+                return View(admin);
+            }
+
             TempData["EditAdmin"] = "Admin yeniləndi.";
             _adminService.Update(admin, admin.ID);
             return RedirectToAction("Index");

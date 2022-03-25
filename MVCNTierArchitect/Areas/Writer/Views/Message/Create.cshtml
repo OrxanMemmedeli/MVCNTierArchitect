@@ -41,7 +41,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             @*<input class="form-control" placeholder="Kimə:" @Html.NameFor(x => x.ReceiverEmail)>*@
-                            @Html.EditorFor(model => model.ReceiverEmail, new { htmlAttributes = new { @class = "form-control", @placeholder = "Kimə:" } })
+                            @Html.DropDownListFor(model => model.ReceiverEmail, (List<SelectListItem>)ViewBag.Emails, htmlAttributes: new { @class = "form-control" })
                             @Html.ValidationMessageFor(model => model.ReceiverEmail, "", new { @class = "text-danger" })
 
                         </div>

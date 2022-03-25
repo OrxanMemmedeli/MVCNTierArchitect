@@ -31,11 +31,15 @@ namespace DataAccessLayer.EntityFramework
             return context.Admins.Include(x => x.Role).ToList();
         }
 
-        public bool IsUserNameUnique(string username)
+        public bool IsEmailUnique(string email, int? id = 0)
         {
-            var responce = context.Admins.FirstOrDefault(x => x.UserName == username);
+            var responce = context.Admins.FirstOrDefault(x => x.Email == email);
             if (responce != null)
             {
+                if (responce.ID == id)
+                {
+                    return true;
+                }
                 return false;
             }
             return true;

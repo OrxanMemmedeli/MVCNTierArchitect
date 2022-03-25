@@ -59,6 +59,11 @@ namespace BusinessLayer.Concrete
             return _adminDal.GetById(Filter);
         }
 
+        public bool IsEmailUnique(string email, int? id = 0)
+        {
+            return _adminDal.IsEmailUnique(email, id);
+        }
+
         public bool IsUserNameUnique(string username, int? id = 0)
         {
             return _adminDal.IsUserNameUnique(username, id);
