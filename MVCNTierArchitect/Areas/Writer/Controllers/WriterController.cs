@@ -5,6 +5,7 @@ using MVCNTierArchitect.Infrastrucrure;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -73,7 +74,10 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             writer.Password = _ancryptionAndDecryption.DecodeData(writer.Password);
             writer.ConfirmPassword = writer.Password;
             writer.Email = _ancryptionAndDecryption.EncodeData(writer.Email);
-
+            if (writer.imageFile != null)
+            {
+                UploadImage(writer);
+            }
             List<string> errors = new List<string>();
 
             ValidationResult results = _validator.Validate(writer);
@@ -142,5 +146,16 @@ namespace MVCNTierArchitect.Areas.Writer.Controllers
             _writerService.Update(writer, writer.ID);
             return Json(200);
         }
+
+
+        private void UploadImage(EntityLayer.Concrete.Writer writer)
+        {
+            string fileName = Guid.NewGuid().ToString();
+            string extension = Path.GetExtension(writer.imageFile.FileName);
+            string path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName + extension);
+            writer.imageFile.SaveAs(path);
+            writer.ImageURL = "/UploadedFiles/" + fileName + extension;
+        }
+
     }
 }

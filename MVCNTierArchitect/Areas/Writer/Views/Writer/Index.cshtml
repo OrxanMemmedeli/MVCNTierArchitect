@@ -73,6 +73,8 @@
                                 <input type="hidden" id="Password" value="@Model.Password" />
                                 <input type="hidden" id="ConfirmPassword" value="@Model.Password" />
                                 <input type="hidden" id="Status" value="@Model.Status" />
+                                <input type="hidden" id="ImageURL" value="@Model.ImageURL" />
+                                <input type="hidden" id="RoleID" value="@Model.RoleID" />
                                 <div class="alert alert-danger">
                                     <p id="EditResponce"></p>
                                 </div>
@@ -97,7 +99,11 @@
                                 <div class="form-group row">
                                     <label for="ImageURL" class="col-sm-2 col-form-label">FotoURL</label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control" id="ImageURL" placeholder="FotoURL" value="@Model.ImageURL">
+                                        <input type="file" class="form-control" id="ImageFile" name="imageFile" />
+                                        @if (Model.ImageURL != null)
+                                        {
+                                            <img src="@Model.ImageURL" alt="profil" style="width:150px"/>
+                                        }
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -169,7 +175,9 @@
             formDataEdit.append('ConfirmPassword', $("#ConfirmPassword").val());
             formDataEdit.append('About', $("#About").val());
             formDataEdit.append('ImageURL', $("#ImageURL").val());
-            //formDataEdit.append('ImageURL', document.getElementById("ImageURL").files[0]);
+            formDataEdit.append('RoleID', $("#RoleID").val());
+            formDataEdit.append('imageFile', document.getElementById("ImageFile").files[0]);
+
             $.ajax({
                 type: "post",
                 processData: false,  // tell jQuery not to process the data
@@ -209,6 +217,7 @@
             formDataEdit.append('ConfirmPassword', $("#WConfirmPassword").val());
             formDataEdit.append('About', $("#About").val());
             formDataEdit.append('ImageURL', $("#ImageURL").val());
+            formDataEdit.append('RoleID', $("#RoleID").val());
             //formDataEdit.append('ImageURL', document.getElementById("ImageURL").files[0]);
             $.ajax({
                 type: "post",
@@ -237,7 +246,7 @@
             });
         });
     </script>
-    }
+}
 <script>
 
 </script>
