@@ -44,6 +44,11 @@ namespace BusinessLayer.Concrete
             return _contentDal.GetAllByHeading(Filter);
         }
 
+        public List<Content> GetAllByHeadingAndWriter(Expression<Func<Content, bool>> Filter)
+        {
+            return _contentDal.GetAllByHeadingAndWriter(Filter);
+        }
+
         public List<Content> GetAllBySearchModel(Expression<Func<Content, bool>> Filter, HeadingSearchViewModel search)
         {
             return _contentDal.GetAllBySearchModel(Filter, search);

@@ -5,7 +5,7 @@
 {
     <li class="nav-item">
         <a href="@(item.Contents.Count() == 0 ? "" : "/Home/ContentByHeading/" + item.ID)" class="nav-link">
-            <span class="nav-icon text-warning">(@item.Contents.Count())</span>
+            <span class="nav-icon text-warning">(@item.Contents.Where(x => x.Status == true).Count())</span>
             <p>
                 @(item.Name.Length <= 25 ? item.Name : item.Name.Substring(0, item.Name.Substring(0,25).LastIndexOf(" ")) + "..." )
 

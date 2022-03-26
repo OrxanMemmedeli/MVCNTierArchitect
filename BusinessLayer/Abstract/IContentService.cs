@@ -12,6 +12,7 @@ namespace BusinessLayer.Abstract
     public interface IContentService : IGenericService<Content>
     {
         List<Content> GetAllByHeading(Expression<Func<Content, bool>> Filter);
+        List<Content> GetAllByHeadingAndWriter(Expression<Func<Content, bool>> Filter);
         List<Content> GetAllBySearchModel(Expression<Func<Content, bool>> Filter, HeadingSearchViewModel search);
     }
 }
