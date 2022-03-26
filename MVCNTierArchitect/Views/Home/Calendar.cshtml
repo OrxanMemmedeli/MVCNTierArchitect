@@ -25,53 +25,46 @@
     <script src="~/AdminLTE/plugins/moment/moment.min.js"></script>
     <script src="~/AdminLTE/plugins/fullcalendar/main.js"></script>
 
+
     <script>
-
-
-        $(document).ready(function () {
-
-            var events = [];
+        document.addEventListener('DOMContentLoaded', function () {
+            var eventarray = [];
             $.ajax({
                 type: "GET",
                 url: "/home/GetCalendarData",
                 success: function (data) {
                     $.each(data, function (i, v) {
-                        events.push({
+                        eventarray.push({
                             title: v.Subject,
-                            description: v.Description,
-                            start: moment(v.Start),
-                            end: v.End != null ? moment(v.End) : null,
-                            color: v.ThemeColor,
-                            allDay: v.IsFullDay
+                            start: v.Start,
+                            end: v.End != null ? v.End : null,
                         });
                     })
-
-                    GenerateCalender(events);
+                    console.log(eventarray);
+                    GenerateCalender(eventarray);
                 },
                 error: function (error) {
                     alert('failed');
                 }
             });
 
-
             function GenerateCalender(events) {
-                $('#calendar').fullCalendar('destroy');
-                $('#calendar').fullCalendar({
-                    contentHeight: 400,
-                    defaultDate: new Date(),
-                    timeFormat: 'h(:mm)a',
-                    header: {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    contentHeight: 750,
+                    headerToolbar: {
                         left: 'prev,next today',
                         center: 'title',
-                        right: 'month,basicWeek,basicDay,agenda'
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
                     },
-                    eventLimit: true,
                     eventColor: '#378006',
-                    events: events,
+                    events: eventarray,
                 });
+                calendar.render();
             }
+
         });
     </script>
+ 
 }
 
-@*https://www.youtube.com/watch?v=wA-Iy6ThYz4&t=437s*@

@@ -22,6 +22,11 @@ namespace DataAccessLayer.EntityFramework
             return context.Contents.Include(x => x.Heading).Where(Filter).ToList();
         }
 
+        public List<Content> GetAllByHeadingAndWriter(Expression<Func<Content, bool>> Filter)
+        {
+            return context.Contents.Include(x => x.Heading).Include(x => x.Writer).Where(Filter).ToList();
+        }
+
         public List<Content> GetAllBySearchModel(Expression<Func<Content, bool>> Filter, HeadingSearchViewModel search)
         {
             var contents = context.Contents.Include(x => x.Heading).Where(Filter).ToList();
@@ -36,7 +41,7 @@ namespace DataAccessLayer.EntityFramework
                 contents = contents.Where(x => x.Text.Contains(search.Content.Trim())).ToList();
             }
 
-            if (search.Date.ToString("dd/MM/yyyy") != "01/01/0001")
+            if (search.Date.ToString("dd/MM/yyyy").Replace(".","/") != "01/01/0001")
             {
                 contents = contents.Where(x => x.CreatedDate.ToString("dd/MM/yyyy") == search.Date.ToString("dd/MM/yyyy")).ToList();
             }

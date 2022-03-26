@@ -61,9 +61,9 @@ namespace MVCNTierArchitect.Controllers
         {
             List<CalendarViewModel> events = new List<CalendarViewModel>();
             Random random = new Random();
-            string[] colors = new string[] { "red", "green", "blue", "yellow", "purple", "pink", "crimson", "maroon", "coral", "orange", "gold", "olive", "lime", "turquoise", "cyan", "teal", "navy", "indigo", "tan" };
+            string[] colors = new string[] { "red", "green", "blue", "yellow", "purple", "pink", "orange" };
 
-            var contents = _contentService.GetAllByHeading(x => x.Status == true);
+            var contents = _contentService.GetAllByHeadingAndWriter(x => x.Status == true);
 
             if (contents.Count > 0)
             {
@@ -71,9 +71,9 @@ namespace MVCNTierArchitect.Controllers
                 {
                     events.Add(new CalendarViewModel
                     {
-                        Subject = item.Heading.Name,
+                        Subject = "Başlıq: " + item.Heading.Name + " (Yazar: " + item.Writer.Name + ")",
                         Description = "",
-                        Start = item.CreatedDate,
+                        Start = item.CreatedDate.ToString("yyyy-MM-dd"),
                         Color = colors[random.Next(colors.Count())]
                     });
                 }

@@ -9,8 +9,8 @@ namespace MVCNTierArchitect.Models.ViewModels
     {
         public string Subject { get; set; }
         public string Description { get; set; }
-        public DateTime Start { get; set; }
-        public Nullable<DateTime> End { get; set; } = null;
+        public string Start { get; set; }
+        public string End { get; set; } = null;
         public string Color { get; set; }
         public bool IsFullDay { get; set; } = true;
     }
