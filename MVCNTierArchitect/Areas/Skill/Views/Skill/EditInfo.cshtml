@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("editInfo", "Skill", "Skill", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
 
@@ -35,7 +35,7 @@
             Haqımda
             <div class="col-md-10">
 
-                @Html.TextAreaFor(model => model.About,  new { @class = "form-control" } )
+                @Html.TextAreaFor(model => model.About, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.About, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -43,7 +43,11 @@
         <div class="form-group">
             Foto URL
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageURL, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="file" name="imageFile" class="form-control" />
+                @if (Model.ImageURL != null)
+                {
+                    <img src="@Model.ImageURL" alt="Alternate Text" style=" width:150px; height:150px" />
+                }
                 @Html.ValidationMessageFor(model => model.ImageURL, "", new { @class = "text-danger" })
             </div>
         </div>

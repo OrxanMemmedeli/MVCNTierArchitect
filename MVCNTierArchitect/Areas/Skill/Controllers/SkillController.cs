@@ -2,6 +2,7 @@
 using EntityLayer.Concrete;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -77,6 +78,10 @@ namespace MVCNTierArchitect.Areas.Skill.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateInfo(SkillInfo skillInfo)
         {
+            if (skillInfo.imageFile != null)
+            {
+                UploadImage(skillInfo);
+            }
             _skillInfoService.Add(skillInfo);
             return RedirectToAction("Details");
         }
@@ -105,10 +110,22 @@ namespace MVCNTierArchitect.Areas.Skill.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditInfo(SkillInfo skillInfo)
         {
+            if (skillInfo.imageFile != null)
+            {
+                UploadImage(skillInfo);
+            }
             _skillInfoService.Update(skillInfo, skillInfo.ID);
+
             return RedirectToAction("Details");
         }
-
+        private void UploadImage(SkillInfo skillInfo)
+        {
+            string fileName = Guid.NewGuid().ToString();
+            string extension = Path.GetExtension(skillInfo.imageFile.FileName);
+            string path = Path.Combine(Server.MapPath("~/UploadedFiles"), fileName + extension);
+            skillInfo.imageFile.SaveAs(path);
+            skillInfo.ImageURL = "/UploadedFiles/" + fileName + extension;
+        }
         public ActionResult DeleteInfo(int id)
         {
             var skillInfo = _skillInfoService.GetByID(x => x.ID == id);
