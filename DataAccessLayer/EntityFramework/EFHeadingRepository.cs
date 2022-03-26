@@ -14,16 +14,24 @@ namespace DataAccessLayer.EntityFramework
 {
     public class EFHeadingRepository : GenericRepository<Heading>, IHeadingDal
     {
-        MVCContext context = new MVCContext();
-
+  
         public List<Heading> GetAllWithContentAndWriter()
         {
-            return context.Headings.Include(x => x.Contents).Include(x => x.Writer).ToList();
+            using (var cx = new MVCContext())
+            {
+                var headings = cx.Headings.Include(x => x.Contents).Include(x => x.Writer).Include(x => x.Category).ToList();
+                return headings;
+            }
+
         }
 
         public List<Heading> GetAllWithContentAndWriter(Expression<Func<Heading, bool>> Filter)
         {
-            return context.Headings.Where(Filter).Include(x => x.Contents).Include(x => x.Writer).ToList();
+            using (var cx = new MVCContext())
+            {
+                var headings = cx.Headings.Where(Filter).Include(x => x.Contents).Include(x => x.Writer).Include(x => x.Category).ToList();
+                return headings;
+            }
         }
     }
 }
