@@ -2701,6 +2701,7 @@
     <Content Include="Areas\Admin\Views\Role\RelationControllerName.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\About\Edit.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Properties\PublishProfiles\MVCNTierArchitect - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -2714,6 +2715,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="SS Odev 3\Odev 3.png" />
+    <Content Include="UploadedFiles\KHAn.jpg" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -2760,7 +2762,6 @@
     <Folder Include="Areas\Skill\Views\Shared\" />
     <Folder Include="Areas\Writer\Data\" />
     <Folder Include="Areas\Writer\Views\Shared\" />
-    <Folder Include="UploadedFiles\" />
     <Folder Include="Views\Skill\" />
   </ItemGroup>
   <ItemGroup>
